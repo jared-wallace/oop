@@ -13,39 +13,38 @@ public class Asg1
 {    
     public static void main(String[] args) 
     {    	
-		ArrayList<Car> ray = new ArrayList<Car>();
+      ArrayList<Car> ray = new ArrayList<Car>();
 		
 		//test case
-		ray.add(new Car("Stuff","Toyota","Corola",2006,554.5));    	
+      ray.add(new Car("Stuff","Toyota","Corola",2006,554.5));    	
 			
-    	Scanner kb = new Scanner(in);
+      Scanner kb = new Scanner(in);
     	boolean loopControl = true;
     	while(loopControl)
     	{
-	    	printMenu();
-	    	switch(kb.nextInt())
-	    	{
-	    		case 1: showCars(ray); break;
-	    		case 2: if(addCar(ray, kb))
-	    				{
-	    					out.println("Car was added successfully");
-	    				} 
-	    				else
-	    					out.println("Car was not added successfully");
-	    					break;
+         printMenu();
+         switch(kb.nextInt())
+         {
+	    	   case 1: showCars(ray); break;
+	    	   case 2: if(addCar(ray, kb))
+	    		        {
+                       out.println("Car was added successfully");
+                    } 
+                    else
+                       out.println("Car was not added successfully");
+                       break;
 	    		case 3:if(deleteCar(ray, kb))
-	    				{
-	    					out.println("Car was added successfully");
-	    				} 
-	    				else
-	    					out.println("Car was not added successfully");
-	    					break;
+                   {
+                      out.println("Car was added successfully");
+                   }   
+                   else
+                      out.println("Car was not added successfully");
+                      break;
 	    	    case 4:
 	    	    case 5:
-	    		case 6: loopControl = false; out.println("bye"); break;
-	    	}    	
-    	}
-
+             case 6: loopControl = false; out.println("bye"); break;
+         }    	
+      }
     }
     
     //haven't decided if these should be in Main or in a Management class
