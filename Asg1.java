@@ -29,7 +29,7 @@ public class Asg1
 	    				else
 	    					out.println("Car was not added successfully");
 	    					break;
-	    		case 3:if(console.deleteCar("boo"))
+	    		case 3:if(console.deleteCar(kb))
 	    				{
 	    					out.println("Car was added successfully");
 	    				} 
@@ -37,7 +37,7 @@ public class Asg1
 	    					out.println("Car was not added successfully");
 	    					break;
 	    	    case 4:
-	    	    case 5:
+	    	    case 5: console.showPriceRange(kb); break;
 	    		case 6: loopControl = false; out.println("bye"); break;
 	    		default: out.println("Not an option");
 	    	}   

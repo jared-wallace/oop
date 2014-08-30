@@ -47,7 +47,7 @@ public class Car
     
     public static boolean validateYear(int year)
     {
-        if(year < 0)
+        if(year < 1886)
             return false;
         return true;
     }
@@ -58,6 +58,11 @@ public class Car
             return false;
         return true;
         
+    }
+
+    public double getPrice()
+    {
+        return price;
     }
     
     //didn't do anything specital with formatting. Do that later

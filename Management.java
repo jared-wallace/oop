@@ -45,8 +45,12 @@ public class Management
     	return -1;
     }
     
-    public ArrayList<Car> showPriceRange()
+    public ArrayList<Car> showPriceRange(double lower, double higher)
     {
-    	return new ArrayList<Car>();
+        ArrayList<Car> results = new ArrayList<Car>();
+        for(Car s: this.db)
+            if(s.getPrice() > lower && s.getPrice() < higher )
+                results.add(s);
+    	return results;
     }
 }

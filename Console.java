@@ -51,7 +51,7 @@ public class Console {
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
         model=kb.next();
-        out.println("Enter the year. (Cannot be < 0)");
+        out.println("Enter the year. (Cannot be < 1886)");
         year = kb.nextInt();
         out.println("Enter the price. (Cannot be < 0)");
         price = kb.nextDouble();
@@ -72,5 +72,19 @@ public class Console {
             out.println("Invalid license plate entered");
             return false;
         }
+    }
+
+    public void showPriceRange(Scanner kb)
+    {
+        out.println("Enter the lower limit of the price range you wish to search.");
+        double lower = kb.nextDouble();
+        out.println("Enter the higher limit of the range you wish to search");
+        double higher = kb.nextDouble();
+        ArrayList<Car> results = manage.showPriceRange(lower, higher);
+        if (results.size() > 0)
+            for(Car s : results)
+                out.println(s);
+        else
+            out.println("Sorry, no matching vehicles found");
     }
 }
