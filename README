@@ -1,4 +1,23 @@
 Class has been designed. Will probably need a few more methods. Still thinking
 
-Deciding between making a Management class for all the methods in main. Probably so.
+Deciding between making a Management class for all the methods in main.
+
+================================================================================
+8/30 - 10:54
+================================================================================
+
+Almost finished Car class. Added validation methods. Validation for 
+constructor - ???
+
+Created Management Class - This class manages the DB and only that. Not designed
+for user interaction
+
+Created Console Class - Designed for user interaction. Communicates with 
+Management class to carry out tasks
+
+Asg1 - Driver/Main/Runner what have you.
+
+Lunch time :)
+
+================================================================================
 
