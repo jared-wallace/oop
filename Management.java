@@ -5,7 +5,9 @@
  * @author Jared Wallace
  * @version %I%, %G%
  */
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Management 
 {
@@ -85,11 +87,44 @@ public class Management
 
     public boolean saveDB()
     {
-        return true;
+        try
+        {
+            FileWriter outFile = new FileWriter ("car_database.db");
+            PrintWriter pWriter = new PrintWriter(outFile);
+            for (Car s: this.db)
+            {
+                pWriter.println(s);
+            }
+            pWriter.close();
+            return true;
+        }
+        catch(IOException e1)
+        {
+            return false;
+        }
     }
 
     public boolean readDB()
     {
-        return true;
+        try
+        {
+            File inFile = new File ("car_database.db");
+            Scanner sc = new Scanner (inFile);
+            while (sc.hasNext())
+            {
+                String lp = sc.next();
+                String make = sc.next();
+                String model = sc.next();
+                int year = sc.nextInt();
+                double price = sc.nextDouble();
+                addCar(lp, make, model, year, price);
+            }
+            sc.close();
+            return true;
+        }
+        catch(IOException e1)
+        {
+            return false;
+        }
     }
 }
