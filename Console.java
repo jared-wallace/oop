@@ -2,12 +2,13 @@
  * @(#)Console.java
  *
  *
- * @author 
- * @version 1.00 2014/8/30
+ * @author Mason Egger and Jared Wallace
+ * @version %I%, %G%
  */
 import static java.lang.System.*;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 
 public class Console {
 
@@ -16,6 +17,8 @@ public class Console {
     public Console() 
     {
         manage = new Management();
+        if (!manage.readDB())
+            out.println("Database corrupted or doesn't exist");
         db = manage.getCars();
     }
     
@@ -29,7 +32,8 @@ public class Console {
         out.println("6. Exit program.");
         
     }
-    
+
+
     public void showCars()
     {
         if(db.size()==0)
@@ -38,7 +42,12 @@ public class Console {
             for(Car s: db)
                 out.println(s);
     }
-    
+
+    /**
+     *
+     * @param kb
+     * @return
+     */
     public boolean addCar(Scanner kb)
     {
         String lp, make, model;
@@ -59,6 +68,12 @@ public class Console {
         return manage.addCar(lp, make, model, year, price);
         
     }
+
+    /**
+     *
+     * @param kb
+     * @return
+     */
     public boolean deleteCar(Scanner kb)
     {
         out.println("Enter the license plate of the car to delete. (Format XXX-XXX)");
@@ -74,6 +89,25 @@ public class Console {
         }
     }
 
+    /**
+     *
+     * @param kb
+     */
+    public void searchCar(Scanner kb)
+    {
+        out.println("Enter the license plate of the car you wish to search for. (Format XXX-XXX)");
+        String lp = kb.next();
+        int index = manage.search(lp);
+        if (index > -1)
+            out.println(db.get(index));
+        else
+            out.println("Sorry, no matching vehicle found.");
+    }
+
+    /**
+     *
+     * @param kb
+     */
     public void showPriceRange(Scanner kb)
     {
         out.println("Enter the lower limit of the price range you wish to search.");
@@ -86,5 +120,17 @@ public class Console {
                 out.println(s);
         else
             out.println("Sorry, no matching vehicles found");
+    }
+
+    /**
+     * Writes the current ArrayList db to a file called car_database.db
+     * as plain text.
+     */
+    public void writeDatabase()
+    {
+        if(!manage.saveDB())
+            out.println("Unable to save database.");
+        else
+            out.println("Database updated, exiting...");
     }
 }

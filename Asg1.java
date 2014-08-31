@@ -3,8 +3,8 @@
  *
  * Asg1 application
  *
- * @author 
- * @version 1.00 2014/8/28
+ * @author Mason Egger and Jared Wallace
+ * @version %I%, %G%
  */
  import static java.lang.System.*;
  import java.util.Scanner;
@@ -38,7 +38,9 @@ public class Asg1
 	    					break;
 	    	    case 4:
 	    	    case 5: console.showPriceRange(kb); break;
-	    		case 6: loopControl = false; out.println("bye"); break;
+	    		case 6: loopControl = false;
+                        console.writeDatabase();
+                        break;
 	    		default: out.println("Not an option");
 	    	}   
 	    	out.println(); 	

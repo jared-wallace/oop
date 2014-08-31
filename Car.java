@@ -7,7 +7,7 @@ public class Car
 	
     public Car(String lpNumber, String make, String model, int year, double price) 
     {
-    	if(lpNumber == "" || make == "" || model == "" || year < 0 || price < 0)
+    	if(lpNumber.equals("") || make.equals("") || model.equals("") || year < 0 || price < 0)
     	{
     		//Validation	
     	}
