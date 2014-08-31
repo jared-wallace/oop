@@ -12,13 +12,17 @@ import java.util.Scanner;
 public class Management 
 {
 	private static ArrayList<Car> db;
-	
+
+    /**
+     * Default constructor creates an ArrayList of Car objects called <code>db</code>
+     */
     public Management() 
     {
     	db = new ArrayList<Car>();
     }
 
     /**
+     * Simply a way to retrieve the existing ArrayList <code>db</code>
      *
      * @return Returns the existing database.
      */
@@ -28,13 +32,17 @@ public class Management
     }
 
     /**
+     * Adds a car to the ArrayList <code>db</code>, (assuming
+     * all the fields validate correctly), which serves as the runtime database.
+     * This does not mean that the information will necessarily end up in the database
+     * file! The database file is only written upon exiting the program normally.
      *
      * @param lp The license plate of the new car. (Format XXX-XXX only)
      * @param make Can't be blank.
      * @param model Can't be blank.
      * @param year Can't be before cars were invented, in 1896.
      * @param price Can't be less than free.
-     * @return
+     * @return Returns true if the car was successfully added, false otherwise.
      */
     public boolean addCar(String lp, String make, String model, int year, double price)
     {
@@ -44,6 +52,10 @@ public class Management
     }
 
     /**
+     * Deletes a car from the ArrayList <code>db</code>, (assuming
+     * it existed), which serves as the runtime database. See <code>addCar</code> for
+     * the difference between runtime and file databases.
+     *
      *
      * @param lp The license plate of the car to be removed from the database
      * @return Returns true if a car was deleted, false otherwise
@@ -58,6 +70,8 @@ public class Management
     }
 
     /**
+     * Given a license plate, attempts to locate the car in question in the
+     * runtime database.
      *
      * @param s Accepts a string that is the license plate of the car being sought.
      * @return Returns the index of the matching car, if found. Otherwise returns -1.
@@ -71,6 +85,7 @@ public class Management
     }
 
     /**
+     * Allows filtering of the database by a price range.
      *
      * @param lower The lower limit of the price range to be searched.
      * @param higher The upper limit of the price range to be searched.
@@ -85,6 +100,13 @@ public class Management
     	return results;
     }
 
+    /**
+     * Attempts to write the existing runtime database to the database file.
+     * The file will be overwritten, so hopefully this doesn't introduce any corruption.
+     *
+     * @return Returns true if the database was successfully written, false if there
+     * was an IOException.
+     */
     public boolean saveDB()
     {
         try
@@ -104,6 +126,13 @@ public class Management
         }
     }
 
+    /**
+     * Attempts to read in from the database file called <code>car_database.db</code>
+     * and load each car's info into the runtime database.
+     *
+     * @return Returns true if the file existed and the information was successfully
+     * read into the ArrayList <code>db</code>, false otherwise.
+     */
     public boolean readDB()
     {
         try
