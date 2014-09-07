@@ -23,10 +23,21 @@ public class Car
     {
     	this("XXX-XXX","Empty","Empty",0,0.0);
     }
-    
+
+    /**
+     * The validation function allows any combination of numbers and
+     * letters, as well as periods, spaces and dashes. This is in
+     * accordance with TxDOT's current rule set for license plates.
+     * Unfortunately, TxDOT also allows texas symbols and heart symbols,
+     * neither of which can be entered. Instead, the texas symbol should
+     * be entered as "*" and the heart as "@".
+     *
+     * @param lp The license plate number to be checked for validity.
+     * @return Returns true for a valid plate, false otherwise.
+     */
     public static boolean validateLP(String lp)
     {
-        if(lp.matches("[\\w]{3}-[\\w]{3}"))
+        if(lp.matches("[\\w\\./[ ]\\*@]{1,7}"))
             return true;
         return false;
     }

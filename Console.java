@@ -54,7 +54,7 @@ public class Console {
         int year;
         double price;
         
-        out.println("Enter the License Plate #. (Format XXX-XXX)");
+        out.println("Enter the license plate number.");
         lp = kb.next();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();
@@ -76,7 +76,7 @@ public class Console {
      */
     public boolean deleteCar(Scanner kb)
     {
-        out.println("Enter the license plate of the car to delete. (Format XXX-XXX)");
+        out.println("Enter the license plate of the car to delete.");
         String lp = kb.next();
         if(Car.validateLP(lp))
         {
@@ -95,7 +95,7 @@ public class Console {
      */
     public void searchCar(Scanner kb)
     {
-        out.println("Enter the license plate of the car you wish to search for. (Format XXX-XXX)");
+        out.println("Enter the license plate of the car you wish to search for.");
         String lp = kb.next();
         int index = manage.search(lp);
         if (index > -1)
@@ -123,7 +123,7 @@ public class Console {
     }
 
     /**
-     * Writes the current ArrayList db to a file called car_database.db
+     * Writes the current ArrayList db to a file called cars.txt
      * as plain text.
      */
     public void writeDatabase()
