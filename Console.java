@@ -19,6 +19,8 @@ public class Console {
         manage = new Management();
         if (!manage.readDB())
             out.println("Database corrupted or doesn't exist");
+        else
+            out.println("Successfully read database cars.txt");
         db = manage.getCars();
     }
     
@@ -39,8 +41,12 @@ public class Console {
         if(db.size()==0)
             out.println("Database is empty");
         else
-            for(Car s: db)
+        {
+            out.println("Plate Make Model Year Price");
+            out.println("---------------------------");
+            for (Car s : db)
                 out.println(s);
+        }
     }
 
     /**
@@ -55,7 +61,8 @@ public class Console {
         double price;
         
         out.println("Enter the license plate number.");
-        lp = kb.next();
+        kb.nextLine();
+        lp = kb.nextLine();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");

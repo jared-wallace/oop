@@ -36,7 +36,7 @@ public class Asg1
 	    				else
 	    					out.println("Car was not added successfully");
 	    					break;
-	    	    case 4:
+	    	    case 4: console.searchCar(kb); break;
 	    	    case 5: console.showPriceRange(kb); break;
 	    		case 6: loopControl = false;
                         console.writeDatabase();

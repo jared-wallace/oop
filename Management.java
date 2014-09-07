@@ -6,6 +6,7 @@
  * @version %I%, %G%
  */
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -47,7 +48,11 @@ public class Management
     public boolean addCar(String lp, String make, String model, int year, double price)
     {
         if(Car.validateLP(lp) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year) && Car.validatePrice(price))
-    	    return db.add(new Car(lp, make, model, year,price));
+        {
+            make = Character.toUpperCase(make.charAt(0)) + make.substring(1);
+            model = Character.toUpperCase(model.charAt(0)) + model.substring(1);
+            return db.add(new Car(lp, make, model, year,price));
+        }
     	return false;
     }
 
@@ -79,8 +84,11 @@ public class Management
     public int search(String s)
     {
         for(int x=0; x<db.size(); x++)
-            if(s.equals(db.get(x)))
-    	        return x;
+        {
+            String lp = db.get(x).getLpNumber();
+            if (s.equals(lp))
+                return x;
+        }
     	return -1;
     }
 

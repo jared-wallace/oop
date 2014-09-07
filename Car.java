@@ -1,10 +1,23 @@
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
-public class Car 
+public class Car
 {
 	private String lpNumber, make, model;
 	private int year;
 	private double price;
-	
+
+    /**
+     * This is the regular constructor, that is, the one that is
+     * expected to be invoked. This should only be called after each
+     * field has passed validation.
+     *
+     * @param lpNumber The license plate number of the new car
+     * @param make The make of the new car
+     * @param model The model of the new car
+     * @param year The year of the new car
+     * @param price The price of the new car
+     */
     public Car(String lpNumber, String make, String model, int year, double price) 
     {
     	if(lpNumber.equals("") || make.equals("") || model.equals("") || year < 0 || price < 0)
@@ -17,8 +30,11 @@ public class Car
     	this.year = year;
     	this.price = price;
     }
-    
-    //Should we allow default init?
+
+    /**
+     * This constructor should never be called. It's only
+     * here as a safety measure.
+     */
     public Car()
     {
     	this("XXX-XXX","Empty","Empty",0,0.0);
@@ -41,28 +57,58 @@ public class Car
             return true;
         return false;
     }
-    
+
+    /**
+     * The only validation for the "make" field is that the make
+     * is indeed a string.
+     *
+     * @param make
+     * @return Returns true if the make is a valid string, false otherwise.
+     */
     public static boolean validateMake(String make)
     {
         if(make.equals(""))
             return false;
         return true;
     }
-    
+
+    /**
+     * The only validation for the "model" field is that the model
+     * is indeed a string.
+     *
+     * @param model
+     * @return Returns true if the model is a valid string, false otherwise.
+     */
     public static boolean validateModel(String model)
     {
         if(model.equals(""))
             return false;
         return true;
     }
-    
+
+    /**
+     * The validation function for the year checks to make sure the year
+     * is at least 1886 or later (The car was invented in 1886). The
+     * function also checks for exactly 4 digits.
+     *
+     * @param year
+     * @return Returns true if the year is greater than 1886 and exactly
+     * 4 digits, otherwise it returns false.
+     */
     public static boolean validateYear(int year)
     {
-        if(year < 1886)
+        if((year < 1886) || (String.valueOf(year).length() != 4))
             return false;
         return true;
     }
-    
+
+    /**
+     * This validation function only checks for a price that is
+     * non-negative.
+     *
+     * @param price
+     * @return Returns true if price is non-negative, false otherwise
+     */
     public static boolean validatePrice(double price)
     {
         if(price < 0.0)
@@ -75,11 +121,25 @@ public class Car
     {
         return price;
     }
-    
-    //didn't do anything specital with formatting. Do that later
+
+    public String getLpNumber()
+    {
+        return lpNumber;
+    }
+
+    /**
+     * This overrides toString to give a nicely formatted Car
+     * output. The price is automatically formatted to exactly
+     * two decimal places.
+     *
+     * @return Returns a string consisting of all of the Car objects
+     * data fields.
+     */
     public String toString()
     {
-    	return lpNumber + " " + make + " " + model + " " + year + " " + price;
+        NumberFormat df = new DecimalFormat("#0.00");
+        String price_formatted = df.format(price);
+        return lpNumber + " " + make + " " + model + " " + year + " " + price_formatted;
     }
     
     
