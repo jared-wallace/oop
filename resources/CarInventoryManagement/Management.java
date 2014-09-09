@@ -15,7 +15,8 @@ public class Management
 	private static ArrayList<Car> db;
 
     /**
-     * Default constructor creates an ArrayList of Car objects called <code>db</code>
+     * Default constructor creates an ArrayList of Car objects called <code>db</code>.
+     * This ArrayList will serve as the runtime database.
      */
     public Management() 
     {
@@ -23,9 +24,9 @@ public class Management
     }
 
     /**
-     * Simply a way to retrieve the existing ArrayList <code>db</code>
+     * Simply a way to retrieve the existing database held in memory.
      *
-     * @return Returns the existing database.
+     * @return The ArrayList <code>db</code>
      */
     public ArrayList<Car> getCars()
     {
@@ -33,17 +34,16 @@ public class Management
     }
 
     /**
-     * Adds a car to the ArrayList <code>db</code>, (assuming
-     * all the fields validate correctly), which serves as the runtime database.
+     * Adds a car to the runtime database, (assuming all the fields validate correctly).
      * This does not mean that the information will necessarily end up in the database
-     * file! The database file is only written upon exiting the program normally.
+     * file! The database file is only written upon exiting the program normally!
      *
-     * @param lp The license plate of the new car. (Format XXX-XXX only)
-     * @param make Can't be blank.
-     * @param model Can't be blank.
-     * @param year Can't be before cars were invented, in 1896.
-     * @param price Can't be less than free.
-     * @return Returns true if the car was successfully added, false otherwise.
+     * @param lp The license plate of the new car.
+     * @param make Make of the new car
+     * @param model Model of the new car
+     * @param year Year of the new car, can't be before cars were invented, in 1896.
+     * @param price Price of the new car, can't be less than free.
+     * @return True if the car was successfully added, false otherwise.
      */
     public boolean addCar(String lp, String make, String model, int year, double price)
     {
@@ -57,13 +57,11 @@ public class Management
     }
 
     /**
-     * Deletes a car from the ArrayList <code>db</code>, (assuming
-     * it existed), which serves as the runtime database. See <code>addCar</code> for
-     * the difference between runtime and file databases.
-     *
+     * Deletes a car from the runtime database, (assuming the car
+     * existed). See cautionary note on the <code>addCar</code> method.
      *
      * @param lp The license plate of the car to be removed from the database
-     * @return Returns true if a car was deleted, false otherwise
+     * @return True if a car was deleted, false otherwise
      */
     public boolean deleteCar(String lp)
     {
@@ -79,7 +77,7 @@ public class Management
      * runtime database.
      *
      * @param s Accepts a string that is the license plate of the car being sought.
-     * @return Returns the index of the matching car, if found. Otherwise returns -1.
+     * @return The index of the matching car, if found. Otherwise returns -1.
      */
     public int search(String s)
     {
@@ -93,16 +91,16 @@ public class Management
     }
 
     /**
-     * Allows filtering of the database by a price range.
+     * Allows filtering of the runtime database by a price range.
      *
      * @param lower The lower limit of the price range to be searched.
      * @param higher The upper limit of the price range to be searched.
-     * @return Returns an ArrayList of cars falling within the specified price range.
+     * @return An ArrayList of cars falling within the specified price range.
      */
     public ArrayList<Car> showPriceRange(double lower, double higher)
     {
         ArrayList<Car> results = new ArrayList<Car>();
-        for(Car s: this.db)
+        for(Car s: db)
             if(s.getPrice() > lower && s.getPrice() < higher )
                 results.add(s);
     	return results;
@@ -112,7 +110,7 @@ public class Management
      * Attempts to write the existing runtime database to the database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.
      *
-     * @return Returns true if the database was successfully written, false if there
+     * @return True if the database was successfully written, false if there
      * was an IOException.
      */
     public boolean saveDB()
@@ -121,7 +119,7 @@ public class Management
         {
             FileWriter outFile = new FileWriter ("resources/CarInventoryManagement/cars.txt");
             PrintWriter pWriter = new PrintWriter(outFile);
-            for (Car s: this.db)
+            for (Car s: db)
             {
                 pWriter.println(s);
             }
@@ -135,10 +133,10 @@ public class Management
     }
 
     /**
-     * Attempts to read in from the database file called <code>car_database.db</code>
+     * Attempts to read in from the database file called <code>cars.txt</code>
      * and load each car's info into the runtime database.
      *
-     * @return Returns true if the file existed and the information was successfully
+     * @return True if the file existed and the information was successfully
      * read into the ArrayList <code>db</code>, false otherwise.
      */
     public boolean readDB()
