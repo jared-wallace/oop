@@ -174,8 +174,10 @@ public class Console {
     }
 
     /**
-     * 
-     * @param kb
+     * Allows searching the database in memory for cars whose prices fall within a specified
+     * range.
+     *
+     * @param kb The scanner object used to read in from the console
      */
     public void showPriceRange(Scanner kb)
     {
@@ -192,8 +194,9 @@ public class Console {
     }
 
     /**
-     * Writes the current ArrayList db to a file called cars.txt
-     * as plain text.
+     * Attempts to write the current database in memory to a file called cars.txt
+     * as plain text. If this effort fails, it will indicate so with an error message.
+     * If it succeeds, it will likewise indicate.
      */
     public void writeDatabase()
     {
