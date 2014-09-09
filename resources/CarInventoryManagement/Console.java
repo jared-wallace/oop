@@ -10,7 +10,7 @@ package resources.CarInventoryManagement;
 import static java.lang.System.*;
 import java.util.Scanner;
 import java.util.ArrayList;
-
+import java.util.*;
 
 public class Console {
 
@@ -125,10 +125,30 @@ public class Console {
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
         model=kb.next();
-        out.println("Enter the year. (Cannot be < 1886)");
-        year = kb.nextInt();
-        out.println("Enter the price. (Cannot be < 0)");
-        price = kb.nextDouble();
+        try
+        {
+            out.println("Enter the year. (Cannot be < 1886)");
+            year = kb.nextInt();
+        }
+        catch(InputMismatchException e)
+        {
+            err.println("Input entered was not of Integer type.");
+            kb.nextLine();
+            return false;
+        }
+            
+        try
+        {
+            out.println("Enter the price. (Cannot be < 0)");
+            price = kb.nextDouble();
+        }
+        catch(InputMismatchException e)
+        {
+            err.println("Input entered was not a number.");
+            kb.nextLine();
+            return false;
+        }
+
         
         return manage.addCar(lp, make, model, year, price);
         
