@@ -54,16 +54,27 @@ public class Console {
         }
     }
 
+    /**
+     * The default constructor for the console class does a few different things. It declares a new
+     * instance of the <code>Management</code> class called <code>manage</code>, and then proceeds
+     * to attempt reading the existing car database, called <code>cars.txt</code>. If that file fails to be
+     * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
+     * indicating that the database has been successfully loaded into memory. Lastly, it calls the
+     * <code>Management.getCars</code> method to get the new arraylist, called <code>db</code>
+     */
     public Console() 
     {
         manage = new Management();
         if (!manage.readDB())
-            out.println("Database corrupted or doesn't exist");
+            err.println("Database corrupted or doesn't exist");
         else
             out.println("Successfully read database cars.txt");
         db = manage.getCars();
     }
-    
+
+    /**
+     * Prints the menu with all the currently available options.
+     */
     public void printMenu()
     {
         out.println("1. Show all existing car records in the database (in any order).");
@@ -76,6 +87,10 @@ public class Console {
     }
 
 
+    /**
+     * Prints out the current database. This will print what is currently
+     * in memory, but not necessarily what is currently written to the file.
+     */
     public void showCars()
     {
         if(db.size()==0)
@@ -90,9 +105,12 @@ public class Console {
     }
 
     /**
+     * Attempts to add a new car to the database in memory. This only succeeds
+     * if all the fields successfully pass validation.
      *
-     * @param kb
-     * @return
+     * @param kb The scanner object used to read in from the console
+     * @return True if a car was successfully added to the database in memory,
+     * false if something went wrong.
      */
     public boolean addCar(Scanner kb)
     {
@@ -117,9 +135,12 @@ public class Console {
     }
 
     /**
+     * Attempts to delete a car from the database in memory. The car is searched for
+     * by license plate number. This does not necessarily mean the change is permanently
+     * written to the database file.
      *
-     * @param kb
-     * @return
+     * @param kb The scanner object used to read in from the console
+     * @return True if the car was located and deleted, false otherwise
      */
     public boolean deleteCar(Scanner kb)
     {
@@ -137,8 +158,9 @@ public class Console {
     }
 
     /**
+     * Allows searching the database in memory for a certain car by license plate number
      *
-     * @param kb
+     * @param kb The scanner object used to read in from the console
      */
     public void searchCar(Scanner kb)
     {
@@ -152,7 +174,7 @@ public class Console {
     }
 
     /**
-     *
+     * 
      * @param kb
      */
     public void showPriceRange(Scanner kb)

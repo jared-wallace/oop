@@ -53,7 +53,7 @@ public class Car
      * be entered as "*" and the heart as "@".
      *
      * @param lp The license plate number to be checked for validity.
-     * @return Returns true for a valid plate, false otherwise.
+     * @return True for a valid plate, false otherwise.
      */
     public static boolean validateLP(String lp)
     {
@@ -64,10 +64,10 @@ public class Car
 
     /**
      * The only validation for the "make" field is that the make
-     * is indeed a string.
+     * is a non empty string.
      *
      * @param make
-     * @return Returns true if the make is a valid string, false otherwise.
+     * @return True if the make is a non empty string, false otherwise.
      */
     public static boolean validateMake(String make)
     {
@@ -81,7 +81,7 @@ public class Car
      * is indeed a string.
      *
      * @param model
-     * @return Returns true if the model is a valid string, false otherwise.
+     * @return True if the model is a non empty string, false otherwise.
      */
     public static boolean validateModel(String model)
     {
@@ -96,7 +96,7 @@ public class Car
      * function also checks for exactly 4 digits.
      *
      * @param year
-     * @return Returns true if the year is greater than 1886 and exactly
+     * @return True if the year is an integer greater than 1886 and exactly
      * 4 digits, otherwise it returns false.
      */
     public static boolean validateYear(int year)
@@ -111,7 +111,7 @@ public class Car
      * non-negative.
      *
      * @param price
-     * @return Returns true if price is non-negative, false otherwise
+     * @return True if price is non-negative, false otherwise
      */
     public static boolean validatePrice(double price)
     {
@@ -124,13 +124,17 @@ public class Car
     /**
      * Getter function to retrieve the price of the Car object.
      *
-     * @return Returns the price of the car object
+     * @return The price of the Car object
      */
     public double getPrice()
     {
         return price;
     }
 
+    /**
+     * Getter function to retrieve the license plate of the Car object.
+     * @return The license plate of the Car object
+     */
     public String getLpNumber()
     {
         return lpNumber;
@@ -141,7 +145,7 @@ public class Car
      * output. The price is automatically formatted to exactly
      * two decimal places.
      *
-     * @return Returns a string consisting of all of the Car objects
+     * @return A string consisting of all of the Car objects
      * data fields.
      */
     public String toString()
