@@ -49,8 +49,8 @@ public class Management
     {
         if(Car.validateLP(lp) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year) && Car.validatePrice(price))
         {
-            make = Character.toUpperCase(make.charAt(0)) + make.substring(1);
-            model = Character.toUpperCase(model.charAt(0)) + model.substring(1);
+            make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
+            model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
             return db.add(new Car(lp, make, model, year,price));
         }
     	return false;

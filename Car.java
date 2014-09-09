@@ -20,10 +20,6 @@ public class Car
      */
     public Car(String lpNumber, String make, String model, int year, double price) 
     {
-    	if(lpNumber.equals("") || make.equals("") || model.equals("") || year < 0 || price < 0)
-    	{
-    		//Validation	
-    	}
     	this.lpNumber = lpNumber;
     	this.make = make;
     	this.model = model;
@@ -117,6 +113,11 @@ public class Car
         
     }
 
+    /**
+     * Getter function to retrieve the price of the Car object.
+     *
+     * @return Returns the price of the car object
+     */
     public double getPrice()
     {
         return price;
