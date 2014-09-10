@@ -117,7 +117,7 @@ public class Management
     {
         try
         {
-            FileWriter outFile = new FileWriter ("resources/CarInventoryManagement/cars.txt");
+            FileWriter outFile = new FileWriter ("cars.txt");
             PrintWriter pWriter = new PrintWriter(outFile);
             for (Car s: db)
             {
@@ -143,7 +143,7 @@ public class Management
     {
         try
         {
-            File inFile = new File ("resources/CarInventoryManagement/cars.txt");
+            File inFile = new File ("cars.txt");
             Scanner sc = new Scanner (inFile);
             while (sc.hasNext())
             {
