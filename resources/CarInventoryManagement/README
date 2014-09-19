@@ -1,3 +1,31 @@
+===============================================================================
+9/19
+===============================================================================
+Proposed class design:
+
+Parent class Vehicle
+    subclass car
+    subclass motorcycle
+    subclass truck
+Parent class Person
+    subclass employees
+    subclass customers
+
+Class management needs to have a "sell car" method added
+
+I'm thinking that vehicle database and person databases should be separate.
+
+
+
+
+
+
+
+
+
+
+
+
 Class has been designed. Will probably need a few more methods. Still thinking
 
 Deciding between making a Management class for all the methods in main.
