@@ -27,7 +27,7 @@ class Car extends Vehicle {
      */
     public Car(String vin, String make, String model, int year, double price, int mileage, String bodyStyle) {
         super(vin, make, model, price, mileage, year);
-        this.bodyStyle = bodyStyle;
+        this.setBodyStyle(bodyStyle);
 
     }
 
@@ -42,8 +42,15 @@ class Car extends Vehicle {
     public String toString() {
         NumberFormat df = new DecimalFormat("#0.00");
         String price_formatted = df.format(this.getPrice());
-        return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getModel() + " " + price_formatted;
+        return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getModel() + " " + price_formatted + this.getBodyStyle();
     }
 
 
+    public String getBodyStyle() {
+        return bodyStyle;
+    }
+
+    public void setBodyStyle(String bodyStyle) {
+        this.bodyStyle = bodyStyle;
+    }
 }
