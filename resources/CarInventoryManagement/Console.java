@@ -111,9 +111,9 @@ class Console {
      * false if something went wrong.
      */
     boolean addCar(Scanner kb) {
-        String vin, make, model, type;
-        int year, mileage;
-        double price;
+        String vin, make, model, type, bodyStyle;
+        int year, mileage, maxLoadWeight;
+        double price, lengthFT;
 
         out.println("Please enter the type of vehicle (car, truck or motorcycle");
         type = kb.next();
@@ -129,38 +129,51 @@ class Console {
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
         model = kb.next();
-        try {
-            out.println("Enter the year. (Cannot be < 1886)");
-            year = kb.nextInt();
-        } catch (InputMismatchException e) {
+        out.println("Enter the year (cannot be prior to 1886)");
+        while(!kb.hasNextInt()){
+            err.println("The input was not an integer, please try again.");
+            kb.next();
+        }
+        year = kb.nextInt();
+        out.println("Enter the price. (Cannot be < 0)");
+        while(!kb.hasNextDouble()){
+            err.println("Input entered was not a valid number.");
+        }
+        price = kb.nextDouble();
+        out.println("Enter the mileage. (Cannot be negative)");
+        while(!kb.hasNextInt()){
             err.println("Input entered was not of Integer type.");
+            kb.next();
+        }
+        mileage = kb.nextInt();
+        if (type == "car"){
+            out.println("Enter the body style.");
             kb.nextLine();
-            return false;
+            bodyStyle = kb.nextLine();
+            return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
+        }
+        else if (type == "truck"){
+            out.println("Enter the maximum load weight in pounds");
+            while(!kb.hasNextInt()){
+                err.println("Input was not an integer number, please try again");
+                kb.next();
+            }
+            maxLoadWeight = kb.nextInt();
+            out.println("Enter the length of the truck in feet");
+            while(!kb.hasNextDouble()){
+                err.println("Input was not a number, please try again.");
+                kb.next();
+            }
+            lengthFT = kb.nextDouble();
+            return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
+        }
+        else {
+            // insert motorcycle code
+            // return manage.addVehicle(vin, make, model, year, price, mileage);
         }
 
-        try {
-            out.println("Enter the price. (Cannot be < 0)");
-            price = kb.nextDouble();
-        } catch (InputMismatchException e) {
-            err.println("Input entered was not a number.");
-            kb.nextLine();
-            return false;
-        }
 
-        try {
-            out.println("Enter the mileage. (Cannot be negative)");
-            mileage = kb.nextInt();
-        } catch (InputMismatchException e) {
-            err.println("Input entered was not of Integer type.");
-            kb.nextLine();
-            return false;
-        }
-
-        out.println("Enter the body style.");
-        kb.nextLine();
-        bodyStyle = kb.nextLine();
-        return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
-
+        return false;
     }
 
     /**
