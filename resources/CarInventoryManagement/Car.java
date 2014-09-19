@@ -43,17 +43,12 @@ class Car extends Vehicle {
     }
 
     /**
-     * This overrides toString to give a nicely formatted Car
-     * output. The price is automatically formatted to exactly
-     * two decimal places.
-     *
-     * @return A string consisting of all of the Car objects
-     * data fields.
+     * Just adds the body style to the default vehicle string.
+     * @return A nicely formatted string of all Car fields.
      */
     public String toString() {
-        NumberFormat df = new DecimalFormat("#0.00");
-        String price_formatted = df.format(this.getPrice());
-        return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getModel() + " " + price_formatted + this.getBodyStyle();
+        String orig = super.toString();
+        return orig + this.getBodyStyle();
     }
 
 

@@ -32,6 +32,7 @@ public class Truck extends Vehicle {
     public boolean validateLengthFT(double lengthFT){
         return !(lengthFT >= 0);
     }
+
     public int getMaxLoadWeight() {
         return maxLoadWeight;
     }

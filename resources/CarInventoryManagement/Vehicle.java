@@ -1,5 +1,8 @@
 package resources.CarInventoryManagement;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * Created by jared on 9/19/14.
  */
@@ -75,6 +78,20 @@ abstract class Vehicle {
     public static boolean validatePrice(double price) {
         return price >= 0.0;
 
+    }
+
+    /**
+     * This overrides toString to give a nicely formatted Vehicle
+     * output. The price is automatically formatted to exactly
+     * two decimal places.
+     *
+     * @return A string consisting of all of the Vehicle objects
+     * data fields.
+     */
+    public String toString() {
+        NumberFormat df = new DecimalFormat("#0.00");
+        String price_formatted = df.format(this.getPrice());
+        return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getModel() + " " + price_formatted;
     }
 
     public String getVin() {
