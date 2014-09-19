@@ -32,6 +32,17 @@ class Car extends Vehicle {
     }
 
     /**
+     * Currently, this only checks to make sure the bodystyle is not an empty
+     * string. In the future, we should check against an accepted list of styles.
+     *
+     * @param bodyStyle the proposed body style of the car
+     * @return True if the bodystyle parameter was not an empty string
+     */
+    public static boolean validateBodyStyle(String bodyStyle) {
+        return !bodyStyle.equals("");
+    }
+
+    /**
      * This overrides toString to give a nicely formatted Car
      * output. The price is automatically formatted to exactly
      * two decimal places.

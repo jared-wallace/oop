@@ -14,6 +14,24 @@ public class Truck extends Vehicle {
         this.setLengthFT(lengthFT);
     }
 
+    /**
+     * Currently only checking for non zero numbers
+     * @param maxLoadWeight the proposed maximum load weight the truck can accept
+     * @return True if the maxLoadWeight parameter is greater than zero
+     */
+    public boolean validateMaxLoadWeight(int maxLoadWeight){
+        return !(maxLoadWeight >= 0);
+    }
+
+    /**
+     * Currently only checking for non zero numbers
+     *
+     * @param lengthFT the proposed length in feet of the truck
+     * @return True if the lengthFT parameter is greater than zero
+     */
+    public boolean validateLengthFT(double lengthFT){
+        return !(lengthFT >= 0);
+    }
     public int getMaxLoadWeight() {
         return maxLoadWeight;
     }

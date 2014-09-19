@@ -3,7 +3,7 @@ package resources.CarInventoryManagement;
 /**
  * Created by jared on 9/19/14.
  */
-class Vehicle {
+abstract class Vehicle {
     private String vin = "";
     private String make = "";
     private String model = "";
