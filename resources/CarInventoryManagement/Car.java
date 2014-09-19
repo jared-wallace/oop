@@ -12,6 +12,8 @@ import java.text.NumberFormat;
 
 class Car extends Vehicle {
 
+    private String bodyStyle = "";
+
     /**
      * This is the regular constructor, that is, the one that is
      * expected to be invoked. This should only be called after each
@@ -25,7 +27,7 @@ class Car extends Vehicle {
      */
     public Car(String vin, String make, String model, int year, double price, int mileage, String bodyStyle) {
         super(vin, make, model, price, mileage, year);
-        String bodyStyle1 = bodyStyle;
+        this.bodyStyle = bodyStyle;
 
     }
 
