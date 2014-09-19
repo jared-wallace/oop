@@ -14,7 +14,7 @@ import java.util.*;
 class Console {
 
     private final Management manage;
-    private final ArrayList<Vehicle> db;
+    private final ArrayList<Vehicle> vehiclesDB;
 
     public static void main(String[] args) {
         Scanner kb = new Scanner(in);
@@ -59,29 +59,29 @@ class Console {
     /**
      * The default constructor for the console class does a few different things. It declares a new
      * instance of the <code>Management</code> class called <code>manage</code>, and then proceeds
-     * to attempt reading the existing car database, called <code>cars.txt</code>. If that file fails to be
+     * to attempt reading the existing vehicle database, called <code>vehicle.txt</code>. If that file fails to be
      * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
      * indicating that the database has been successfully loaded into memory. Lastly, it calls the
-     * <code>Management.getCars</code> method to get the new arraylist, called <code>db</code>
+     * <code>Management.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
      */
     private Console() {
         manage = new Management();
         if (manage.readDB())
             err.println("Database corrupted or doesn't exist");
         else
-            out.println("Successfully read database cars.txt");
-        db = manage.getVehicles();
+            out.println("Successfully read database vehicles.txt");
+        vehiclesDB = manage.getVehicles();
     }
 
     /**
      * Prints the menu with all the currently available options.
      */
-    public void printMenu() {
-        out.println("1. Show all existing car records in the database (in any order).");
-        out.println("2. Add a new car record to the database.");
-        out.println("3. Delete a car record from a database.");
-        out.println("4. Search for a car (given its license plate).");
-        out.println("5. Show a list of cars within a given price range.");
+    void printMenu() {
+        out.println("1. Show all existing vehicle records in the database (in any order).");
+        out.println("2. Add a new vehicle record to the database.");
+        out.println("3. Delete a vehicle record from a database.");
+        out.println("4. Search for a vehicle (given its VIN number).");
+        out.println("5. Show a list of vehicles within a given price range.");
         out.println("6. Exit program.");
 
     }
@@ -91,33 +91,40 @@ class Console {
      * Prints out the current database. This will print what is currently
      * in memory, but not necessarily what is currently written to the file.
      */
-    public void showCars() {
-        if (db.size() == 0)
+    void showCars() {
+        if (vehiclesDB.size() == 0)
             out.println("Database is empty");
         else {
             out.println("Vin Make Model Year Price Mileage Body Style Maximum Load Weight(lb) Length(ft)");
             out.println("---------------------------");
-            for (Vehicle s : db)
+            for (Vehicle s : vehiclesDB)
                 out.println(s);
         }
     }
 
     /**
-     * Attempts to add a new car to the database in memory. This only succeeds
+     * Attempts to add a new vehicle to the database in memory. This only succeeds
      * if all the fields successfully pass validation.
      *
      * @param kb The scanner object used to read in from the console
-     * @return True if a car was successfully added to the database in memory,
+     * @return True if a vehicle was successfully added to the database in memory,
      * false if something went wrong.
      */
-    public boolean addCar(Scanner kb) {
-        String vin, make, model, bodyStyle;
+    boolean addCar(Scanner kb) {
+        String vin, make, model, type;
         int year, mileage;
         double price;
 
+        out.println("Please enter the type of vehicle (car, truck or motorcycle");
+        type = kb.next();
+        if (type.matches("[cC][aA][rR][sS]?"))
+            type = "car";
+        else if (type.matches("[tT][rR][uU][cC][kK][sS]?"))
+            type = "truck";
+        else if (type.matches("[mM]"))
         out.println("Enter the vin number.");
-        kb.nextLine();
-        vin = kb.nextLine();
+        kb.next();
+        vin = kb.next();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
@@ -157,15 +164,15 @@ class Console {
     }
 
     /**
-     * Attempts to delete a car from the database in memory. The car is searched for
-     * by license plate number. This does not necessarily mean the change is permanently
+     * Attempts to delete a vehicle from the database in memory. The vehicle is located
+     * by VIN number. This does not necessarily mean the change is permanently
      * written to the database file.
      *
      * @param kb The scanner object used to read in from the console
-     * @return True if the car was located and deleted, false otherwise
+     * @return True if the vehicle was located and deleted, false otherwise
      */
-    public boolean deleteCar(Scanner kb) {
-        out.println("Enter the vin number of the car to delete.");
+    boolean deleteCar(Scanner kb) {
+        out.println("Enter the VIN number of the car to delete.");
         String vin = kb.next();
         if (Car.validateVin(vin)) {
             return manage.deleteVehicle(vin);
@@ -176,16 +183,16 @@ class Console {
     }
 
     /**
-     * Allows searching the database in memory for a certain car by license plate number
+     * Allows searching the database in memory for a certain vehicle by VIN number
      *
      * @param kb The scanner object used to read in from the console
      */
-    public void searchCar(Scanner kb) {
-        out.println("Enter the license plate of the car you wish to search for.");
+    void searchCar(Scanner kb) {
+        out.println("Enter the VIN number of the vehicle you wish to search for.");
         String lp = kb.next();
         int index = manage.search(lp);
         if (index > -1)
-            out.println(db.get(index));
+            out.println(vehiclesDB.get(index));
         else
             out.println("Sorry, no matching vehicle found.");
     }
@@ -196,7 +203,7 @@ class Console {
      *
      * @param kb The scanner object used to read in from the console
      */
-    public void showPriceRange(Scanner kb) {
+    void showPriceRange(Scanner kb) {
         out.println("Enter the lower limit of the price range you wish to search.");
         double lower = kb.nextDouble();
         out.println("Enter the higher limit of the range you wish to search");
@@ -225,7 +232,7 @@ class Console {
      * as plain text. If this effort fails, it will indicate so with an error message.
      * If it succeeds, it will likewise indicate.
      */
-    public void writeDatabase() {
+    void writeDatabase() {
         if (manage.saveDB())
             out.println("Unable to save database.");
         else
