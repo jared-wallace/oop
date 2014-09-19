@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Management 
+class Management
 {
 	private static ArrayList<Car> db;
 
@@ -38,20 +38,21 @@ public class Management
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param lp The license plate of the new car.
+     * @param vin The license plate of the new car.
      * @param make Make of the new car
      * @param model Model of the new car
      * @param year Year of the new car, can't be before cars were invented, in 1896.
      * @param price Price of the new car, can't be less than free.
      * @return True if the car was successfully added, false otherwise.
      */
-    public boolean addCar(String lp, String make, String model, int year, double price)
+    public boolean addCar(String vin, String make, String model, int year, double price, int mileage, String bodyType)
     {
-        if(Car.validateLP(lp) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year) && Car.validatePrice(price))
+        if(Car.validateVin(vin) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year) && Car.validatePrice(price))
         {
             make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
             model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
-            return db.add(new Car(lp, make, model, year,price));
+            bodyType = Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1).toLowerCase();
+            return db.add(new Car(vin, make, model, year, price, mileage, bodyType));
         }
     	return false;
     }
@@ -83,7 +84,7 @@ public class Management
     {
         for(int x=0; x<db.size(); x++)
         {
-            String lp = db.get(x).getLpNumber();
+            String lp = db.get(x).getVin();
             if (s.equals(lp))
                 return x;
         }
@@ -124,11 +125,11 @@ public class Management
                 pWriter.println(s);
             }
             pWriter.close();
-            return true;
+            return false;
         }
         catch(IOException e1)
         {
-            return false;
+            return true;
         }
     }
 
@@ -147,19 +148,21 @@ public class Management
             Scanner sc = new Scanner (inFile);
             while (sc.hasNext())
             {
-                String lp = sc.next();
+                String vin = sc.next();
                 String make = sc.next();
                 String model = sc.next();
                 int year = sc.nextInt();
                 double price = sc.nextDouble();
-                addCar(lp, make, model, year, price);
+                int mileage = sc.nextInt();
+                String bodyType = sc.next();
+                addCar(vin, make, model, year, price, mileage, bodyType);
             }
             sc.close();
-            return true;
+            return false;
         }
         catch(IOException e1)
         {
-            return false;
+            return true;
         }
     }
 }

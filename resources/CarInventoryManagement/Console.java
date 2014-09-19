@@ -8,14 +8,13 @@ package resources.CarInventoryManagement;
  */
 
 import static java.lang.System.*;
-import java.util.Scanner;
-import java.util.ArrayList;
+
 import java.util.*;
 
-public class Console {
+class Console {
 
-    private Management manage;
-    private ArrayList<Car> db;
+    private final Management manage;
+    private final ArrayList<Car> db;
 
     public static void main(String[] args)
     {
@@ -65,7 +64,7 @@ public class Console {
     public Console() 
     {
         manage = new Management();
-        if (!manage.readDB())
+        if (manage.readDB())
             err.println("Database corrupted or doesn't exist");
         else
             out.println("Successfully read database cars.txt");
@@ -114,13 +113,13 @@ public class Console {
      */
     public boolean addCar(Scanner kb)
     {
-        String lp, make, model;
-        int year;
+        String vin, make, model, bodyStyle;
+        int year, mileage;
         double price;
         
-        out.println("Enter the license plate number.");
+        out.println("Enter the vin number.");
         kb.nextLine();
-        lp = kb.nextLine();
+        vin = kb.nextLine();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
@@ -149,8 +148,22 @@ public class Console {
             return false;
         }
 
-        
-        return manage.addCar(lp, make, model, year, price);
+        try
+        {
+            out.println("Enter the mileage. (Cannot be negative)");
+            mileage = kb.nextInt();
+        }
+        catch(InputMismatchException e)
+        {
+            err.println("Input entered was not of Integer type.");
+            kb.nextLine();
+            return false;
+        }
+
+        out.println("Enter the body style.");
+        kb.nextLine();
+        bodyStyle = kb.nextLine();
+        return manage.addCar(vin, make, model, year, price, mileage, bodyStyle);
         
     }
 
@@ -164,15 +177,15 @@ public class Console {
      */
     public boolean deleteCar(Scanner kb)
     {
-        out.println("Enter the license plate of the car to delete.");
-        String lp = kb.next();
-        if(Car.validateLP(lp))
+        out.println("Enter the vin number of the car to delete.");
+        String vin = kb.next();
+        if(Car.validateVin(vin))
         {
-            return manage.deleteCar(lp);
+            return manage.deleteCar(vin);
         }
         else
         {
-            out.println("Invalid license plate entered");
+            out.println("Invalid vin number entered");
             return false;
         }
     }
@@ -220,7 +233,7 @@ public class Console {
      */
     public void writeDatabase()
     {
-        if(!manage.saveDB())
+        if(manage.saveDB())
             out.println("Unable to save database.");
         else
             out.println("Database updated, exiting...");
