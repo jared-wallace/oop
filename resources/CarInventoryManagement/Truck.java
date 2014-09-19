@@ -46,19 +46,19 @@ public class Truck extends Vehicle {
         return orig + this.getMaxLoadWeight() + this.getLengthFT();
     }
 
-    public int getMaxLoadWeight() {
+    int getMaxLoadWeight() {
         return maxLoadWeight;
     }
 
-    public void setMaxLoadWeight(int maxLoadWeight) {
+    void setMaxLoadWeight(int maxLoadWeight) {
         this.maxLoadWeight = maxLoadWeight;
     }
 
-    public double getLengthFT() {
+    double getLengthFT() {
         return lengthFT;
     }
 
-    public void setLengthFT(double lengthFT) {
+    void setLengthFT(double lengthFT) {
         this.lengthFT = lengthFT;
     }
 }

@@ -14,7 +14,7 @@ abstract class Vehicle {
     private int mileage = 0;
     private int year = 0;
 
-    public Vehicle(String vin, String make, String model, double price, int mileage, int year) {
+    Vehicle(String vin, String make, String model, double price, int mileage, int year) {
         this.vin = vin;
         this.make = make;
         this.model = model;
@@ -102,7 +102,7 @@ abstract class Vehicle {
         this.vin = vin;
     }
 
-    public String getMake() {
+    String getMake() {
         return make;
     }
 
@@ -110,7 +110,7 @@ abstract class Vehicle {
         this.make = make;
     }
 
-    public String getModel() {
+    String getModel() {
         return model;
     }
 

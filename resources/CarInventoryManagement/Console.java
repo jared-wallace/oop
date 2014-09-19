@@ -146,13 +146,13 @@ class Console {
             kb.next();
         }
         mileage = kb.nextInt();
-        if (type == "car"){
+        if (type.equals("car")){
             out.println("Enter the body style.");
             kb.nextLine();
             bodyStyle = kb.nextLine();
             return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
         }
-        else if (type == "truck"){
+        else if (type.equals("truck")){
             out.println("Enter the maximum load weight in pounds");
             while(!kb.hasNextInt()){
                 err.println("Input was not an integer number, please try again");

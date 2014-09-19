@@ -124,9 +124,9 @@ class Management {
         ArrayList<Vehicle> results = new ArrayList<Vehicle>();
         for (Vehicle s : vehicleDB){
             if (s.getPrice() > lower && s.getPrice() < higher){
-                if (type == "cars" && s instanceof Car)
+                if (type.equals("cars") && s instanceof Car)
                     results.add(s);
-                else if (type == "trucks" && s instanceof Truck)
+                else if (type.equals("trucks") && s instanceof Truck)
                     results.add(s);
                 else
                     results.add(s);
