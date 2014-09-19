@@ -33,6 +33,16 @@ public class Truck extends Vehicle {
         return !(lengthFT >= 0);
     }
 
+    /**
+     * Adds max load weight and length to the default Vehicle string.
+     *
+     * @return A nicely formatted string with all the Truck fields.
+     */
+    @Override
+    public String toString() {
+        String orig = super.toString();
+        return orig + this.getMaxLoadWeight() + this.getLengthFT();
+    }
     public int getMaxLoadWeight() {
         return maxLoadWeight;
     }

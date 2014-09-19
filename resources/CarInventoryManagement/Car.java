@@ -44,8 +44,10 @@ class Car extends Vehicle {
 
     /**
      * Just adds the body style to the default vehicle string.
+     *
      * @return A nicely formatted string of all Car fields.
      */
+    @Override
     public String toString() {
         String orig = super.toString();
         return orig + this.getBodyStyle();

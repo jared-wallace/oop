@@ -12,25 +12,25 @@ import java.util.Scanner;
 
 class Management
 {
-	private static ArrayList<Car> db;
+	private static ArrayList<Car> carsdb;
 
     /**
-     * Default constructor creates an ArrayList of Car objects called <code>db</code>.
+     * Default constructor creates an ArrayList of Car objects called <code>carsdb</code>.
      * This ArrayList will serve as the runtime database.
      */
     public Management() 
     {
-    	db = new ArrayList<Car>();
+    	carsdb = new ArrayList<Car>();
     }
 
     /**
      * Simply a way to retrieve the existing database held in memory.
      *
-     * @return The ArrayList <code>db</code>
+     * @return The ArrayList <code>carsdb</code>
      */
     public ArrayList<Car> getCars()
     {
-    	return db;
+    	return carsdb;
     }
 
     /**
@@ -52,7 +52,7 @@ class Management
             make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
             model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
             bodyType = Character.toUpperCase(bodyType.charAt(0)) + bodyType.substring(1).toLowerCase();
-            return db.add(new Car(vin, make, model, year, price, mileage, bodyType));
+            return carsdb.add(new Car(vin, make, model, year, price, mileage, bodyType));
         }
     	return false;
     }
@@ -69,7 +69,7 @@ class Management
         int i = search(lp);
         if(i == -1)
             return false;
-        db.remove(i);
+        carsdb.remove(i);
     	return true;
     }
 
@@ -82,9 +82,9 @@ class Management
      */
     public int search(String s)
     {
-        for(int x=0; x<db.size(); x++)
+        for(int x=0; x< carsdb.size(); x++)
         {
-            String lp = db.get(x).getVin();
+            String lp = carsdb.get(x).getVin();
             if (s.equals(lp))
                 return x;
         }
@@ -101,7 +101,7 @@ class Management
     public ArrayList<Car> showPriceRange(double lower, double higher)
     {
         ArrayList<Car> results = new ArrayList<Car>();
-        for(Car s: db)
+        for(Car s: carsdb)
             if(s.getPrice() > lower && s.getPrice() < higher )
                 results.add(s);
     	return results;
@@ -120,7 +120,7 @@ class Management
         {
             FileWriter outFile = new FileWriter ("cars.txt");
             PrintWriter pWriter = new PrintWriter(outFile);
-            for (Car s: db)
+            for (Car s: carsdb)
             {
                 pWriter.println(s);
             }
@@ -138,7 +138,7 @@ class Management
      * and load each car's info into the runtime database.
      *
      * @return True if the file existed and the information was successfully
-     * read into the ArrayList <code>db</code>, false otherwise.
+     * read into the ArrayList <code>carsdb</code>, false otherwise.
      */
     public boolean readDB()
     {
