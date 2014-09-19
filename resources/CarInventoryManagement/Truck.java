@@ -8,18 +8,20 @@ public class Truck extends Vehicle {
     private int maxLoadWeight = 0;
     private double lengthFT = 0;
 
-    public Truck(String vin, String make, String model, int year, double price, int mileage, int maxLoadWeight, double lengthFT) {
-        super(vin,make, model, price, mileage, year);
+    public Truck(String vin, String make, String model, int year, double price, int mileage, int maxLoadWeight,
+                 double lengthFT) {
+        super(vin, make, model, price, mileage, year);
         this.setMaxLoadWeight(maxLoadWeight);
         this.setLengthFT(lengthFT);
     }
 
     /**
      * Currently only checking for non zero numbers
+     *
      * @param maxLoadWeight the proposed maximum load weight the truck can accept
      * @return True if the maxLoadWeight parameter is greater than zero
      */
-    public static boolean validateMaxLoadWeight(int maxLoadWeight){
+    public static boolean validateMaxLoadWeight(int maxLoadWeight) {
         return !(maxLoadWeight >= 0);
     }
 
@@ -29,7 +31,7 @@ public class Truck extends Vehicle {
      * @param lengthFT the proposed length in feet of the truck
      * @return True if the lengthFT parameter is greater than zero
      */
-    public static boolean validateLengthFT(double lengthFT){
+    public static boolean validateLengthFT(double lengthFT) {
         return !(lengthFT >= 0);
     }
 
@@ -43,6 +45,7 @@ public class Truck extends Vehicle {
         String orig = super.toString();
         return orig + this.getMaxLoadWeight() + this.getLengthFT();
     }
+
     public int getMaxLoadWeight() {
         return maxLoadWeight;
     }

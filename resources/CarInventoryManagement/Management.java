@@ -72,7 +72,8 @@ class Management {
     public boolean addVehicle(String vin, String make, String model, int year, double price, int mileage,
                               int maxLoadWeight, double lengthFT) {
         if (Truck.validateVin(vin) && Truck.validateMake(make) && Truck.validateModel(model) && Truck.validateYear(year)
-                && Truck.validatePrice(price) && Truck.validateMaxLoadWeight(maxLoadWeight) && Truck.validateLengthFT(lengthFT)) {
+                && Truck.validatePrice(price) && Truck.validateMaxLoadWeight(maxLoadWeight)
+                && Truck.validateLengthFT(lengthFT)) {
             make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
             model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
             return vehicleDB.add(new Truck(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT));
@@ -84,11 +85,11 @@ class Management {
      * Deletes a Vehicle from the runtime database, (assuming the Vehicle
      * existed). See cautionary note on the <code>addVehicle</code> method.
      *
-     * @param lp The license plate of the Vehicle to be removed from the database
+     * @param vin The vin number of the Vehicle to be removed from the database
      * @return True if a Vehicle was deleted, false otherwise
      */
-    public boolean deleteVehicle(String lp) {
-        int i = search(lp);
+    public boolean deleteVehicle(String vin) {
+        int i = search(vin);
         if (i == -1)
             return false;
         vehicleDB.remove(i);
@@ -96,16 +97,16 @@ class Management {
     }
 
     /**
-     * Given a license plate, attempts to locate the Vehicle in question in the
+     * Given a vin number, attempts to locate the Vehicle in question in the
      * runtime database.
      *
-     * @param s Accepts a string that is the license plate of the Vehicle being sought.
-     * @return The index of the matching Vehicle, if found. Otherwise returns -1.
+     * @param s A string that is the vin number of the vehicle being sought.
+     * @return The index of the matching vehicle, if found. Otherwise returns -1.
      */
     public int search(String s) {
         for (int x = 0; x < vehicleDB.size(); x++) {
-            String lp = vehicleDB.get(x).getVin();
-            if (s.equals(lp))
+            String vin = vehicleDB.get(x).getVin();
+            if (s.equals(vin))
                 return x;
         }
         return -1;
@@ -116,13 +117,21 @@ class Management {
      *
      * @param lower  The lower limit of the price range to be searched.
      * @param higher The upper limit of the price range to be searched.
+     * @param type   The type of results to return (car, truck, motorcycle or all)
      * @return An ArrayList of Vehicles falling within the specified price range.
      */
-    public ArrayList<Vehicle> showPriceRange(double lower, double higher) {
+    public ArrayList<Vehicle> showPriceRange(double lower, double higher, String type) {
         ArrayList<Vehicle> results = new ArrayList<Vehicle>();
-        for (Vehicle s : vehicleDB)
-            if (s.getPrice() > lower && s.getPrice() < higher)
-                results.add(s);
+        for (Vehicle s : vehicleDB){
+            if (s.getPrice() > lower && s.getPrice() < higher){
+                if (type == "cars" && s instanceof Car)
+                    results.add(s);
+                else if (type == "trucks" && s instanceof Truck)
+                    results.add(s);
+                else
+                    results.add(s);
+            }
+        }
         return results;
     }
 
@@ -135,7 +144,7 @@ class Management {
      */
     public boolean saveDB() {
         try {
-            FileWriter outFile = new FileWriter("Vehicles.txt");
+            FileWriter outFile = new FileWriter("vehicles.txt");
             PrintWriter pWriter = new PrintWriter(outFile);
             for (Vehicle s : vehicleDB) {
                 pWriter.println(s);
@@ -165,8 +174,18 @@ class Management {
                 int year = sc.nextInt();
                 double price = sc.nextDouble();
                 int mileage = sc.nextInt();
-                String bodyType = sc.next();
-                addVehicle(vin, make, model, year, price, mileage, bodyType);
+                if (sc.hasNextInt()){
+                    int maxLoadWeight = sc.nextInt();
+                    double lengthFT = sc.nextDouble();
+                    addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
+                }
+                else if (sc.hasNext()){
+                    String bodyStyle = sc.next();
+                    addVehicle(vin, make, model, year, price, mileage, bodyStyle);
+                }
+                else{
+
+                }
             }
             sc.close();
             return false;

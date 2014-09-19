@@ -7,9 +7,6 @@ package resources.CarInventoryManagement;
  * @version %I%, %G%
  */
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 class Car extends Vehicle {
 
     private String bodyStyle = "";
@@ -19,11 +16,11 @@ class Car extends Vehicle {
      * expected to be invoked. This should only be called after each
      * field has passed validation.
      *
-     * @param vin The vin number of the new car
-     * @param make     The make of the new car
-     * @param model    The model of the new car
-     * @param year     The year of the new car
-     * @param price    The price of the new car
+     * @param vin   The vin number of the new car
+     * @param make  The make of the new car
+     * @param model The model of the new car
+     * @param year  The year of the new car
+     * @param price The price of the new car
      */
     public Car(String vin, String make, String model, int year, double price, int mileage, String bodyStyle) {
         super(vin, make, model, price, mileage, year);

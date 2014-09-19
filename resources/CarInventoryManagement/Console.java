@@ -16,37 +16,40 @@ class Console {
     private final Management manage;
     private final ArrayList<Car> db;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Scanner kb = new Scanner(in);
         Console console = new Console();
         boolean loopControl = true;
-        while(loopControl)
-        {
+        while (loopControl) {
             console.printMenu();
-            switch(kb.nextInt())
-            {
-                case 1: console.showCars(); break;
-                case 2: if(console.addCar(kb))
-                {
-                    out.println("Car was added successfully");
-                }
-                else
-                    out.println("Car was not added successfully");
+            switch (kb.nextInt()) {
+                case 1:
+                    console.showCars();
                     break;
-                case 3:if(console.deleteCar(kb))
-                {
-                    out.println("Car was added successfully");
-                }
-                else
-                    out.println("Car was not added successfully");
+                case 2:
+                    if (console.addCar(kb)) {
+                        out.println("Car was added successfully");
+                    } else
+                        out.println("Car was not added successfully");
                     break;
-                case 4: console.searchCar(kb); break;
-                case 5: console.showPriceRange(kb); break;
-                case 6: loopControl = false;
+                case 3:
+                    if (console.deleteCar(kb)) {
+                        out.println("Car was added successfully");
+                    } else
+                        out.println("Car was not added successfully");
+                    break;
+                case 4:
+                    console.searchCar(kb);
+                    break;
+                case 5:
+                    console.showPriceRange(kb);
+                    break;
+                case 6:
+                    loopControl = false;
                     console.writeDatabase();
                     break;
-                default: out.println("Not an option");
+                default:
+                    out.println("Not an option");
             }
             out.println();
             out.println();
@@ -61,28 +64,26 @@ class Console {
      * indicating that the database has been successfully loaded into memory. Lastly, it calls the
      * <code>Management.getCars</code> method to get the new arraylist, called <code>db</code>
      */
-    public Console() 
-    {
+    public Console() {
         manage = new Management();
         if (manage.readDB())
             err.println("Database corrupted or doesn't exist");
         else
             out.println("Successfully read database cars.txt");
-        db = manage.getCars();
+        db = manage.getVehicles();
     }
 
     /**
      * Prints the menu with all the currently available options.
      */
-    public void printMenu()
-    {
+    public void printMenu() {
         out.println("1. Show all existing car records in the database (in any order).");
         out.println("2. Add a new car record to the database.");
         out.println("3. Delete a car record from a database.");
         out.println("4. Search for a car (given its license plate).");
         out.println("5. Show a list of cars within a given price range.");
         out.println("6. Exit program.");
-        
+
     }
 
 
@@ -90,12 +91,10 @@ class Console {
      * Prints out the current database. This will print what is currently
      * in memory, but not necessarily what is currently written to the file.
      */
-    public void showCars()
-    {
-        if(db.size()==0)
+    public void showCars() {
+        if (db.size() == 0)
             out.println("Database is empty");
-        else
-        {
+        else {
             out.println("Plate Make Model Year Price");
             out.println("---------------------------");
             for (Car s : db)
@@ -111,50 +110,40 @@ class Console {
      * @return True if a car was successfully added to the database in memory,
      * false if something went wrong.
      */
-    public boolean addCar(Scanner kb)
-    {
+    public boolean addCar(Scanner kb) {
         String vin, make, model, bodyStyle;
         int year, mileage;
         double price;
-        
+
         out.println("Enter the vin number.");
         kb.nextLine();
         vin = kb.nextLine();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
-        model=kb.next();
-        try
-        {
+        model = kb.next();
+        try {
             out.println("Enter the year. (Cannot be < 1886)");
             year = kb.nextInt();
-        }
-        catch(InputMismatchException e)
-        {
+        } catch (InputMismatchException e) {
             err.println("Input entered was not of Integer type.");
             kb.nextLine();
             return false;
         }
-            
-        try
-        {
+
+        try {
             out.println("Enter the price. (Cannot be < 0)");
             price = kb.nextDouble();
-        }
-        catch(InputMismatchException e)
-        {
+        } catch (InputMismatchException e) {
             err.println("Input entered was not a number.");
             kb.nextLine();
             return false;
         }
 
-        try
-        {
+        try {
             out.println("Enter the mileage. (Cannot be negative)");
             mileage = kb.nextInt();
-        }
-        catch(InputMismatchException e)
-        {
+        } catch (InputMismatchException e) {
             err.println("Input entered was not of Integer type.");
             kb.nextLine();
             return false;
@@ -163,8 +152,8 @@ class Console {
         out.println("Enter the body style.");
         kb.nextLine();
         bodyStyle = kb.nextLine();
-        return manage.addCar(vin, make, model, year, price, mileage, bodyStyle);
-        
+        return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
+
     }
 
     /**
@@ -175,16 +164,12 @@ class Console {
      * @param kb The scanner object used to read in from the console
      * @return True if the car was located and deleted, false otherwise
      */
-    public boolean deleteCar(Scanner kb)
-    {
+    public boolean deleteCar(Scanner kb) {
         out.println("Enter the vin number of the car to delete.");
         String vin = kb.next();
-        if(Car.validateVin(vin))
-        {
-            return manage.deleteCar(vin);
-        }
-        else
-        {
+        if (Car.validateVin(vin)) {
+            return manage.deleteVehicle(vin);
+        } else {
             out.println("Invalid vin number entered");
             return false;
         }
@@ -195,8 +180,7 @@ class Console {
      *
      * @param kb The scanner object used to read in from the console
      */
-    public void searchCar(Scanner kb)
-    {
+    public void searchCar(Scanner kb) {
         out.println("Enter the license plate of the car you wish to search for.");
         String lp = kb.next();
         int index = manage.search(lp);
@@ -212,15 +196,22 @@ class Console {
      *
      * @param kb The scanner object used to read in from the console
      */
-    public void showPriceRange(Scanner kb)
-    {
+    public void showPriceRange(Scanner kb) {
         out.println("Enter the lower limit of the price range you wish to search.");
         double lower = kb.nextDouble();
         out.println("Enter the higher limit of the range you wish to search");
         double higher = kb.nextDouble();
-        ArrayList<Car> results = manage.showPriceRange(lower, higher);
+        out.println("Enter the type of vehicle you wish to search for (cars, trucks, motorcycles or all)");
+        String choice = kb.next();
+        String type;
+        if (choice.matches("[cC]ar[sS]?") )
+            type = "cars";
+        else if (choice.matches("[mM]ot[eo]r\\s?([cC]ycle|[bB]ike)"))
+            type = "motorcycles";
+        else if 
+        ArrayList<Car> results = manage.showPriceRange(lower, higher, type);
         if (results.size() > 0)
-            for(Car s : results)
+            for (Car s : results)
                 out.println(s);
         else
             out.println("Sorry, no matching vehicles found");
@@ -231,9 +222,8 @@ class Console {
      * as plain text. If this effort fails, it will indicate so with an error message.
      * If it succeeds, it will likewise indicate.
      */
-    public void writeDatabase()
-    {
-        if(manage.saveDB())
+    public void writeDatabase() {
+        if (manage.saveDB())
             out.println("Unable to save database.");
         else
             out.println("Database updated, exiting...");
