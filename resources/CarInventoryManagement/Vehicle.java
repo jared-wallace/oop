@@ -20,8 +20,15 @@ class Vehicle {
         this.year = year;
     }
 
+    /**
+     * Currently, the only validation is a length between 1 and 17 inclusive.
+     * Although vin numbers are standard now, this was not always the case.
+     *
+     * @param vin A string representing the vin number of the vehicle
+     * @return True if the string is 17 characters or less and not empty.
+     */
     public static boolean validateVin(String vin){
-        return !vin.equals("");
+        return !(vin.equals("") && vin.length() < 17);
     }
     /**
      * The only validation for the "make" field is that the make
