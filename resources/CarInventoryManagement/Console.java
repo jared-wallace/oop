@@ -14,7 +14,7 @@ import java.util.*;
 class Console {
 
     private final Management manage;
-    private final ArrayList<Car> db;
+    private final ArrayList<Vehicle> db;
 
     public static void main(String[] args) {
         Scanner kb = new Scanner(in);
@@ -64,7 +64,7 @@ class Console {
      * indicating that the database has been successfully loaded into memory. Lastly, it calls the
      * <code>Management.getCars</code> method to get the new arraylist, called <code>db</code>
      */
-    public Console() {
+    private Console() {
         manage = new Management();
         if (manage.readDB())
             err.println("Database corrupted or doesn't exist");
@@ -95,9 +95,9 @@ class Console {
         if (db.size() == 0)
             out.println("Database is empty");
         else {
-            out.println("Plate Make Model Year Price");
+            out.println("Vin Make Model Year Price Mileage Body Style Maximum Load Weight(lb) Length(ft)");
             out.println("---------------------------");
-            for (Car s : db)
+            for (Vehicle s : db)
                 out.println(s);
         }
     }
@@ -208,10 +208,13 @@ class Console {
             type = "cars";
         else if (choice.matches("[mM]ot[eo]r\\s?([cC]ycle|[bB]ike)"))
             type = "motorcycles";
-        else if 
-        ArrayList<Car> results = manage.showPriceRange(lower, higher, type);
+        else if (choice.matches("[tT]ruck[sS]?"))
+            type = "trucks";
+        else
+            type = "all";
+        ArrayList<Vehicle> results = manage.showPriceRange(lower, higher, type);
         if (results.size() > 0)
-            for (Car s : results)
+            for (Vehicle s : results)
                 out.println(s);
         else
             out.println("Sorry, no matching vehicles found");

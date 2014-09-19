@@ -51,11 +51,11 @@ class Car extends Vehicle {
     }
 
 
-    public String getBodyStyle() {
+    String getBodyStyle() {
         return bodyStyle;
     }
 
-    public void setBodyStyle(String bodyStyle) {
+    void setBodyStyle(String bodyStyle) {
         this.bodyStyle = bodyStyle;
     }
 }
