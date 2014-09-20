@@ -40,7 +40,7 @@ class Management {
      * @param make      Make of the new car
      * @param model     Model of the new car
      * @param year      Year of the new car, can't be before cars were invented, in 1896.
-     * @param price     Price of the new car, can't be less than free.
+     * @param price     Price of the new car, can't be less than 0.00.
      * @param bodyStyle The type of car it is.
      * @return True if the car was successfully added, false otherwise.
      */
@@ -64,7 +64,7 @@ class Management {
      * @param make          Make of the new truck
      * @param model         Model of the new truck
      * @param year          Year of the new truck, can't be before cars were invented, in 1896.
-     * @param price         Price of the new truck, can't be less than free.
+     * @param price         Price of the new truck, can't be less than 0.00.
      * @param maxLoadWeight The maximum load rating in pounds of the truck.
      * @param lengthFT      The length in feet of the truck.
      * @return True if the truck was successfully added, false otherwise.
@@ -77,6 +77,33 @@ class Management {
             make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
             model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
             return vehicleDB.add(new Truck(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT));
+        }
+        return false;
+    }
+
+
+    /**
+     * Adds a motorcycle to the runtime database, (assuming all the fields validate correctly).
+     * This does not mean that the information will necessarily end up in the database
+     * file! The database file is only written upon exiting the program normally!
+     *
+     * @param vin           The vin number of the new truck.
+     * @param make          Make of the new Motorcycle
+     * @param model         Model of the new Motorcycle
+     * @param year          Year of the new Motorcycle, can't be before cars were invented, in 1896.
+     * @param price         Price of the new Motorcycle, can't be less than 0.00.
+     * @param displacement  The displacement of the Motorcycle, can't be less than zero.
+     * @param type          The type of the motorcycle (Scooter, Touring, Street Bike, Bitchen, etc)
+     * @return True if the Motorcycle was successfully added, false otherwise.
+     */
+    public boolean addVehicle(String vin, String make, String model, int year, double price, int mileage,
+                              int displacement, String type) {
+        if (Motorcycle.validateVin(vin) && Motorcycle.validateMake(make) && Motorcycle.validateModel(model) && Motorcycle.validateYear(year)
+                && Motorcycle.validatePrice(price) && Motorcycle.validateDisplacement(displacement)
+                && Motorcycle.validateType(type)) {
+            make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
+            model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
+            return vehicleDB.add(new Motorcycle(vin, make, model, year, price, mileage, type, displacement));
         }
         return false;
     }

@@ -24,27 +24,33 @@ class Console {
             console.printMenu();
             switch (kb.nextInt()) {
                 case 1:
-                    console.showCars();
-                    break;
-                case 2:
                     if (console.addCar(kb)) {
                         out.println("Car was added successfully");
                     } else
                         out.println("Car was not added successfully");
                     break;
-                case 3:
+                case 2:
                     if (console.deleteCar(kb)) {
                         out.println("Car was added successfully");
                     } else
                         out.println("Car was not added successfully");
                     break;
-                case 4:
-                    console.searchCar(kb);
+                case 3:
+                    console.showCars();
                     break;
-                case 5:
+                case 4:
                     console.showPriceRange(kb);
                     break;
+                case 5:
+                    console.searchCar(kb);
+                    break;
                 case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
                     loopControl = false;
                     console.writeDatabase();
                     break;
@@ -77,12 +83,15 @@ class Console {
      * Prints the menu with all the currently available options.
      */
     void printMenu() {
-        out.println("1. Show all existing vehicle records in the database (in any order).");
-        out.println("2. Add a new vehicle record to the database.");
-        out.println("3. Delete a vehicle record from a database.");
-        out.println("4. Search for a vehicle (given its VIN number).");
-        out.println("5. Show a list of vehicles within a given price range.");
-        out.println("6. Exit program.");
+        out.println("1. Add a new vehicle to the database.");
+        out.println("2. Delete a vehicle from a database (given its VIN).");
+        out.println("3. Show all existing vehicles in the database.");
+        out.println("4. Show a list of vehicles within a given price range.");
+        out.println("5. Add a new user to the database.");
+        out.println("6. Update user info (given their id).");
+        out.println("7. Show list of users.");
+        out.println("8. Sell a vehicle.");
+        out.println("9. Exit program.")
 
     }
 
