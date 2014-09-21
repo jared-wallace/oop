@@ -4,33 +4,38 @@ package resources.CarInventoryManagement;
  */
 
 
-
-
-public class Employee extends Person
+class Employee extends Person
 {
 	private double salary;
-	private int bankNum;
+	private int bankNumber;
 	
-    public Employee(int id, String fName, String lName, double salary, int bankNum) 
+    public Employee(int id, String firstName, String lastName, double salary, int bankNumber)
     {
-    	super(id, fName, lName);
+    	super(id, firstName, lastName);
     	this.salary = salary;
-    	this.bankNum = bankNum;
+    	this.bankNumber = bankNumber;
     }
     
     public static boolean validateSalary(double salary)
     {
     	return !(salary < 0.0);
     }
-    
-    public static boolean validateBankAccount(int bankNum)
+
+    /**
+     * The type of accounts we are interested in validating (ACH capable)
+     * are limited to numeric only, between 4 and 17 characters.
+     *
+     * @param bankNumber The employee account number to validate.
+     * @return True if the account number is an integer between 4 and 17 digits
+     */
+    public static boolean validateBankAccount(int bankNumber)
     {
-    	return !(bankNum < 0);
+    	return !(String.valueOf(bankNumber).length() < 4 && String.valueOf(bankNumber).length() > 17);
     }
     
-    public void setBankAccount(int bankNum)
+    public void setBankAccount(int bankNumber)
     {
-    	this.bankNum = bankNum;
+    	this.bankNumber = bankNumber;
     }
     
     public void setSalary(double salary)
@@ -38,12 +43,12 @@ public class Employee extends Person
     	this.salary = salary;
     }
     
-    public int getBankAccount()
+    int getBankAccount()
     {
-    	return bankNum;
+    	return bankNumber;
     }
     
-    public double getSalary()
+    double getSalary()
     {
     	return salary;
     }

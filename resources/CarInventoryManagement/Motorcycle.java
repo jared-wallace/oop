@@ -32,13 +32,12 @@ public class Motorcycle extends Vehicle implements Serializable
     /**
      * Checks to see if the displacement is less than 0
      *
-     * @param displacement - integer value representing displacement
-     * @return True if the displacement is not less than 0
+     * @param displacement - integer value representing displacement in cubic centimeters
+     * @return True if the displacement is not less than 50
      */
     public static boolean validateDisplacement(int displacement)
     {
-        //I have no clue what displacement is, so if there is another way we should check this let me know. 
-        return !(displacement < 0);
+        return !(displacement < 50);
     }
     
     /**
@@ -53,22 +52,22 @@ public class Motorcycle extends Vehicle implements Serializable
         return orig + this.getDisplacement() + this.getType();
     }
     
-    public int getDisplacement()
+    int getDisplacement()
     {
         return displacement;
     }
 
-    public void setDisplacement(int displacement)
+    void setDisplacement(int displacement)
     {
         this.displacement = displacement;
     }
     
-    public String getType()
+    String getType()
     {
         return type;
     }
     
-    public void setType(String type)
+    void setType(String type)
     {
         this.type = type;
     }

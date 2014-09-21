@@ -9,7 +9,6 @@ package resources.CarInventoryManagement;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 class Management
 {

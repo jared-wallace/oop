@@ -226,11 +226,10 @@ class Console {
                     kb.next();
                 }
             }
-            valid=false;
             return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
         }
         else {
-            out.println("Enter the type of Motorcyle");
+            out.println("Enter the type of Motorcycle");
             motorcycleType = kb.next();
             out.println("Enter the displacement");
             while(!valid)
@@ -246,11 +245,8 @@ class Console {
                     kb.next();
                 }
             }
-            return manage.addVehicle(vin, make, model, year, price, mileage, displacement, type);
+            return manage.addVehicle(vin, make, model, year, price, mileage, displacement, motorcycleType);
         }
-
-
-        //return false; This statement is unreachable
     }
 
     /**

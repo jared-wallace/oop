@@ -1,65 +1,55 @@
 package resources.CarInventoryManagement;
+
 /**
  * created by Mason Egger - 9/19
  */
 
 
-abstract class Person 
-{
+abstract class Person {
 
     private int id;
-    private String fName, lName;
-    
-    public Person(int id, String fName, String lName) 
-    {
+    private String firstName, lastName;
+
+    Person(int id, String firstName, String lastName) {
         this.id = id;
-        this.fName=fName;
-        this.lName=lName;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
-    
-    public static boolean validateName(String name)
-    {
-        return !(name.length()<1);
+
+    public static boolean validateName(String name) {
+        return !(name.length() < 1);
     }
-    
-    public static boolean validateID(int id)
-    {
+
+    public static boolean validateID(int id) {
         return !(id < 0);
     }
-    
-    public void setID(int id)
-    {
+
+    public void setID(int id) {
         this.id = id;
     }
-    
-    public int getID()
-    {
+
+    int getID() {
         return id;
     }
-    
-    public void setfName(String fName)
-    {
-        this.fName = fName;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    
-    public String getfName()
-    {
-        return fName;
+
+    String getFirstName() {
+        return firstName;
     }
-    
-    public void setlName(String lName)
-    {
-        this.lName = lName;
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-    
-    public String getlName()
-    {
-        return lName;
+
+    String getLastName() {
+        return lastName;
     }
-    
+
     @Override
-    public String toString()
-    {
-        return this.getID() + " " + this.getlName() + "," + this.getfName();
+    public String toString() {
+        return this.getID() + " " + this.getLastName() + "," + this.getFirstName();
     }
 }

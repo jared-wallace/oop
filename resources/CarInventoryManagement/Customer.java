@@ -28,11 +28,8 @@ public class Customer extends Person
         else if(phoneNumber.matches("\\d{3}-\\d{3}-\\d{4}\\s(x|(ext))\\d{3,5}"))
            return true;
         //validating phone number where area code is in braces ()
-        else if(phoneNumber.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}")) 
-           return true;
-        //return false if nothing matches the input
-        else 
-           return false;
+        else //return false if nothing matches the input
+            return phoneNumber.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}");
     }
     
     public static boolean validateDriversLicense(int dlNumber)
@@ -40,28 +37,26 @@ public class Customer extends Person
        //every state has a different setup for license numbers
        //since the requirements specify int we are going to go with 
        //Texas Drivers license which is 7-8 ints long  
-       
-       if(dlNumber < 1000000 || dlNumber > 99999999) 
-          return false;
-       return true;
+
+        return !(dlNumber < 1000000 || dlNumber > 99999999);
     }
     
-    public void setPhoneNumber(String phoneNumber)
+    void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
     }
     
-    public void setDriversLicense(int dlNumber)
+    void setDriversLicense(int dlNumber)
     {
         this.dlNumber = dlNumber;
     }
     
-    public String getPhoneNumber()
+    String getPhoneNumber()
     {
         return phoneNumber;
     }
     
-    public int getDriversLicense()
+    int getDriversLicense()
     {
         return dlNumber;
     }
