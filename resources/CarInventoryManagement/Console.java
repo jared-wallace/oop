@@ -19,12 +19,19 @@ class Console {
     public static void main(String[] args) {
         Scanner kb = new Scanner(in);
         Console console = new Console();
+        try{
+            //give our program time to read the database
+            Thread.currentThread().sleep(1000);
+        }
+        catch(InterruptedException ie){
+            // interruption causes no harm
+        }
         boolean loopControl = true;
         while (loopControl) {
             console.printMenu();
             switch (kb.nextInt()) {
                 case 1:
-                    if (console.addCar(kb)) {
+                    if (console.addVehicle(kb)) {
                         out.println("Car was added successfully");
                     } else
                         out.println("Car was not added successfully");
@@ -72,7 +79,7 @@ class Console {
      */
     private Console() {
         manage = new Management();
-        if (manage.readDB())
+        if (!manage.readDB())
             err.println("Database corrupted or doesn't exist");
         else
             out.println("Successfully read database vehicles.txt");
@@ -104,8 +111,8 @@ class Console {
         if (vehiclesDB.size() == 0)
             out.println("Database is empty");
         else {
-            out.println("Vin Make Model Year Price Mileage Body Style Maximum Load Weight(lb) Length(ft)");
-            out.println("---------------------------");
+            out.println("Vin Make Model Year Price Mileage Extra");
+            out.println("--------------------------------------------------------------------------------");
             for (Vehicle s : vehiclesDB)
                 out.println(s);
         }
@@ -119,134 +126,123 @@ class Console {
      * @return True if a vehicle was successfully added to the database in memory,
      * false if something went wrong.
      */
-    boolean addCar(Scanner kb) {
-        String vin, make, model, type, bodyStyle, motorcycleType;
+    boolean addVehicle(Scanner kb) {
+        String vin, make, model, type;
         int year = -1;
         int mileage = -1;
-        int maxLoadWeight = -1;
-        int displacement = -1;
-        double price = -1;
-        double lengthFT = -1;
+        double price = -1.0;
         boolean valid = false;
-
         out.println("Please enter the type of vehicle (car, truck or motorcycle");
         type = kb.next();
-        if (type.matches("[cC][aA][rR][sS]?"))
-            type = "car";
-        else if (type.matches("[tT][rR][uU][cC][kK][sS]?"))
-            type = "truck";
-        else if (type.matches("[mM]"))
-        	type = "motorcycle";
+
         out.println("Enter the vin number.");
         vin = kb.next();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
         model = kb.next();
-        out.println("Enter the year (cannot be prior to 1886)");
-        while(!valid)
-        {
-            try
-            {
-                year=kb.nextInt();
-                valid=true; //if an exception is thrown it'll never get here and loop back
-            }
-            catch(InputMismatchException e)
-            {
-               err.println("The input was not an integer, please try again.");
-               kb.next();
-            }
 
+        out.println("Enter the year (cannot be prior to 1886)");
+        while(!valid) {
+            try {
+                year = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("That was not an integer value.");
+                err.println("Please enter the year again.");
+                kb.next();
+            }
         }
-        valid=false;
+
         out.println("Enter the price. (Cannot be < 0)");
-        while(!valid)
-        {
-            try
-            {
+        valid = false;
+        while(!valid) {
+            try {
                 price=kb.nextDouble();
-                valid=true; //if an exception is thrown it'll never get here and loop back
+                valid = true;
             }
-            catch(InputMismatchException e)
-            {
-               err.println("The input was not a valid number.");
-               kb.next();
+            catch(InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the price again.");
+                kb.next();
             }
         }
-        valid=false;
+
         out.println("Enter the mileage. (Cannot be negative)");
-        while(!valid)
-        {
-            try
-            {
-                mileage=kb.nextInt();
-                valid=true; //if an exception is thrown it'll never get here and loop back
-            }
-            catch(InputMismatchException e)
-            {
-               err.println("The input was not a valid number.");
-               kb.next();
+        valid = false;
+        while(!valid) {
+            try {
+                mileage = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the mileage again");
+                kb.next();
             }
         }
-        valid=false;
-        if (type.equals("car")){
-            out.println("Enter the body style.");
-            kb.nextLine();
-            bodyStyle = kb.nextLine();
-            return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
+
+        if (type.matches("[cC][aA][rR][sS]?")) {
+            type = "car";
+            return addCar(kb, vin, make, model, year, price, mileage);
+        } else if (type.matches("[tT][rR][uU][cC][kK][sS]?")) {
+            type = "truck";
+            return addTruck(kb, vin, make, model, year, price, mileage);
+        } else if (type.matches("[mM]")) {
+            type = "motorcycle";
+            return addMotorcycle(kb, vin, make, model, year, price, mileage);
+        } else {
+            return false;
         }
-        else if (type.equals("truck")){
-            out.println("Enter the maximum load weight in pounds");
-            while(!valid)
-            {
-                try
-                {
-                    maxLoadWeight=kb.nextInt();
-                    valid=true; //if an exception is thrown it'll never get here and loop back
-                }
-                catch(InputMismatchException e)
-                {
-                    err.println("The input was not a valid number.");
-                    kb.next();
-                }
-            }
-            
-            valid=false;
-            out.println("Enter the length of the truck in feet");
-            while(!valid)
-            {
-                try
-                {
-                    lengthFT=kb.nextDouble();
-                    valid=true; //if an exception is thrown it'll never get here and loop back
-                }
-                catch(InputMismatchException e)
-                {
-                    err.println("The input was not a valid number.");
-                    kb.next();
-                }
-            }
-            return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
+    }
+
+    boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+        String bodyStyle;
+        out.println("Enter the body style.");
+        kb.nextLine();
+        bodyStyle = kb.nextLine();
+        return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
+    }
+
+    boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+        int maxLoadWeight = -1;
+        double lengthFT = -1.0;
+
+        out.println("Enter the maximum load weight in pounds");
+        try {
+            maxLoadWeight=kb.nextInt();
         }
-        else {
-            out.println("Enter the type of Motorcycle");
-            motorcycleType = kb.next();
-            out.println("Enter the displacement");
-            while(!valid)
-            {
-                try
-                {
-                    displacement=kb.nextInt();
-                    valid=true; //if an exception is thrown it'll never get here and loop back
-                }
-                catch(InputMismatchException e)
-                {
-                    err.println("The input was not a valid number.");
-                    kb.next();
-                }
-            }
-            return manage.addVehicle(vin, make, model, year, price, mileage, displacement, motorcycleType);
+        catch(InputMismatchException e) {
+            err.println("The input was not a valid number.");
+            return false;
         }
+
+        out.println("Enter the length of the truck in feet");
+        try {
+            lengthFT=kb.nextDouble();
+        }
+        catch(InputMismatchException e) {
+            err.println("The input was not a valid number.");
+            return false;
+        }
+
+        return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
+    }
+
+    boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+        String type;
+        int displacement;
+
+        out.println("Enter the type of Motorcycle");
+        type = kb.next();
+        out.println("Enter the displacement");
+        try {
+            displacement=kb.nextInt();
+        }
+        catch(InputMismatchException e) {
+            err.println("The input was not a valid number.");
+            return false;
+        }
+        return manage.addVehicle(vin, make, model, year, price, mileage, displacement, type);
     }
 
     /**
@@ -319,7 +315,7 @@ class Console {
      * If it succeeds, it will likewise indicate.
      */
     void writeDatabase() {
-        if (manage.saveDB())
+        if (!manage.saveDB())
             out.println("Unable to save database.");
         else
             out.println("Database updated, exiting...");

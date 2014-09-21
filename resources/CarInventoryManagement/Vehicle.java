@@ -93,7 +93,7 @@ abstract class Vehicle implements Serializable
     public String toString() {
         NumberFormat df = new DecimalFormat("#0.00");
         String price_formatted = df.format(this.getPrice());
-        return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getModel() + " " + price_formatted;
+        return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " " + price_formatted;
     }
 
     public String getVin() {

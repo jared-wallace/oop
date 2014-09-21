@@ -49,7 +49,7 @@ public class Motorcycle extends Vehicle implements Serializable
     public String toString()
     {
         String orig = super.toString();
-        return orig + this.getDisplacement() + this.getType();
+        return orig + " " + this.getDisplacement() + "cc, " + this.getType();
     }
     
     int getDisplacement()

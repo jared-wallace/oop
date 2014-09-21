@@ -47,7 +47,7 @@ public class Truck extends Vehicle implements Serializable
     @Override
     public String toString() {
         String orig = super.toString();
-        return orig + this.getMaxLoadWeight() + this.getLengthFT();
+        return orig + this.getMaxLoadWeight() + "lbs load cap., " + this.getLengthFT();
     }
 
     int getMaxLoadWeight() {

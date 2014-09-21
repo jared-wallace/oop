@@ -177,9 +177,9 @@ class Management
             pWriter.writeObject(vehicleDB);
             
             pWriter.close();
-            return false;
-        } catch (IOException e1) {
             return true;
+        } catch (IOException e1) {
+            return false;
         }
     }
 
@@ -197,15 +197,15 @@ class Management
             vehicleDB = (ArrayList<Vehicle>)sc.readObject();
   
             sc.close();
-            return false;
+            return true;
         } 
         catch (IOException e1) 
         {
-            return true;
+            return false;
         }
         catch(ClassNotFoundException ex)
         {
-      		return true;
+      		return false;
         }
     }
 }
