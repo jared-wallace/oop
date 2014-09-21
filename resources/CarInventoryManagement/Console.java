@@ -7,25 +7,38 @@ package resources.CarInventoryManagement;
  * @version %I%, %G%
  */
 
-import static java.lang.System.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
-import java.util.*;
+import static java.lang.System.*;
 
 class Console {
 
     private final VehicleManager manage;
     private final ArrayList<Vehicle> vehiclesDB;
 
+    /**
+     * The default constructor for the console class does a few different things. It declares a new
+     * instance of the <code>VehicleManager</code> class called <code>manage</code>, and then proceeds
+     * to attempt reading the existing vehicle database, called <code>vehicle.txt</code>. If that file fails to be
+     * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
+     * indicating that the database has been successfully loaded into memory. Lastly, it calls the
+     * <code>VehicleManager.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
+     */
+    private Console() {
+        manage = new VehicleManager();
+        if (!manage.readDB()) {
+            err.println("Database corrupted or doesn't exist");
+        } else {
+            out.println("Successfully read database vehicles.txt");
+        }
+        vehiclesDB = manage.getVehicles();
+    }
+
     public static void main(String[] args) {
         Scanner kb = new Scanner(in);
         Console console = new Console();
-        try{
-            //give our program time to read the database
-            Thread.currentThread().sleep(1000);
-        }
-        catch(InterruptedException ie){
-            // interruption causes no harm
-        }
         boolean loopControl = true;
         while (loopControl) {
             console.printMenu();
@@ -33,14 +46,16 @@ class Console {
                 case 1:
                     if (console.addVehicle(kb)) {
                         out.println("Car was added successfully");
-                    } else
+                    } else {
                         out.println("Car was not added successfully");
+                    }
                     break;
                 case 2:
                     if (console.deleteCar(kb)) {
                         out.println("Car was added successfully");
-                    } else
+                    } else {
                         out.println("Car was not added successfully");
+                    }
                     break;
                 case 3:
                     console.showCars();
@@ -70,23 +85,6 @@ class Console {
     }
 
     /**
-     * The default constructor for the console class does a few different things. It declares a new
-     * instance of the <code>VehicleManager</code> class called <code>manage</code>, and then proceeds
-     * to attempt reading the existing vehicle database, called <code>vehicle.txt</code>. If that file fails to be
-     * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
-     * indicating that the database has been successfully loaded into memory. Lastly, it calls the
-     * <code>VehicleManager.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
-     */
-    private Console() {
-        manage = new VehicleManager();
-        if (!manage.readDB())
-            err.println("Database corrupted or doesn't exist");
-        else
-            out.println("Successfully read database vehicles.txt");
-        vehiclesDB = manage.getVehicles();
-    }
-
-    /**
      * Prints the menu with all the currently available options.
      */
     void printMenu() {
@@ -108,13 +106,14 @@ class Console {
      * in memory, but not necessarily what is currently written to the file.
      */
     void showCars() {
-        if (vehiclesDB.size() == 0)
+        if (vehiclesDB.size() == 0) {
             out.println("Database is empty");
-        else {
+        } else {
             out.println("Vin Make Model Year Price Mileage Extra");
             out.println("--------------------------------------------------------------------------------");
-            for (Vehicle s : vehiclesDB)
+            for (Vehicle s : vehiclesDB) {
                 out.println(s);
+            }
         }
     }
 
@@ -143,7 +142,7 @@ class Console {
         model = kb.next();
 
         out.println("Enter the year (cannot be prior to 1886)");
-        while(!valid) {
+        while (!valid) {
             try {
                 year = kb.nextInt();
                 valid = true;
@@ -156,12 +155,11 @@ class Console {
 
         out.println("Enter the price. (Cannot be < 0)");
         valid = false;
-        while(!valid) {
+        while (!valid) {
             try {
-                price=kb.nextDouble();
+                price = kb.nextDouble();
                 valid = true;
-            }
-            catch(InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 err.println("The input was not a valid number.");
                 err.println("Please enter the price again.");
                 kb.next();
@@ -170,7 +168,7 @@ class Console {
 
         out.println("Enter the mileage. (Cannot be negative)");
         valid = false;
-        while(!valid) {
+        while (!valid) {
             try {
                 mileage = kb.nextInt();
                 valid = true;
@@ -182,17 +180,11 @@ class Console {
         }
 
         if (type.matches("[cC][aA][rR][sS]?")) {
-            type = "car";
             return addCar(kb, vin, make, model, year, price, mileage);
         } else if (type.matches("[tT][rR][uU][cC][kK][sS]?")) {
-            type = "truck";
             return addTruck(kb, vin, make, model, year, price, mileage);
-        } else if (type.matches("[mM]")) {
-            type = "motorcycle";
-            return addMotorcycle(kb, vin, make, model, year, price, mileage);
-        } else {
-            return false;
-        }
+        } else
+            return type.matches("[mM]") && addMotorcycle(kb, vin, make, model, year, price, mileage);
     }
 
     boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
@@ -209,7 +201,7 @@ class Console {
         boolean valid = false;
 
         out.println("Enter the maximum load weight in pounds");
-        while(!valid) {
+        while (!valid) {
             try {
                 maxLoadWeight = kb.nextInt();
                 valid = true;
@@ -222,7 +214,7 @@ class Console {
 
         out.println("Enter the length of the truck in feet");
         valid = false;
-        while(!valid) {
+        while (!valid) {
             try {
                 lengthFT = kb.nextDouble();
                 valid = true;
@@ -244,9 +236,8 @@ class Console {
         type = kb.next();
         out.println("Enter the displacement");
         try {
-            displacement=kb.nextInt();
-        }
-        catch(InputMismatchException e) {
+            displacement = kb.nextInt();
+        } catch (InputMismatchException e) {
             err.println("The input was not a valid number.");
             return false;
         }
@@ -281,10 +272,11 @@ class Console {
         out.println("Enter the VIN number of the vehicle you wish to search for.");
         String lp = kb.next();
         int index = manage.search(lp);
-        if (index > -1)
+        if (index > -1) {
             out.println(vehiclesDB.get(index));
-        else
+        } else {
             out.println("Sorry, no matching vehicle found.");
+        }
     }
 
     /**
@@ -301,20 +293,23 @@ class Console {
         out.println("Enter the type of vehicle you wish to search for (cars, trucks, motorcycles or all)");
         String choice = kb.next();
         String type;
-        if (choice.matches("[cC]ar[sS]?") )
+        if (choice.matches("[cC]ar[sS]?")) {
             type = "cars";
-        else if (choice.matches("[mM]ot[eo]r\\s?([cC]ycle|[bB]ike)"))
+        } else if (choice.matches("[mM]ot[eo]r\\s?([cC]ycle|[bB]ike)")) {
             type = "motorcycles";
-        else if (choice.matches("[tT]ruck[sS]?"))
+        } else if (choice.matches("[tT]ruck[sS]?")) {
             type = "trucks";
-        else
+        } else {
             type = "all";
+        }
         ArrayList<Vehicle> results = manage.showPriceRange(lower, higher, type);
-        if (results.size() > 0)
-            for (Vehicle s : results)
+        if (results.size() > 0) {
+            for (Vehicle s : results) {
                 out.println(s);
-        else
+            }
+        } else {
             out.println("Sorry, no matching vehicles found");
+        }
     }
 
     /**
@@ -323,9 +318,10 @@ class Console {
      * If it succeeds, it will likewise indicate.
      */
     void writeDatabase() {
-        if (!manage.saveDB())
+        if (!manage.saveDB()) {
             out.println("Unable to save database.");
-        else
+        } else {
             out.println("Database updated, exiting...");
+        }
     }
 }

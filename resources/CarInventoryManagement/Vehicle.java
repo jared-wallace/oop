@@ -1,14 +1,13 @@
 package resources.CarInventoryManagement;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.io.*;
 
 /**
  * Created by jared on 9/19/14.
  */
-abstract class Vehicle implements Serializable
-{
+abstract class Vehicle implements Serializable {
     private String vin = "";
     private String make = "";
     private String model = "";
@@ -32,14 +31,15 @@ abstract class Vehicle implements Serializable
      * @param vin A string representing the vin number of the vehicle
      * @return True if the string is 17 characters or less and not empty.
      */
-    public static boolean validateVin(String vin){
+    public static boolean validateVin(String vin) {
         return !(vin.equals("") && vin.length() > 17);
     }
+
     /**
      * The only validation for the "make" field is that the make
      * is a non empty string.
      *
-     * @param make
+     * @param make The make to be validated
      * @return True if the make is a non empty string, false otherwise.
      */
     public static boolean validateMake(String make) {
@@ -50,7 +50,7 @@ abstract class Vehicle implements Serializable
      * The only validation for the "model" field is that the model
      * is indeed a string.
      *
-     * @param model
+     * @param model The model to be validated
      * @return True if the model is a non empty string, false otherwise.
      */
     public static boolean validateModel(String model) {
@@ -62,7 +62,7 @@ abstract class Vehicle implements Serializable
      * is at least 1886 or later (The car was invented in 1886). The
      * function also checks for exactly 4 digits.
      *
-     * @param year
+     * @param year The year to be validated
      * @return True if the year is an integer greater than 1886 and exactly
      * 4 digits, otherwise it returns false.
      */
@@ -74,7 +74,7 @@ abstract class Vehicle implements Serializable
      * This validation function only checks for a price that is
      * non-negative.
      *
-     * @param price
+     * @param price The price to be validated
      * @return True if price is non-negative, false otherwise
      */
     public static boolean validatePrice(double price) {
@@ -141,7 +141,7 @@ abstract class Vehicle implements Serializable
         this.mileage = mileage;
     }
 
-    public int getYear() {
+    int getYear() {
         return year;
     }
 

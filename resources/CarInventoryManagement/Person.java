@@ -24,28 +24,28 @@ abstract class Person {
         return !(id < 0);
     }
 
-    public void setID(int id) {
-        this.id = id;
-    }
-
     int getID() {
         return id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setID(int id) {
+        this.id = id;
     }
 
     String getFirstName() {
         return firstName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override

@@ -10,8 +10,7 @@ package resources.CarInventoryManagement;
 import java.io.*;
 import java.util.ArrayList;
 
-class VehicleManager
-{
+class VehicleManager {
     private static ArrayList<Vehicle> vehicleDB;
 
     /**
@@ -87,13 +86,13 @@ class VehicleManager
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param vin           The vin number of the new truck.
-     * @param make          Make of the new Motorcycle
-     * @param model         Model of the new Motorcycle
-     * @param year          Year of the new Motorcycle, can't be before cars were invented, in 1896.
-     * @param price         Price of the new Motorcycle, can't be less than 0.00.
-     * @param displacement  The displacement of the Motorcycle, can't be less than zero.
-     * @param type          The type of the motorcycle (Scooter, Touring, Street Bike, Bitchen, etc)
+     * @param vin          The vin number of the new truck.
+     * @param make         Make of the new Motorcycle
+     * @param model        Model of the new Motorcycle
+     * @param year         Year of the new Motorcycle, can't be before cars were invented, in 1896.
+     * @param price        Price of the new Motorcycle, can't be less than 0.00.
+     * @param displacement The displacement of the Motorcycle, can't be less than zero.
+     * @param type         The type of the motorcycle (Scooter, Touring, Street Bike, Bitchen, etc)
      * @return True if the Motorcycle was successfully added, false otherwise.
      */
     public boolean addVehicle(String vin, String make, String model, int year, double price, int mileage,
@@ -117,8 +116,9 @@ class VehicleManager
      */
     public boolean deleteVehicle(String vin) {
         int i = search(vin);
-        if (i == -1)
+        if (i == -1) {
             return false;
+        }
         vehicleDB.remove(i);
         return true;
     }
@@ -133,8 +133,9 @@ class VehicleManager
     public int search(String s) {
         for (int x = 0; x < vehicleDB.size(); x++) {
             String vin = vehicleDB.get(x).getVin();
-            if (s.equals(vin))
+            if (s.equals(vin)) {
                 return x;
+            }
         }
         return -1;
     }
@@ -149,14 +150,15 @@ class VehicleManager
      */
     public ArrayList<Vehicle> showPriceRange(double lower, double higher, String type) {
         ArrayList<Vehicle> results = new ArrayList<Vehicle>();
-        for (Vehicle s : vehicleDB){
-            if (s.getPrice() > lower && s.getPrice() < higher){
-                if (type.equals("cars") && s instanceof Car)
+        for (Vehicle s : vehicleDB) {
+            if (s.getPrice() > lower && s.getPrice() < higher) {
+                if (type.equals("cars") && s instanceof Car) {
                     results.add(s);
-                else if (type.equals("trucks") && s instanceof Truck)
+                } else if (type.equals("trucks") && s instanceof Truck) {
                     results.add(s);
-                else
+                } else {
                     results.add(s);
+                }
             }
         }
         return results;
@@ -172,10 +174,10 @@ class VehicleManager
     public boolean saveDB() {
         try {
             FileOutputStream outFile = new FileOutputStream("vehicles.txt");
-            ObjectOutputStream pWriter = new ObjectOutputStream(outFile); 
+            ObjectOutputStream pWriter = new ObjectOutputStream(outFile);
             //for(Vehicle s: vehicleDB)
             pWriter.writeObject(vehicleDB);
-            
+
             pWriter.close();
             return true;
         } catch (IOException e1) {
@@ -195,18 +197,14 @@ class VehicleManager
             InputStream file = new FileInputStream("vehicles.txt");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput sc = new ObjectInputStream(buffer);
-            vehicleDB = (ArrayList<Vehicle>)sc.readObject();
+            vehicleDB = (ArrayList<Vehicle>) sc.readObject();
             return true;
-        } 
-        catch (IOException e1) 
-        {
+        } catch (IOException e1) {
             System.err.println("Error " + e1);
             return false;
-        }
-        catch(ClassNotFoundException e2)
-        {
+        } catch (ClassNotFoundException e2) {
             System.err.println("Error" + e2);
-      		return false;
+            return false;
         }
     }
 }

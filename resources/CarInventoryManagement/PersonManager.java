@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by jared on 9/21/14.
  */
-public class PersonManager {
+class PersonManager {
 
     private static ArrayList<Person> personDB;
 
@@ -32,19 +32,17 @@ public class PersonManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param iD       The vin number of the new car.
-     * @param firstName      Make of the new car
-     * @param lastName     Model of the new car
-     * @param salary      Year of the new car, can't be before cars were invented, in 1896.
-     * @param accountNumber     Price of the new car, can't be less than 0.00.
+     * @param iD            The vin number of the new car.
+     * @param firstName     Make of the new car
+     * @param lastName      Model of the new car
+     * @param salary        Year of the new car, can't be before cars were invented, in 1896.
+     * @param accountNumber Price of the new car, can't be less than 0.00.
      * @return True if the employee was successfully added, false otherwise.
      */
     public boolean addPerson(int iD, String firstName, String lastName, double salary, int accountNumber) {
-        if (Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
-                && Employee.validateSalary(salary) && Employee.validateAccountNumber(accountNumber)) {
-            return personDB.add(new Employee(iD, firstName, lastName, salary, accountNumber));
-        }
-        return false;
+        return Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
+                && Employee.validateSalary(salary) && Employee.validateAccountNumber(accountNumber)
+                && personDB.add(new Employee(iD, firstName, lastName, salary, accountNumber));
     }
 
     /**
@@ -52,19 +50,17 @@ public class PersonManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param iD           The vin number of the new truck.
-     * @param firstName          Make of the new truck
-     * @param lastName         Model of the new truck
-     * @param phoneNumber          Year of the new truck, can't be before cars were invented, in 1896.
-     * @param dLNumber         Price of the new truck, can't be less than 0.00.
+     * @param iD          The vin number of the new truck.
+     * @param firstName   Make of the new truck
+     * @param lastName    Model of the new truck
+     * @param phoneNumber Year of the new truck, can't be before cars were invented, in 1896.
+     * @param dLNumber    Price of the new truck, can't be less than 0.00.
      * @return True if the customer was successfully added, false otherwise.
      */
     public boolean addPerson(int iD, String firstName, String lastName, String phoneNumber, int dLNumber) {
-        if (Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
-                && Customer.validatePhoneNumber(phoneNumber) && Customer.validateDriversLicense(dLNumber)) {
-            return personDB.add(new Customer(iD, firstName, lastName, phoneNumber, dLNumber));
-        }
-        return false;
+        return Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
+                && Customer.validatePhoneNumber(phoneNumber) && Customer.validateDriversLicense(dLNumber)
+                && personDB.add(new Customer(iD, firstName, lastName, phoneNumber, dLNumber));
     }
 
     /**
@@ -77,8 +73,9 @@ public class PersonManager {
     public int search(int s) {
         for (int x = 0; x < personDB.size(); x++) {
             int UID = personDB.get(x).getID();
-            if (s == UID)
+            if (s == UID) {
                 return x;
+            }
         }
         return -1;
     }
@@ -115,16 +112,12 @@ public class PersonManager {
             InputStream file = new FileInputStream("people.db");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput sc = new ObjectInputStream(buffer);
-            personDB = (ArrayList<Person>)sc.readObject();
+            personDB = (ArrayList<Person>) sc.readObject();
             return true;
-        }
-        catch (IOException e1)
-        {
+        } catch (IOException e1) {
             System.err.println("Error " + e1);
             return false;
-        }
-        catch(ClassNotFoundException e2)
-        {
+        } catch (ClassNotFoundException e2) {
             System.err.println("Error" + e2);
             return false;
         }

@@ -3,11 +3,10 @@ package resources.CarInventoryManagement;
 /**
  * Created by jared on 9/19/14.
  */
- 
-import java.io.*;
 
-public class Truck extends Vehicle implements Serializable
-{
+import java.io.Serializable;
+
+public class Truck extends Vehicle implements Serializable {
 
     private int maxLoadWeight = 0;
     private double lengthFT = 0;

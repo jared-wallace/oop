@@ -6,7 +6,8 @@ package resources.CarInventoryManagement;
  * @author Mason Egger and Jared Wallace
  * @version %I%, %G%
  */
-import java.io.*;
+
+import java.io.Serializable;
 
 class Car extends Vehicle implements Serializable {
 
