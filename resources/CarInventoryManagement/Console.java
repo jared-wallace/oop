@@ -120,12 +120,13 @@ class Console {
      * false if something went wrong.
      */
     boolean addCar(Scanner kb) {
-        String vin, make, model, type, bodyStyle;
-        int year = 0;
-        int mileage = 0;
-        int maxLoadWeight = 0;
-        double price = 0;
-        double lengthFT = 0;
+        String vin, make, model, type, bodyStyle, motorcycleType;
+        int year = -1;
+        int mileage = -1;
+        int maxLoadWeight = -1;
+        int displacement = -1;
+        double price = -1;
+        double lengthFT = -1;
         boolean valid = false;
 
         out.println("Please enter the type of vehicle (car, truck or motorcycle");
@@ -229,12 +230,27 @@ class Console {
             return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
         }
         else {
-            // insert motorcycle code
-            // return manage.addVehicle(vin, make, model, year, price, mileage);
+            out.println("Enter the type of Motorcyle");
+            motorcycleType = kb.next();
+            out.println("Enter the displacement");
+            while(!valid)
+            {
+                try
+                {
+                    displacement=kb.nextInt();
+                    valid=true; //if an exception is thrown it'll never get here and loop back
+                }
+                catch(InputMismatchException e)
+                {
+                    err.println("The input was not a valid number.");
+                    kb.next();
+                }
+            }
+            return manage.addVehicle(vin, make, model, year, price, mileage, displacement, type);
         }
 
 
-        return false;
+        //return false; This statement is unreachable
     }
 
     /**
