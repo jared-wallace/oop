@@ -13,7 +13,7 @@ import java.util.*;
 
 class Console {
 
-    private final Management manage;
+    private final VehicleManager manage;
     private final ArrayList<Vehicle> vehiclesDB;
 
     public static void main(String[] args) {
@@ -71,14 +71,14 @@ class Console {
 
     /**
      * The default constructor for the console class does a few different things. It declares a new
-     * instance of the <code>Management</code> class called <code>manage</code>, and then proceeds
+     * instance of the <code>VehicleManager</code> class called <code>manage</code>, and then proceeds
      * to attempt reading the existing vehicle database, called <code>vehicle.txt</code>. If that file fails to be
      * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
      * indicating that the database has been successfully loaded into memory. Lastly, it calls the
-     * <code>Management.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
+     * <code>VehicleManager.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
      */
     private Console() {
-        manage = new Management();
+        manage = new VehicleManager();
         if (!manage.readDB())
             err.println("Database corrupted or doesn't exist");
         else

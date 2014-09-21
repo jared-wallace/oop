@@ -1,6 +1,6 @@
 package resources.CarInventoryManagement;
 /**
- * @(#)Management.java
+ * @(#)VehicleManager.java
  *
  * @author Mason Egger
  * @author Jared Wallace
@@ -10,7 +10,7 @@ package resources.CarInventoryManagement;
 import java.io.*;
 import java.util.ArrayList;
 
-class Management
+class VehicleManager
 {
     private static ArrayList<Vehicle> vehicleDB;
 
@@ -18,7 +18,7 @@ class Management
      * Default constructor creates an ArrayList of Vehicle objects called <code>vehicleDB</code>.
      * This ArrayList will serve as the runtime database.
      */
-    public Management() {
+    public VehicleManager() {
         vehicleDB = new ArrayList<Vehicle>();
     }
 
