@@ -11,7 +11,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Management {
+class Management implements Serializable
+{
     private static ArrayList<Vehicle> vehicleDB;
 
     /**
@@ -171,11 +172,10 @@ class Management {
      */
     public boolean saveDB() {
         try {
-            FileWriter outFile = new FileWriter("vehicles.txt");
-            PrintWriter pWriter = new PrintWriter(outFile);
-            for (Vehicle s : vehicleDB) {
-                pWriter.println(s);
-            }
+            FileOutputStream outFile = new FileOutputStream("vehicles.txt");
+            ObjectOutputStream pWriter = new ObjectOutputStream(outFile); 
+            pWriter.writeObject(vehicleDB);
+            
             pWriter.close();
             return false;
         } catch (IOException e1) {
@@ -192,32 +192,20 @@ class Management {
      */
     public boolean readDB() {
         try {
-            File inFile = new File("Vehicles.txt");
-            Scanner sc = new Scanner(inFile);
-            while (sc.hasNext()) {
-                String vin = sc.next();
-                String make = sc.next();
-                String model = sc.next();
-                int year = sc.nextInt();
-                double price = sc.nextDouble();
-                int mileage = sc.nextInt();
-                if (sc.hasNextInt()){
-                    int maxLoadWeight = sc.nextInt();
-                    double lengthFT = sc.nextDouble();
-                    addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
-                }
-                else if (sc.hasNext()){
-                    String bodyStyle = sc.next();
-                    addVehicle(vin, make, model, year, price, mileage, bodyStyle);
-                }
-                else{
-
-                }
-            }
+            FileInputStream inFile = new FileInputStream("Vehicles.txt");
+            ObjectInputStream sc = new ObjectInputStream(inFile);
+            vehicleDB = (ArrayList<Vehicle>)sc.readObject();
+  
             sc.close();
             return false;
-        } catch (IOException e1) {
+        } 
+        catch (IOException e1) 
+        {
             return true;
+        }
+        catch(ClassNotFoundException ex)
+        {
+      		return true;
         }
     }
 }
