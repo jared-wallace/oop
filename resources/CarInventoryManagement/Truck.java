@@ -26,7 +26,7 @@ public class Truck extends Vehicle implements Serializable
      * @return True if the maxLoadWeight parameter is greater than zero
      */
     public static boolean validateMaxLoadWeight(int maxLoadWeight) {
-        return !(maxLoadWeight >= 0);
+        return !(maxLoadWeight <= 0);
     }
 
     /**
@@ -36,7 +36,7 @@ public class Truck extends Vehicle implements Serializable
      * @return True if the lengthFT parameter is greater than zero
      */
     public static boolean validateLengthFT(double lengthFT) {
-        return !(lengthFT >= 0);
+        return !(lengthFT <= 0);
     }
 
     /**

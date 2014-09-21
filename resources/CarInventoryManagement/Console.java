@@ -206,23 +206,31 @@ class Console {
     boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
         int maxLoadWeight = -1;
         double lengthFT = -1.0;
+        boolean valid = false;
 
         out.println("Enter the maximum load weight in pounds");
-        try {
-            maxLoadWeight=kb.nextInt();
-        }
-        catch(InputMismatchException e) {
-            err.println("The input was not a valid number.");
-            return false;
+        while(!valid) {
+            try {
+                maxLoadWeight = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the load weight again.");
+                kb.next();
+            }
         }
 
         out.println("Enter the length of the truck in feet");
-        try {
-            lengthFT=kb.nextDouble();
-        }
-        catch(InputMismatchException e) {
-            err.println("The input was not a valid number.");
-            return false;
+        valid = false;
+        while(!valid) {
+            try {
+                lengthFT = kb.nextDouble();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the length again.");
+                kb.next();
+            }
         }
 
         return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);

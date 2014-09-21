@@ -192,19 +192,20 @@ class Management
      */
     public boolean readDB() {
         try {
-            FileInputStream inFile = new FileInputStream("Vehicles.txt");
-            ObjectInputStream sc = new ObjectInputStream(inFile);
+            InputStream file = new FileInputStream("vehicles.txt");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput sc = new ObjectInputStream(buffer);
             vehicleDB = (ArrayList<Vehicle>)sc.readObject();
-  
-            sc.close();
             return true;
         } 
         catch (IOException e1) 
         {
+            System.err.println("Error " + e1);
             return false;
         }
-        catch(ClassNotFoundException ex)
+        catch(ClassNotFoundException e2)
         {
+            System.err.println("Error" + e2);
       		return false;
         }
     }

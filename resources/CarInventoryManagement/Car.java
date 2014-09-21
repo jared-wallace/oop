@@ -48,7 +48,7 @@ class Car extends Vehicle implements Serializable {
     @Override
     public String toString() {
         String orig = super.toString();
-        return orig + this.getBodyStyle();
+        return orig + " " + this.getBodyStyle();
     }
 
 

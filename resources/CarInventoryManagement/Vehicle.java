@@ -33,7 +33,7 @@ abstract class Vehicle implements Serializable
      * @return True if the string is 17 characters or less and not empty.
      */
     public static boolean validateVin(String vin){
-        return !(vin.equals("") && vin.length() < 17);
+        return !(vin.equals("") && vin.length() > 17);
     }
     /**
      * The only validation for the "make" field is that the make
