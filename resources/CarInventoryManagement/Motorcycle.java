@@ -2,9 +2,9 @@ package resources.CarInventoryManagement;
 /**
  * created by Mason Egger - 9/19
  */
+import java.io.*;
 
-
-public class Motorcycle extends Vehicle
+public class Motorcycle extends Vehicle implements Serializable
 {
     private String type;
     private int displacement;

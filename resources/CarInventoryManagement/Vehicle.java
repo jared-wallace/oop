@@ -2,11 +2,13 @@ package resources.CarInventoryManagement;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.io.*;
 
 /**
  * Created by jared on 9/19/14.
  */
-abstract class Vehicle {
+abstract class Vehicle implements Serializable
+{
     private String vin = "";
     private String make = "";
     private String model = "";

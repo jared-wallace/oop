@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Management implements Serializable
+class Management
 {
     private static ArrayList<Vehicle> vehicleDB;
 
@@ -174,6 +174,7 @@ class Management implements Serializable
         try {
             FileOutputStream outFile = new FileOutputStream("vehicles.txt");
             ObjectOutputStream pWriter = new ObjectOutputStream(outFile); 
+            //for(Vehicle s: vehicleDB)
             pWriter.writeObject(vehicleDB);
             
             pWriter.close();

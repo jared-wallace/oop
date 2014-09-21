@@ -136,8 +136,8 @@ class Console {
         else if (type.matches("[tT][rR][uU][cC][kK][sS]?"))
             type = "truck";
         else if (type.matches("[mM]"))
+        	type = "motorcycle";
         out.println("Enter the vin number.");
-        kb.next();
         vin = kb.next();
         out.println("Enter the make. (Cannot be blank)");
         make = kb.next();

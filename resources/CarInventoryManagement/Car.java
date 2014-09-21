@@ -6,8 +6,9 @@ package resources.CarInventoryManagement;
  * @author Mason Egger and Jared Wallace
  * @version %I%, %G%
  */
+import java.io.*;
 
-class Car extends Vehicle {
+class Car extends Vehicle implements Serializable {
 
     private String bodyStyle = "";
 
