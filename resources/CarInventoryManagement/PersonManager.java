@@ -162,12 +162,12 @@ class PersonManager {
         }
         else
         {
+            int choice = -1;
+            String changeS = "";
+            int changeI = -1;
+            double changeD = -1;
             if(personDB.get(userID) instanceof Customer)
             {
-                int choice = -1;
-                String changeS = "";
-                int changeI = -1;
-                double changeD = -1;
                 out.println("Enter the number of the field you want to change");
                 out.println("\t1. First Name");
                 out.println("\t2. Last Name");
@@ -246,12 +246,92 @@ class PersonManager {
 
                     default:
                         out.println("Not a correct choice.");
+                        return false;
                 }
 
             }
             else
             {
+                out.println("Enter the number of the field you want to change");
+                out.println("\t1. First Name");
+                out.println("\t2. Last Name");
+                out.println("\t3. Salary");
+                out.println("\t4. Bank Account Number");
+                out.println("\t5. Cancel");
 
+                while(!valid){
+                    try{
+                        choice = kb.nextInt();
+                        valid = true;
+                    }
+                    catch(InputMismatchException e){
+                        err.println("Input was not an integer");
+                        err.println("Please reenter the option you wish to change. ");
+                        kb.next();
+                    }
+                }
+
+                switch(choice)
+                {
+                    case 1:
+                        out.println("Enter your first name");
+                        changeS = kb.next();
+                        if(Person.validateName(changeS))
+                        {
+                            personDB.get(userID).setFirstName(changeS);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid name.");
+                            return false;
+                        }
+                    case 2:
+                        out.println("Enter your last name");
+                        changeS = kb.next();
+                        if(Person.validateName(changeS))
+                        {
+                            personDB.get(userID).setLastName(changeS);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid name.");
+                            return false;
+                        }
+                    case 3:
+                        out.println("Enter your salary");
+                        changeD = kb.nextDouble();
+                        if(Employee.validateSalary(changeD))
+                        {
+                            ((Employee)personDB.get(userID)).setSalary(changeD);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid salary.");
+                            return false;
+                        }
+                    case 4:
+                        out.println("Enter your bank account number");
+                        changeI = kb.nextInt();
+                        if(Employee.validateAccountNumber(changeI))
+                        {
+                            ((Employee)personDB.get(userID)).setAccountNumber(changeI);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid bank account number");
+                            return false;
+                        }
+                    case 5:
+                        return false;
+
+                    default:
+                        out.println("Not a correct choice.");
+                        return false;
+                }
             }
         }
     }
@@ -284,7 +364,7 @@ class PersonManager {
 
 
     public static boolean sellCar(int customerUID, int employeeUID, String vin, Date saleDate, double salePrice) {
-        return;
+        return false;
     }
     /**
      * Attempts to write the existing runtime database to the database file.
