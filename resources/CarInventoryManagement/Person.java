@@ -50,7 +50,7 @@ abstract class Person{
 
     @Override
     public String toString() {
-        return this.getID() + " " + this.getLastName() + "," + this.getFirstName();
+        return this.getLastName() + "," + this.getFirstName();
     }
     
 }

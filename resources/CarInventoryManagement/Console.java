@@ -90,7 +90,7 @@ class Console {
                     console.updateUser(kb);
                     break;
                 case 7:
-                    console.showUsers(kb);
+                    console.showUsers();
                     break;
                 case 8:
                     if (console.sellVehicle(kb)) {
@@ -117,11 +117,6 @@ class Console {
 
         out.println("Please enter the type of user you wish to add. (employee or customer)");
         type = kb.next();
-        if (type.matches("[cC]\\w*"))
-            type = "customer";
-        else
-            type = "employee";
-
         uID = PersonManager.getUID(personDB);
 
         out.println("Enter the first name of the user.");
@@ -129,12 +124,10 @@ class Console {
         out.println("Enter the last name of the user.");
         lastName = kb.next();
 
-        if (type.equals("employee")) {
-            return addEmployee(kb, uID, lastName, firstName);
-        }
-        else {
+        if (type.matches("[cC]\\w*"))
             return addCustomer(kb, uID, lastName, firstName);
-        }
+        else
+            return addEmployee(kb, uID, lastName, firstName);
     }
 
     private boolean addEmployee(Scanner kb, int uID, String lastName, String firstName) {
@@ -194,8 +187,16 @@ class Console {
         return false;
     }
 
-    void showUsers(Scanner kb) {
-
+    void showUsers() {
+        if (personDB.size() == 0) {
+            out.println("Database is empty");
+        } else {
+            out.println("Last name | First name | Classification | Extra");
+            out.println("--------------------------------------------------------------------------------");
+            for (Person s : personDB) {
+                out.println(s);
+            }
+        }
     }
 
     boolean sellVehicle(Scanner kb) {

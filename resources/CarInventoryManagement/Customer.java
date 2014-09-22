@@ -56,6 +56,6 @@ public class Customer extends Person{
 
     @Override
     public String toString() {
-        return super.toString() + this.getPhoneNumber() + " " + this.getDriversLicense();
+        return super.toString() + "Customer " + this.getPhoneNumber() + " " + this.getDriversLicense();
     }
 }

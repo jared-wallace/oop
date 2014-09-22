@@ -48,7 +48,7 @@ class Employee extends Person {
 
     @Override
     public String toString() {
-        return super.toString() + " " + this.getSalary() + " " + this.getAccountNumber();
+        return super.toString() + " " + "Employee " + this.getSalary() + " " + this.getAccountNumber();
     }
 
 }

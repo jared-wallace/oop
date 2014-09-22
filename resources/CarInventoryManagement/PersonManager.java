@@ -83,6 +83,9 @@ class PersonManager {
 
 	public static int getUID(ArrayList<Person> personDB)
 	{
+        if (personDB.size() == 0) {
+            return 1;
+        }
 		return (personDB.get(personDB.size()-1)).getID() + 1;
 	}
     /**
