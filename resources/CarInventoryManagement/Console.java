@@ -47,14 +47,14 @@ class Console {
                     if (console.addVehicle(kb)) {
                         out.println("Car was added successfully");
                     } else {
-                        out.println("Car was not added successfully");
+                        out.println("Error: Car was not added successfully");
                     }
                     break;
                 case 2:
                     if (console.deleteCar(kb)) {
                         out.println("Car was added successfully");
                     } else {
-                        out.println("Car was not added successfully");
+                        out.println("Error: Car was not added successfully");
                     }
                     break;
                 case 3:
@@ -64,13 +64,24 @@ class Console {
                     console.showPriceRange(kb);
                     break;
                 case 5:
-                    console.searchCar(kb);
+                    if (console.addUser(kb)) {
+                        out.println("User added successfully");
+                    } else {
+                        out.println("Error: User not added successfully");
+                    }
                     break;
                 case 6:
+                    console.updateUser(kb);
                     break;
                 case 7:
+                    console.showUsers(kb);
                     break;
                 case 8:
+                    if (console.sellVehicle(kb)) {
+                        out.println("Vehicle sold.");
+                    } else {
+                        out.println("Error: Vehicle not sold.");
+                    }
                     break;
                 case 9:
                     loopControl = false;
@@ -82,6 +93,52 @@ class Console {
             out.println();
             out.println();
         }
+    }
+
+    boolean addUser(Scanner kb) {
+        int uID = -1;
+        String lastName, firstName, type;
+
+        out.println("Please enter the type of user you wish to add. (employee or customer)");
+        type = kb.next();
+
+        uID = PersonManager.getUID();
+
+        out.println("Enter the first name of the user.");
+        firstName = kb.next();
+        out.println("Enter the last name of the user.");
+        lastName = kb.next();
+
+        if (type.equals("employee")) {
+            return addEmployee(uID, lastName, firstName);
+        }
+        else {
+            return addCustomer(uID, lastName, firstName);
+        }
+        return false;
+    }
+
+    private boolean addEmployee(int uID, String lastName, String firstName) {
+        double salary;
+        int accountNumber;
+        boolean valid = false;
+        out.println("Please enter the monthly salary of the employee");
+        while (!valid) {
+
+        }
+
+    }
+
+    boolean updateUser(Scanner kb) {
+        return false;
+    }
+
+    void showUsers(Scanner kb) {
+
+    }
+
+    boolean sellVehicle(Scanner kb) {
+        return false;
     }
 
     /**
@@ -187,7 +244,7 @@ class Console {
             return type.matches("[mM]") && addMotorcycle(kb, vin, make, model, year, price, mileage);
     }
 
-    boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+    private boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
         String bodyStyle;
         out.println("Enter the body style.");
         kb.nextLine();
@@ -195,7 +252,7 @@ class Console {
         return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
     }
 
-    boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+    private boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
         int maxLoadWeight = -1;
         double lengthFT = -1.0;
         boolean valid = false;
@@ -228,7 +285,7 @@ class Console {
         return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
     }
 
-    boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+    private boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
         String type;
         int displacement;
 
@@ -260,22 +317,6 @@ class Console {
         } else {
             out.println("Invalid vin number entered");
             return false;
-        }
-    }
-
-    /**
-     * Allows searching the database in memory for a certain vehicle by VIN number
-     *
-     * @param kb The scanner object used to read in from the console
-     */
-    void searchCar(Scanner kb) {
-        out.println("Enter the VIN number of the vehicle you wish to search for.");
-        String lp = kb.next();
-        int index = manage.search(lp);
-        if (index > -1) {
-            out.println(vehiclesDB.get(index));
-        } else {
-            out.println("Sorry, no matching vehicle found.");
         }
     }
 
