@@ -176,12 +176,7 @@ class Console {
     boolean deleteCar(Scanner kb) {
         out.println("Enter the VIN number of the car to delete.");
         String vin = kb.next();
-        if (Car.validateVin(vin)) {
-            return vehicleManager.deleteVehicle(vin);
-        } else {
-            out.println("Invalid vin number entered");
-            return false;
-        }
+        return vehicleManager.deleteVehicle(vin);
     }
 
     /**
@@ -229,10 +224,16 @@ class Console {
             out.println("People database updated, exiting...");
         }
 
-        if (!vehicleManager.saveDB()) {
+        if (!vehicleManager.saveVehicleDB()) {
             out.println("Unable to save vehicle database.");
         } else {
             out.println("Vehicle database updated, exiting...");
+        }
+
+        if (!vehicleManager.saveSalesDB()) {
+            out.println("Unable to save sales database.");
+        } else {
+            out.println("Sales database updated, exiting...");
         }
     }
     

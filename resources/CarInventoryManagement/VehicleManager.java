@@ -235,6 +235,9 @@ class VehicleManager {
      * @return True if a Vehicle was deleted, false otherwise
      */
     public boolean deleteVehicle(String vin) {
+        if (!Car.validateVin(vin)) {
+            return false;
+        }
         int i = search(vin);
         if (i == -1) {
             return false;
@@ -369,17 +372,37 @@ class VehicleManager {
     }
 
     /**
-     * Attempts to write the existing runtime database to the database file.
+     * Attempts to write the existing runtime vehicle database to the database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.
      *
      * @return True if the database was successfully written, false if there
      * was an IOException.
      */
-    public boolean saveDB() {
+    public boolean saveVehicleDB() {
         try {
             FileOutputStream outFile = new FileOutputStream("vehicles.db");
             ObjectOutputStream pWriter = new ObjectOutputStream(outFile);
             pWriter.writeObject(vehicleDB);
+            pWriter.close();
+            return true;
+        } catch (IOException e1) {
+            System.err.println("Error " + e1);
+            return false;
+        }
+    }
+
+    /**
+     * Attempts to write the existing sales runtime database to the database file.
+     * The file will be overwritten, so hopefully this doesn't introduce any corruption.
+     *
+     * @return True if the database was successfully written, false if there
+     * was an IOException.
+     */
+    public boolean saveSalesDB() {
+        try {
+            FileOutputStream outFile = new FileOutputStream("sales.db");
+            ObjectOutputStream pWriter = new ObjectOutputStream(outFile);
+            pWriter.writeObject(saleDB);
             pWriter.close();
             return true;
         } catch (IOException e1) {
