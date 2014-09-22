@@ -36,7 +36,7 @@ class PersonManager {
 
         out.println("Please enter the type of user you wish to add. (employee or customer)");
         type = kb.next();
-        uID = getUID(personDB);
+        uID = getNewUID(personDB);
 
         out.println("Enter the first name of the user.");
         firstName = kb.next();
@@ -274,7 +274,7 @@ class PersonManager {
     }
 
 
-	public static int getUID(ArrayList<Person> personDB)
+	public static int getNewUID(ArrayList<Person> personDB)
 	{
         if (personDB.size() == 0) {
             return 1;

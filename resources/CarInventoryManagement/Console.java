@@ -18,9 +18,7 @@ class Console {
 
     private final VehicleManager vehicleManager;
     private final PersonManager userManager;
-    private final ArrayList<Vehicle> vehiclesDB;
 
-    private final ArrayList<Sale> saleDB;
     /**
      * The default constructor for the console class does a few different things. It declares a new
      * instance of the <code>VehicleManager</code> class called <code>vehicleManager</code>, and then proceeds
@@ -35,12 +33,7 @@ class Console {
 
 
 
-        if (!vehicleManager.readDB()) {
-            err.println("Vehicle database corrupted or doesn't exist");
-        } else {
-            out.println("Successfully read database vehicles.db");
-        }
-        vehiclesDB = vehicleManager.getVehicles();
+
     }
 
     public static void main(String[] args) {
@@ -173,7 +166,6 @@ class Console {
                 valid = true;
             } catch (ParseException e1) {
                 err.println("Error: Please try again");
-                err.println(e1);
             }
         }
         out.println("Please enter the final sale price.");

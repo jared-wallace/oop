@@ -8,17 +8,39 @@ package resources.CarInventoryManagement;
  */
 
 import java.io.*;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.*;
+
+import static java.lang.System.err;
+import static java.lang.System.out;
 
 class VehicleManager {
     private static ArrayList<Vehicle> vehicleDB;
+    private static ArrayList<Sale> saleDB;
 
     /**
      * Default constructor creates an ArrayList of Vehicle objects called <code>vehicleDB</code>.
      * This ArrayList will serve as the runtime database.
      */
     public VehicleManager() {
+
         vehicleDB = new ArrayList<Vehicle>();
+        saleDB = new ArrayList<Sale>();
+
+        if (!readDB()) {
+            err.println("Vehicle database corrupted or doesn't exist");
+        } else {
+            out.println("Successfully read database vehicles.db");
+        }
+
+        if (!readSaleDB()) {
+            err.println("Sales database corrupted or doesn't exist");
+        } else {
+            out.println("Successfully read database sales.db");
+        }
+
+
     }
 
     /**
@@ -123,6 +145,68 @@ class VehicleManager {
         return true;
     }
 
+    boolean sellVehicle(Scanner kb) {
+        int employeeUID;
+        int customerUID;
+        String vin;
+        Date saleDate;
+        DateFormat fmt = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        double salePrice;
+        boolean valid = false;
+
+        out.println("Please enter the customers UID");
+        while (!valid) {
+            try {
+                customerUID = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException) {
+                err.println("Error: That number was not valid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        out.println("Please enter the salesman's UID");
+        valid = false;
+        while (!valid) {
+            try {
+                employeeUID = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException) {
+                err.println("Error: That number was not valid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        out.println("Please enter the VIN number of the car being sold.");
+        vin = kb.next();
+        out.println("Please enter the date of sale");
+        valid = false;
+        while (!valid) {
+            try {
+                saleDate = fmt.parse(kb.next());
+                valid = true;
+            } catch (ParseException e1) {
+                err.println("Error: Please try again");
+            }
+        }
+        out.println("Please enter the final sale price.");
+        valid = false;
+        while (!valid) {
+            try {
+                salePrice = kb.nextDouble();
+                valid = true;
+            } catch {
+                err.println("Error: That number was invalid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        return sellCar(customerUID, employeeUID, vin, saleDate, salePrice);
+    }
+
     /**
      * Given a vin number, attempts to locate the Vehicle in question in the
      * runtime database.
@@ -194,7 +278,7 @@ class VehicleManager {
      */
     public boolean readDB() {
         try {
-            InputStream file = new FileInputStream("vehicles.txt");
+            InputStream file = new FileInputStream("vehicles.db");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput sc = new ObjectInputStream(buffer);
             vehicleDB = (ArrayList<Vehicle>) sc.readObject();
@@ -203,7 +287,30 @@ class VehicleManager {
             System.err.println("Error " + e1);
             return false;
         } catch (ClassNotFoundException e2) {
-            System.err.println("Error" + e2);
+            System.err.println("Error " + e2);
+            return false;
+        }
+    }
+
+    /**
+     * Attempts to read in from the database file called <code>sales.db</code>
+     * and load each Vehicle's info into the runtime database.
+     *
+     * @return True if the file existed and the information was successfully
+     * read into the ArrayList <code>salesDB</code>, false otherwise.
+     */
+    public boolean readSaleDB() {
+        try {
+            InputStream file = new FileInputStream("sales.db");
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput sc = new ObjectInputStream(buffer);
+            vehicleDB = (ArrayList<Vehicle>) sc.readObject();
+            return true;
+        } catch (IOException e1) {
+            System.err.println("Error " + e1);
+            return false;
+        } catch (ClassNotFoundException e2) {
+            System.err.println("Error " + e2);
             return false;
         }
     }
