@@ -2,6 +2,7 @@ package resources.CarInventoryManagement;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by jared on 9/21/14.
@@ -88,6 +89,10 @@ class PersonManager {
         }
 		return (personDB.get(personDB.size()-1)).getID() + 1;
 	}
+
+    public static boolean sellCar(int customerUID, int employeeUID, String vin, Date saleDate, double salePrice) {
+        return;
+    }
     /**
      * Attempts to write the existing runtime database to the database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.

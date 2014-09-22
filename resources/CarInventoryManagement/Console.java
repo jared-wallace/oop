@@ -7,9 +7,9 @@ package resources.CarInventoryManagement;
  * @version %I%, %G%
  */
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.util.*;
+import java.text.DateFormat;
 
 import static java.lang.System.*;
 import static java.lang.Thread.sleep;
@@ -20,6 +20,7 @@ class Console {
     private final PersonManager userManager;
     private final ArrayList<Vehicle> vehiclesDB;
     private final ArrayList<Person> personDB;
+    private final ArrayList<Sale> saleDB;
     /**
      * The default constructor for the console class does a few different things. It declares a new
      * instance of the <code>VehicleManager</code> class called <code>vehicleManager</code>, and then proceeds
@@ -233,7 +234,66 @@ class Console {
     }
 
     boolean sellVehicle(Scanner kb) {
-        return false;
+        int employeeUID;
+        int customerUID;
+        String vin;
+        Date saleDate;
+        DateFormat fmt = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        double salePrice;
+        boolean valid = false;
+
+        out.println("Please enter the customers UID");
+        while (!valid) {
+            try {
+                customerUID = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException) {
+                err.println("Error: That number was not valid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        out.println("Please enter the salesman's UID");
+        valid = false;
+        while (!valid) {
+            try {
+                employeeUID = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException) {
+                err.println("Error: That number was not valid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        out.println("Please enter the VIN number of the car being sold.");
+        vin = kb.next();
+        out.println("Please enter the date of sale");
+        valid = false;
+        while (!valid) {
+            try {
+                saleDate = fmt.parse(kb.next());
+                valid = true;
+            } catch (ParseException e1) {
+                err.println("Error: Please try again");
+                err.println(e1);
+            }
+        }
+        out.println("Please enter the final sale price.");
+        valid = false;
+        while (!valid) {
+            try {
+                salePrice = kb.nextDouble();
+                valid = true;
+            } catch {
+                err.println("Error: That number was invalid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        return userManager.sellCar(customerUID, employeeUID, vin, saleDate, salePrice);
     }
 
     /**
