@@ -1,5 +1,12 @@
 package resources.CarInventoryManagement;
-
+/**
+ * @(#)PersonManager.java
+ *
+ *
+ * @author Mason Egger
+ * @author Jared Wallace
+ * @version %I%, %G%
+ */
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;

@@ -1,6 +1,11 @@
 package resources.CarInventoryManagement;
 /**
- * created by Mason Egger - 9/19
+ * @(#)Motorcycle.java
+ *
+ *
+ * @author Mason Egger
+ * @author Jared Wallace
+ * @version %I%, %G%
  */
 
 import java.io.Serializable;

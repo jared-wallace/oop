@@ -1,7 +1,11 @@
 package resources.CarInventoryManagement;
-
 /**
- * Created by jared on 9/19/14.
+ * @(#)Truck.java
+ *
+ *
+ * @author Mason Egger
+ * @author Jared Wallace
+ * @version %I%, %G%
  */
 
 import java.io.Serializable;

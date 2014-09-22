@@ -3,7 +3,8 @@ package resources.CarInventoryManagement;
  * @(#)Car.java
  *
  *
- * @author Mason Egger and Jared Wallace
+ * @author Mason Egger
+ * @author Jared Wallace
  * @version %I%, %G%
  */
 

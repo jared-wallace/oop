@@ -1,12 +1,16 @@
 package resources.CarInventoryManagement;
-
+/**
+ * @(#)Vehicle.java
+ *
+ *
+ * @author Mason Egger
+ * @author Jared Wallace
+ * @version %I%, %G%
+ */
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-/**
- * Created by jared on 9/19/14.
- */
 abstract class Vehicle implements Serializable {
     private String vin = "";
     private String make = "";

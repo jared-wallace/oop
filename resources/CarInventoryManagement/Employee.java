@@ -1,5 +1,12 @@
 package resources.CarInventoryManagement;
-
+/**
+ * @(#)Employee.java
+ *
+ *
+ * @author Mason Egger
+ * @author Jared Wallace
+ * @version %I%, %G%
+ */
 import java.io.Serializable;
 
 /**
