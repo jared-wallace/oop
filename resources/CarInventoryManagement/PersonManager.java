@@ -8,9 +8,6 @@ import java.util.Scanner;
 import static java.lang.System.err;
 import static java.lang.System.out;
 
-/**
- * Created by jared on 9/21/14.
- */
 class PersonManager {
 
     private static ArrayList<Person> personDB;
@@ -58,10 +55,10 @@ class PersonManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param kb            Scanner object for input/output
-     * @param uID           The UID of the employee
-     * @param firstName     The first name of the employee
-     * @param lastName      The last name of the employee
+     * @param kb        Scanner object for input/output
+     * @param uID       The UID of the employee
+     * @param firstName The first name of the employee
+     * @param lastName  The last name of the employee
      * @return True if the employee was successfully added, false otherwise.
      */
     private boolean addEmployee(Scanner kb, int uID, String lastName, String firstName) {
@@ -103,10 +100,10 @@ class PersonManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param kb          Scanner object for input/output
-     * @param uID         The UID of the customer
-     * @param firstName   The first name of the customer
-     * @param lastName    The last name of the customer
+     * @param kb        Scanner object for input/output
+     * @param uID       The UID of the customer
+     * @param firstName The first name of the customer
+     * @param lastName  The last name of the customer
      * @return True if the customer was successfully added, false otherwise.
      */
     private boolean addCustomer(Scanner kb, int uID, String lastName, String firstName) {

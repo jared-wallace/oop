@@ -6,6 +6,7 @@ Still need:
 
 remove ugly exception printing on db loads
 add toUpper on names for users
+Fix the abomination that is update user lol
 Try removing sleep hack
 
 
