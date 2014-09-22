@@ -50,5 +50,5 @@ abstract class Person implements Serializable {
     public String toString() {
         return this.id + " " + this.getLastName() + "," + this.getFirstName();
     }
-    
+
 }

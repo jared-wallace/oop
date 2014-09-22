@@ -10,7 +10,10 @@ package resources.CarInventoryManagement;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -43,12 +46,14 @@ class VehicleManager {
 
     }
 
-    public ArrayList<Vehicle> getVehicleDB() { return vehicleDB; }
+    public ArrayList<Vehicle> getVehicleDB() {
+        return vehicleDB;
+    }
 
     boolean validateVin(String vin) {
-        for (Vehicle s: vehicleDB) {
+        for (Vehicle s : vehicleDB) {
             if (s.getVin().equals(vin))
-                    return true;
+                return true;
         }
         return false;
     }
@@ -131,11 +136,11 @@ class VehicleManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param vin       The vin number of the new car.
-     * @param make      Make of the new car
-     * @param model     Model of the new car
-     * @param year      Year of the new car, can't be before cars were invented, in 1896.
-     * @param price     Price of the new car, can't be less than 0.00.
+     * @param vin   The vin number of the new car.
+     * @param make  Make of the new car
+     * @param model Model of the new car
+     * @param year  Year of the new car, can't be before cars were invented, in 1896.
+     * @param price Price of the new car, can't be less than 0.00.
      * @return True if the car was successfully added, false otherwise.
      */
     private boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
@@ -153,11 +158,11 @@ class VehicleManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param vin           The vin number of the new truck.
-     * @param make          Make of the new truck
-     * @param model         Model of the new truck
-     * @param year          Year of the new truck, can't be before cars were invented, in 1896.
-     * @param price         Price of the new truck, can't be less than 0.00.
+     * @param vin   The vin number of the new truck.
+     * @param make  Make of the new truck
+     * @param model Model of the new truck
+     * @param year  Year of the new truck, can't be before cars were invented, in 1896.
+     * @param price Price of the new truck, can't be less than 0.00.
      * @return True if the truck was successfully added, false otherwise.
      */
     private boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
@@ -201,11 +206,11 @@ class VehicleManager {
      * This does not mean that the information will necessarily end up in the database
      * file! The database file is only written upon exiting the program normally!
      *
-     * @param vin          The vin number of the new truck.
-     * @param make         Make of the new Motorcycle
-     * @param model        Model of the new Motorcycle
-     * @param year         Year of the new Motorcycle, can't be before cars were invented, in 1896.
-     * @param price        Price of the new Motorcycle, can't be less than 0.00.
+     * @param vin   The vin number of the new truck.
+     * @param make  Make of the new Motorcycle
+     * @param model Model of the new Motorcycle
+     * @param year  Year of the new Motorcycle, can't be before cars were invented, in 1896.
+     * @param price Price of the new Motorcycle, can't be less than 0.00.
      * @return True if the Motorcycle was successfully added, false otherwise.
      */
     private boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {

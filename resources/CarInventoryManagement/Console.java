@@ -7,7 +7,8 @@ package resources.CarInventoryManagement;
  * @version %I%, %G%
  */
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import static java.lang.System.*;
 import static java.lang.Thread.sleep;
@@ -116,7 +117,6 @@ class Console {
     }
 
 
-
     boolean updateUser(Scanner kb) {
         return userManager.updateUser(kb);
     }
@@ -136,8 +136,6 @@ class Console {
     boolean sellVehicle(Scanner kb) {
         return vehicleManager.sellVehicle(kb, userManager);
     }
-
-
 
 
     /**
@@ -167,6 +165,7 @@ class Console {
     boolean addVehicle(Scanner kb) {
         return vehicleManager.addVehicle(kb);
     }
+
     /**
      * Attempts to delete a vehicle from the database in memory. The vehicle is located
      * by VIN number. This does not necessarily mean the change is permanently
@@ -238,5 +237,5 @@ class Console {
             out.println("Sales database updated, exiting...");
         }
     }
-    
+
 }
