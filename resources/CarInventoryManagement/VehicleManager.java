@@ -46,6 +46,14 @@ class VehicleManager {
 
     public ArrayList<Vehicle> getVehicleDB() { return vehicleDB; }
 
+    public boolean validateVin(String vin) {
+        for (Vehicle s: vehicleDB) {
+            if (s.getVin().equals(vin))
+                    return true;
+        }
+        return false;
+    }
+
     /**
      * Adds a car to the runtime database, (assuming all the fields validate correctly).
      * This does not mean that the information will necessarily end up in the database
@@ -185,7 +193,17 @@ class VehicleManager {
 
         out.println("Please enter the VIN number of the car being sold.");
         vin = kb.next();
-        out.println("Please enter the date of sale");
+        valid = false;
+        while (!valid) {
+            if (validateVin(vin)) {
+                valid = true;
+            } else {
+                err.println("Error: That VIN does not match any existing vehicle in the database.");
+                err.println("Please re-enter the VIN number.");
+                vin = kb.next();
+            }
+        }
+        out.println("Please enter the date of sale (Format MM/dd/yyyy)");
         valid = false;
         while (!valid) {
             try {
@@ -209,7 +227,7 @@ class VehicleManager {
             }
         }
 
-
+        deleteVehicle(vin);
         return saleDB.add(new Sale(employeeUID, customerUID, vin, saleDate, salePrice));
     }
 
