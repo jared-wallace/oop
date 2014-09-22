@@ -8,7 +8,6 @@ package resources.CarInventoryManagement;
  */
 
 import java.io.*;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -46,12 +45,85 @@ class VehicleManager {
 
     public ArrayList<Vehicle> getVehicleDB() { return vehicleDB; }
 
-    public boolean validateVin(String vin) {
+    boolean validateVin(String vin) {
         for (Vehicle s: vehicleDB) {
             if (s.getVin().equals(vin))
                     return true;
         }
         return false;
+    }
+
+    /**
+     * Attempts to add a new vehicle to the database in memory. This only succeeds
+     * if all the fields successfully pass validation.
+     *
+     * @param kb The scanner object used to read in from the console
+     * @return True if a vehicle was successfully added to the database in memory,
+     * false if something went wrong.
+     */
+    boolean addVehicle(Scanner kb) {
+        String vin, make, model, type;
+        int year = -1;
+        int mileage = -1;
+        double price = -1.0;
+        boolean valid = false;
+        out.println("Please enter the type of vehicle (car, truck or motorcycle");
+        type = kb.next();
+
+        out.println("Enter the vin number.");
+        vin = kb.next();
+        out.println("Enter the make. (Cannot be blank)");
+        make = kb.next();
+        out.println("Enter the model. (Cannot be blank)");
+        model = kb.next();
+
+        out.println("Enter the year (cannot be prior to 1886)");
+        while (!valid) {
+            try {
+                year = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("That was not an integer value.");
+                err.println("Please enter the year again.");
+                kb.next();
+            }
+        }
+
+        out.println("Enter the price. (Cannot be < 0)");
+        valid = false;
+        while (!valid) {
+            try {
+                price = kb.nextDouble();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the price again.");
+                kb.next();
+            }
+        }
+
+        out.println("Enter the mileage. (Cannot be negative)");
+        valid = false;
+        while (!valid) {
+            try {
+                mileage = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the mileage again");
+                kb.next();
+            }
+        }
+
+        make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
+        model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
+
+        if (type.matches("[cC][aA][rR][sS]?")) {
+            return addCar(kb, vin, make, model, year, price, mileage);
+        } else if (type.matches("[tT][rR][uU][cC][kK][sS]?")) {
+            return addTruck(kb, vin, make, model, year, price, mileage);
+        } else
+            return type.matches("[mM]") && addMotorcycle(kb, vin, make, model, year, price, mileage);
     }
 
     /**
@@ -64,18 +136,16 @@ class VehicleManager {
      * @param model     Model of the new car
      * @param year      Year of the new car, can't be before cars were invented, in 1896.
      * @param price     Price of the new car, can't be less than 0.00.
-     * @param bodyStyle The type of car it is.
      * @return True if the car was successfully added, false otherwise.
      */
-    public boolean addVehicle(String vin, String make, String model, int year, double price,
-                              int mileage, String bodyStyle) {
-        if (Car.validateVin(vin) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year)
-                && Car.validatePrice(price) && Car.validateBodyStyle(bodyStyle)) {
-            make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
-            model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
-            return vehicleDB.add(new Car(vin, make, model, year, price, mileage, bodyStyle));
-        }
-        return false;
+    private boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+        String bodyStyle;
+        out.println("Enter the body style.");
+        kb.nextLine();
+        bodyStyle = kb.nextLine();
+        return Car.validateVin(vin) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year)
+                && Car.validatePrice(price) && Car.validateBodyStyle(bodyStyle)
+                && vehicleDB.add(new Car(vin, make, model, year, price, mileage, bodyStyle));
     }
 
     /**
@@ -88,22 +158,43 @@ class VehicleManager {
      * @param model         Model of the new truck
      * @param year          Year of the new truck, can't be before cars were invented, in 1896.
      * @param price         Price of the new truck, can't be less than 0.00.
-     * @param maxLoadWeight The maximum load rating in pounds of the truck.
-     * @param lengthFT      The length in feet of the truck.
      * @return True if the truck was successfully added, false otherwise.
      */
-    public boolean addVehicle(String vin, String make, String model, int year, double price, int mileage,
-                              int maxLoadWeight, double lengthFT) {
-        if (Truck.validateVin(vin) && Truck.validateMake(make) && Truck.validateModel(model) && Truck.validateYear(year)
-                && Truck.validatePrice(price) && Truck.validateMaxLoadWeight(maxLoadWeight)
-                && Truck.validateLengthFT(lengthFT)) {
-            make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
-            model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
-            return vehicleDB.add(new Truck(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT));
-        }
-        return false;
-    }
+    private boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+        int maxLoadWeight = -1;
+        double lengthFT = -1.0;
+        boolean valid = false;
 
+        out.println("Enter the maximum load weight in pounds");
+        while (!valid) {
+            try {
+                maxLoadWeight = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the load weight again.");
+                kb.next();
+            }
+        }
+
+        out.println("Enter the length of the truck in feet");
+        valid = false;
+        while (!valid) {
+            try {
+                lengthFT = kb.nextDouble();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("The input was not a valid number.");
+                err.println("Please enter the length again.");
+                kb.next();
+            }
+        }
+
+        return Truck.validateVin(vin) && Truck.validateMake(make) && Truck.validateModel(model) && Truck.validateYear(year)
+                && Truck.validatePrice(price) && Truck.validateMaxLoadWeight(maxLoadWeight)
+                && Truck.validateLengthFT(lengthFT)
+                && vehicleDB.add(new Truck(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT));
+    }
 
     /**
      * Adds a motorcycle to the runtime database, (assuming all the fields validate correctly).
@@ -115,20 +206,25 @@ class VehicleManager {
      * @param model        Model of the new Motorcycle
      * @param year         Year of the new Motorcycle, can't be before cars were invented, in 1896.
      * @param price        Price of the new Motorcycle, can't be less than 0.00.
-     * @param displacement The displacement of the Motorcycle, can't be less than zero.
-     * @param type         The type of the motorcycle (Scooter, Touring, Street Bike, Bitchen, etc)
      * @return True if the Motorcycle was successfully added, false otherwise.
      */
-    public boolean addVehicle(String vin, String make, String model, int year, double price, int mileage,
-                              int displacement, String type) {
-        if (Motorcycle.validateVin(vin) && Motorcycle.validateMake(make) && Motorcycle.validateModel(model) && Motorcycle.validateYear(year)
-                && Motorcycle.validatePrice(price) && Motorcycle.validateDisplacement(displacement)
-                && Motorcycle.validateType(type)) {
-            make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
-            model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
-            return vehicleDB.add(new Motorcycle(vin, make, model, year, price, mileage, type, displacement));
+    private boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
+        String type;
+        int displacement;
+
+        out.println("Enter the type of Motorcycle");
+        type = kb.next();
+        out.println("Enter the displacement");
+        try {
+            displacement = kb.nextInt();
+        } catch (InputMismatchException e) {
+            err.println("The input was not a valid number.");
+            return false;
         }
-        return false;
+        return Motorcycle.validateVin(vin) && Motorcycle.validateMake(make) && Motorcycle.validateModel(model)
+                && Motorcycle.validateYear(year) && Motorcycle.validatePrice(price)
+                && Motorcycle.validateDisplacement(displacement) && Motorcycle.validateType(type)
+                && vehicleDB.add(new Motorcycle(vin, make, model, year, price, mileage, type, displacement));
     }
 
     /**
@@ -299,7 +395,7 @@ class VehicleManager {
      * @return True if the file existed and the information was successfully
      * read into the ArrayList <code>vehicleDB</code>, false otherwise.
      */
-    public boolean readDB() {
+    boolean readDB() {
         try {
             InputStream file = new FileInputStream("vehicles.db");
             InputStream buffer = new BufferedInputStream(file);
@@ -322,7 +418,7 @@ class VehicleManager {
      * @return True if the file existed and the information was successfully
      * read into the ArrayList <code>salesDB</code>, false otherwise.
      */
-    public boolean readSaleDB() {
+    boolean readSaleDB() {
         try {
             InputStream file = new FileInputStream("sales.db");
             InputStream buffer = new BufferedInputStream(file);

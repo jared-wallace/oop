@@ -20,20 +20,13 @@ class Console {
     private final PersonManager userManager;
 
     /**
-     * The default constructor for the console class does a few different things. It declares a new
-     * instance of the <code>VehicleManager</code> class called <code>vehicleManager</code>, and then proceeds
-     * to attempt reading the existing vehicle database, called <code>vehicle.txt</code>. If that file fails to be
-     * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
-     * indicating that the database has been successfully loaded into memory. Lastly, it calls the
-     * <code>VehicleManager.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
+     * The default constructor for the console class does two basic things. It declares a new
+     * instance of the <code>VehicleManager</code> class called <code>vehicleManager</code>, and
+     * a new instance of the <code>PersonManager</code> class called <code>userManager</code>.
      */
     private Console() {
         vehicleManager = new VehicleManager();
         userManager = new PersonManager();
-
-
-
-
     }
 
     public static void main(String[] args) {
@@ -100,6 +93,22 @@ class Console {
         }
     }
 
+    /**
+     * Prints the menu with all the currently available options.
+     */
+    void printMenu() {
+        out.println("1. Add a new vehicle to the database.");
+        out.println("2. Delete a vehicle from a database (given its VIN).");
+        out.println("3. Show all existing vehicles in the database.");
+        out.println("4. Show a list of vehicles within a given price range.");
+        out.println("5. Add a new user to the database.");
+        out.println("6. Update user info (given their id).");
+        out.println("7. Show list of users.");
+        out.println("8. Sell a vehicle.");
+        out.println("9. Exit program.");
+
+    }
+
     boolean addUser(Scanner kb) {
         return userManager.addUser(kb);
     }
@@ -126,21 +135,7 @@ class Console {
         return vehicleManager.sellVehicle(kb, userManager);
     }
 
-    /**
-     * Prints the menu with all the currently available options.
-     */
-    void printMenu() {
-        out.println("1. Add a new vehicle to the database.");
-        out.println("2. Delete a vehicle from a database (given its VIN).");
-        out.println("3. Show all existing vehicles in the database.");
-        out.println("4. Show a list of vehicles within a given price range.");
-        out.println("5. Add a new user to the database.");
-        out.println("6. Update user info (given their id).");
-        out.println("7. Show list of users.");
-        out.println("8. Sell a vehicle.");
-        out.println("9. Exit program.");
 
-    }
 
 
     /**
@@ -168,124 +163,8 @@ class Console {
      * false if something went wrong.
      */
     boolean addVehicle(Scanner kb) {
-        String vin, make, model, type;
-        int year = -1;
-        int mileage = -1;
-        double price = -1.0;
-        boolean valid = false;
-        out.println("Please enter the type of vehicle (car, truck or motorcycle");
-        type = kb.next();
-
-        out.println("Enter the vin number.");
-        vin = kb.next();
-        out.println("Enter the make. (Cannot be blank)");
-        make = kb.next();
-        out.println("Enter the model. (Cannot be blank)");
-        model = kb.next();
-
-        out.println("Enter the year (cannot be prior to 1886)");
-        while (!valid) {
-            try {
-                year = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException e) {
-                err.println("That was not an integer value.");
-                err.println("Please enter the year again.");
-                kb.next();
-            }
-        }
-
-        out.println("Enter the price. (Cannot be < 0)");
-        valid = false;
-        while (!valid) {
-            try {
-                price = kb.nextDouble();
-                valid = true;
-            } catch (InputMismatchException e) {
-                err.println("The input was not a valid number.");
-                err.println("Please enter the price again.");
-                kb.next();
-            }
-        }
-
-        out.println("Enter the mileage. (Cannot be negative)");
-        valid = false;
-        while (!valid) {
-            try {
-                mileage = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException e) {
-                err.println("The input was not a valid number.");
-                err.println("Please enter the mileage again");
-                kb.next();
-            }
-        }
-
-        if (type.matches("[cC][aA][rR][sS]?")) {
-            return addCar(kb, vin, make, model, year, price, mileage);
-        } else if (type.matches("[tT][rR][uU][cC][kK][sS]?")) {
-            return addTruck(kb, vin, make, model, year, price, mileage);
-        } else
-            return type.matches("[mM]") && addMotorcycle(kb, vin, make, model, year, price, mileage);
+        return vehicleManager.addVehicle(kb);
     }
-
-    private boolean addCar(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
-        String bodyStyle;
-        out.println("Enter the body style.");
-        kb.nextLine();
-        bodyStyle = kb.nextLine();
-        return vehicleManager.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
-    }
-
-    private boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
-        int maxLoadWeight = -1;
-        double lengthFT = -1.0;
-        boolean valid = false;
-
-        out.println("Enter the maximum load weight in pounds");
-        while (!valid) {
-            try {
-                maxLoadWeight = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException e) {
-                err.println("The input was not a valid number.");
-                err.println("Please enter the load weight again.");
-                kb.next();
-            }
-        }
-
-        out.println("Enter the length of the truck in feet");
-        valid = false;
-        while (!valid) {
-            try {
-                lengthFT = kb.nextDouble();
-                valid = true;
-            } catch (InputMismatchException e) {
-                err.println("The input was not a valid number.");
-                err.println("Please enter the length again.");
-                kb.next();
-            }
-        }
-
-        return vehicleManager.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
-    }
-
-    private boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
-        String type;
-        int displacement;
-
-        out.println("Enter the type of Motorcycle");
-        type = kb.next();
-        out.println("Enter the displacement");
-        try {
-            displacement = kb.nextInt();
-        } catch (InputMismatchException e) {
-            err.println("The input was not a valid number.");
-            return false;
-        }
-        return vehicleManager.addVehicle(vin, make, model, year, price, mileage, displacement, type);
-    }
-
     /**
      * Attempts to delete a vehicle from the database in memory. The vehicle is located
      * by VIN number. This does not necessarily mean the change is permanently

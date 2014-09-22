@@ -6,6 +6,7 @@ Still need:
 
 uniqueness checking for vin in addVehicle
 salesDB write
+Try removing sleep hack
 
 
 
