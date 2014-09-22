@@ -5,7 +5,7 @@ package resources.CarInventoryManagement;
  */
 
 
-abstract class Person {
+abstract class Person implements Comparable{
 
     private int id;
     private String firstName, lastName;
@@ -51,5 +51,11 @@ abstract class Person {
     @Override
     public String toString() {
         return this.getID() + " " + this.getLastName() + "," + this.getFirstName();
+    }
+    
+    public int compareTo(Person rhs)
+    {
+    	int rhsID = rhs.id;
+    	return ((Integer)id).compareTo(rhsID);
     }
 }

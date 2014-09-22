@@ -80,6 +80,8 @@ class PersonManager {
         return -1;
     }
 
+
+	public static int getUID()
     /**
      * Attempts to write the existing runtime database to the database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.
