@@ -184,7 +184,40 @@ class Console {
     }
 
     boolean updateUser(Scanner kb) {
-        return false;
+        
+        int userID = -1;
+        boolean valid = false;
+        
+        out.println("Enter the id of the User");
+        
+        while(!valid){
+        	try{
+        		userID = kb.nextInt();
+        		valid = true;
+        	}
+        	catch(InputMismatchException e){
+        		err.println("Not valid input");
+        		err.println("Please input the id of the User again");
+        		kb.next();
+        	}
+        }
+        
+        if(userID < 0 || userID > personDB.size()-1)
+        {
+        	err.println("User does not exist");
+        	return false;
+        }
+        else
+        {
+        	if(personDB.get(userID) instanceof Customer)
+        	{
+        		
+        	}
+        	else
+        	{
+        		
+        	}
+        }
     }
 
     void showUsers() {
