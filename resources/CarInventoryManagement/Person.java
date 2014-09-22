@@ -5,7 +5,7 @@ package resources.CarInventoryManagement;
  */
 
 
-abstract class Person {
+abstract class Person{
 
     private int id;
     private String firstName, lastName;
@@ -52,4 +52,5 @@ abstract class Person {
     public String toString() {
         return this.getID() + " " + this.getLastName() + "," + this.getFirstName();
     }
+    
 }
