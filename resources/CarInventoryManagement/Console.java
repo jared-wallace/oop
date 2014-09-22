@@ -16,8 +16,9 @@ import static java.lang.System.*;
 class Console {
 
     private final VehicleManager manage;
+    private final PersonManager userManager;
     private final ArrayList<Vehicle> vehiclesDB;
-
+    private final ArrayList<Person> personDB;
     /**
      * The default constructor for the console class does a few different things. It declares a new
      * instance of the <code>VehicleManager</code> class called <code>manage</code>, and then proceeds
@@ -28,10 +29,19 @@ class Console {
      */
     private Console() {
         manage = new VehicleManager();
+        userManager = new PersonManager();
+
+        if (!userManager.readDB()) {
+            err.println("Database corrupted or doesn't exist");
+        } else {
+            out.println("Successfully read database people.db");
+        }
+        personDB = userManager.getPersons();
+
         if (!manage.readDB()) {
             err.println("Database corrupted or doesn't exist");
         } else {
-            out.println("Successfully read database vehicles.txt");
+            out.println("Successfully read database vehicles.db");
         }
         vehiclesDB = manage.getVehicles();
     }
@@ -101,6 +111,10 @@ class Console {
 
         out.println("Please enter the type of user you wish to add. (employee or customer)");
         type = kb.next();
+        if (type.matches("[cC]\\w*"))
+            type = "customer";
+        else
+            type = "employee";
 
         uID = PersonManager.getUID();
 
@@ -110,23 +124,48 @@ class Console {
         lastName = kb.next();
 
         if (type.equals("employee")) {
-            return addEmployee(uID, lastName, firstName);
+            return addEmployee(kb, uID, lastName, firstName);
         }
         else {
-            return addCustomer(uID, lastName, firstName);
+            return addCustomer(kb, uID, lastName, firstName);
         }
         return false;
     }
 
-    private boolean addEmployee(int uID, String lastName, String firstName) {
-        double salary;
-        int accountNumber;
+    private boolean addEmployee(Scanner kb, int uID, String lastName, String firstName) {
+        double salary = -1.0;
+        int accountNumber = -1;
         boolean valid = false;
         out.println("Please enter the monthly salary of the employee");
         while (!valid) {
-
+            try {
+                salary = kb.nextDouble();
+                valid = true;
+            } catch (InputMismatchException e1) {
+                err.println("Error: That salary number was not valid.");
+                err.println("Please try again.");
+                kb.next();
+            }
         }
 
+        valid = false;
+        out.println("Please enter the bank account number for direct deposit");
+        while (!valid) {
+            try {
+                accountNumber = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e1) {
+                err.println("Error: That account number was invalid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+
+        return userManager.addPerson(uID, firstName, lastName, salary, accountNumber);
+    }
+
+    private boolean addCustomer(Scanner kb, int uID, String lastName, String firstName) {
+        return false;
     }
 
     boolean updateUser(Scanner kb) {
