@@ -111,77 +111,19 @@ class Console {
     }
 
     void showUsers() {
-        if (personDB.size() == 0) {
+        if (userManager.getPersonDB().size() == 0) {
             out.println("Database is empty");
         } else {
             out.println("Last name | First name | Classification | Extra");
             out.println("--------------------------------------------------------------------------------");
-            for (Person s : personDB) {
+            for (Person s : userManager.getPersonDB()) {
                 out.println(s);
             }
         }
     }
 
     boolean sellVehicle(Scanner kb) {
-        int employeeUID;
-        int customerUID;
-        String vin;
-        Date saleDate;
-        DateFormat fmt = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
-        double salePrice;
-        boolean valid = false;
-
-        out.println("Please enter the customers UID");
-        while (!valid) {
-            try {
-                customerUID = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException) {
-                err.println("Error: That number was not valid.");
-                err.println("Please try again.");
-                kb.next();
-            }
-        }
-
-        out.println("Please enter the salesman's UID");
-        valid = false;
-        while (!valid) {
-            try {
-                employeeUID = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException) {
-                err.println("Error: That number was not valid.");
-                err.println("Please try again.");
-                kb.next();
-            }
-        }
-
-        out.println("Please enter the VIN number of the car being sold.");
-        vin = kb.next();
-        out.println("Please enter the date of sale");
-        valid = false;
-        while (!valid) {
-            try {
-                saleDate = fmt.parse(kb.next());
-                valid = true;
-            } catch (ParseException e1) {
-                err.println("Error: Please try again");
-            }
-        }
-        out.println("Please enter the final sale price.");
-        valid = false;
-        while (!valid) {
-            try {
-                salePrice = kb.nextDouble();
-                valid = true;
-            } catch {
-                err.println("Error: That number was invalid.");
-                err.println("Please try again.");
-                kb.next();
-            }
-        }
-
-        return userManager.sellCar(customerUID, employeeUID, vin, saleDate, salePrice);
+        return vehicleManager.sellVehicle(kb, userManager);
     }
 
     /**
@@ -206,12 +148,12 @@ class Console {
      * in memory, but not necessarily what is currently written to the file.
      */
     void showCars() {
-        if (vehiclesDB.size() == 0) {
+        if (vehicleManager.getVehicleDB().size() == 0) {
             out.println("Database is empty");
         } else {
             out.println("Vin Make Model Year Price Mileage Extra");
             out.println("--------------------------------------------------------------------------------");
-            for (Vehicle s : vehiclesDB) {
+            for (Vehicle s : vehicleManager.getVehicleDB()) {
                 out.println(s);
             }
         }

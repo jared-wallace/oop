@@ -30,6 +30,10 @@ class PersonManager {
         }
     }
 
+    public ArrayList<Person> getPersonDB(){ return personDB;}
+
+
+
     boolean addUser(Scanner kb) {
         int uID;
         String lastName, firstName, type;
@@ -337,12 +341,27 @@ class PersonManager {
     }
 
     /**
-     * Given a UID, attempts to locate the person in question in the
-     * runtime database.
+     * Given a UID, attempts to validate whether or not the user
+     * is listed in the database as a customer
      *
-     * @param s An int that is the UID of the person being sought.
-     * @return The index of the matching person, if found. Otherwise returns -1.
+     * @param UID An int that is the UID of the person being sought.
+     * @return True if the UID belongs to a customer. Otherwise returns false.
      */
+    public boolean validateCustomerUID(int UID) {
+        return UID < personDB.size() && UID > 0 && personDB.get(search(UID)) instanceof Customer;
+    }
+
+    /**
+     * Given a UID, attempts to validate whether or not the user
+     * is listed in the database as a employee
+     *
+     * @param UID An int that is the UID of the person being sought.
+     * @return True if the UID belongs to a customer. Otherwise returns false.
+     */
+    public boolean validateEmployeeUID(int UID) {
+        return UID < personDB.size() && UID > 0 && personDB.get(search(UID)) instanceof Employee;
+    }
+
     public int search(int s) {
         for (int x = 0; x < personDB.size(); x++) {
             int UID = personDB.get(x).getID();

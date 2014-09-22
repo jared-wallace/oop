@@ -43,14 +43,7 @@ class VehicleManager {
 
     }
 
-    /**
-     * Simply a way to retrieve the existing database held in memory.
-     *
-     * @return The ArrayList <code>vehicleDB</code>
-     */
-    public ArrayList<Vehicle> getVehicles() {
-        return vehicleDB;
-    }
+    public ArrayList<Vehicle> getVehicleDB() { return vehicleDB; }
 
     /**
      * Adds a car to the runtime database, (assuming all the fields validate correctly).
@@ -145,13 +138,13 @@ class VehicleManager {
         return true;
     }
 
-    boolean sellVehicle(Scanner kb) {
-        int employeeUID;
-        int customerUID;
-        String vin;
-        Date saleDate;
+    boolean sellVehicle(Scanner kb, PersonManager userManager) {
+        int employeeUID = 0;
+        int customerUID = 0;
+        String vin = "";
+        Date saleDate = null;
         DateFormat fmt = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
-        double salePrice;
+        double salePrice = 0.0;
         boolean valid = false;
 
         out.println("Please enter the customers UID");
@@ -159,7 +152,9 @@ class VehicleManager {
             try {
                 customerUID = kb.nextInt();
                 valid = true;
-            } catch (InputMismatchException) {
+                if (!userManager.validateCustomerUID(customerUID))
+                    valid = false;
+            } catch (InputMismatchException e1) {
                 err.println("Error: That number was not valid.");
                 err.println("Please try again.");
                 kb.next();
@@ -172,7 +167,9 @@ class VehicleManager {
             try {
                 employeeUID = kb.nextInt();
                 valid = true;
-            } catch (InputMismatchException) {
+                if (!userManager.validateEmployeeUID(employeeUID))
+                    valid = false;
+            } catch (InputMismatchException e1) {
                 err.println("Error: That number was not valid.");
                 err.println("Please try again.");
                 kb.next();
@@ -197,14 +194,15 @@ class VehicleManager {
             try {
                 salePrice = kb.nextDouble();
                 valid = true;
-            } catch {
+            } catch (InputMismatchException e1) {
                 err.println("Error: That number was invalid.");
                 err.println("Please try again.");
                 kb.next();
             }
         }
 
-        return sellCar(customerUID, employeeUID, vin, saleDate, salePrice);
+
+        return saleDB.add(new Sale(employeeUID, customerUID, vin, saleDate, salePrice));
     }
 
     /**

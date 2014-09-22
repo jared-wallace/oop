@@ -20,10 +20,6 @@ public class Sale {
         this.salePrice = salePrice;
     }
 
-    boolean validateEmployeeUID(int employeeUID) {
-
-    }
-
     int getEmployeeUID() {
         return employeeUID;
     }
@@ -48,11 +44,11 @@ public class Sale {
         this.vin = vin;
     }
 
-    int getSaleDate() {
+    Date getSaleDate() {
         return saleDate;
     }
 
-    void setSaleDate(int saleDate) {
+    void setSaleDate(Date saleDate) {
         this.saleDate = saleDate;
     }
 
