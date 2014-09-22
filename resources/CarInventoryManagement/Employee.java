@@ -15,6 +15,11 @@ class Employee extends Person {
         this.accountNumber = accountNumber;
     }
 
+    public static boolean contains(int UID) {
+        if(UID > personDB.size() || UID < 0)
+            return true;
+        return false;
+    }
     public static boolean validateSalary(double salary) {
         return !(salary < 0.0);
     }

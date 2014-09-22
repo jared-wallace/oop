@@ -21,13 +21,7 @@ public class Sale {
     }
 
     boolean validateEmployeeUID(int employeeUID) {
-        for (int x = 0; x < personManager.searchsize(); x++) {
-            String vin = vehicleDB.get(x).getVin();
-            if (s.equals(vin)) {
-                return x;
-            }
-        }
-        return -1;
+
     }
 
     int getEmployeeUID() {

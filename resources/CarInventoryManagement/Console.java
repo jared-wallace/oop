@@ -19,7 +19,7 @@ class Console {
     private final VehicleManager vehicleManager;
     private final PersonManager userManager;
     private final ArrayList<Vehicle> vehiclesDB;
-    private final ArrayList<Person> personDB;
+
     private final ArrayList<Sale> saleDB;
     /**
      * The default constructor for the console class does a few different things. It declares a new
@@ -33,12 +33,7 @@ class Console {
         vehicleManager = new VehicleManager();
         userManager = new PersonManager();
 
-        if (!userManager.readDB()) {
-            err.println("People database corrupted or doesn't exist");
-        } else {
-            out.println("Successfully read database people.db");
-        }
-        personDB = userManager.getPersons();
+
 
         if (!vehicleManager.readDB()) {
             err.println("Vehicle database corrupted or doesn't exist");
@@ -113,84 +108,19 @@ class Console {
     }
 
     boolean addUser(Scanner kb) {
-        int uID;
-        String lastName, firstName, type;
-
-        out.println("Please enter the type of user you wish to add. (employee or customer)");
-        type = kb.next();
-        uID = PersonManager.getUID(personDB);
-
-        out.println("Enter the first name of the user.");
-        firstName = kb.next();
-        out.println("Enter the last name of the user.");
-        lastName = kb.next();
-
-        if (type.matches("[cC]\\w*"))
-            return addCustomer(kb, uID, lastName, firstName);
-        else
-            return addEmployee(kb, uID, lastName, firstName);
+        return userManager.addUser(kb);
     }
 
-    private boolean addEmployee(Scanner kb, int uID, String lastName, String firstName) {
-        double salary = -1.0;
-        int accountNumber = -1;
-        boolean valid = false;
-        out.println("Please enter the monthly salary of the employee");
-        while (!valid) {
-            try {
-                salary = kb.nextDouble();
-                valid = true;
-            } catch (InputMismatchException e1) {
-                err.println("Error: That salary number was not valid.");
-                err.println("Please try again.");
-                kb.next();
-            }
-        }
 
-        valid = false;
-        out.println("Please enter the bank account number for direct deposit");
-        while (!valid) {
-            try {
-                accountNumber = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException e1) {
-                err.println("Error: That account number was invalid.");
-                err.println("Please try again.");
-                kb.next();
-            }
-        }
-
-        return userManager.addPerson(uID, firstName, lastName, salary, accountNumber);
-    }
-
-    private boolean addCustomer(Scanner kb, int uID, String lastName, String firstName) {
-        String phoneNumber;
-        int dLNumber = -1;
-        boolean valid = false;
-        out.println("Please enter the phone number of the customer.");
-        phoneNumber = kb.next();
-
-        out.println("Please enter the driver's license number of the customer.");
-        while (!valid) {
-            try {
-                dLNumber = kb.nextInt();
-                valid = true;
-            } catch (InputMismatchException e1) {
-                err.println("Error: That license number was invalid.");
-                err.println("Please try again.");
-                kb.next();
-            }
-        }
-        return userManager.addPerson(uID, firstName, lastName, phoneNumber, dLNumber);
-    }
 
     boolean updateUser(Scanner kb) {
-        
+        return userManager.updateUser(kb);
+
         int userID = -1;
         boolean valid = false;
-        
+
         out.println("Enter the id of the User");
-        
+
         while(!valid){
         	try{
         		userID = kb.nextInt();
@@ -203,7 +133,7 @@ class Console {
         	}
         }
         valid = false;
-        
+
         if(userID < 0 || userID > personDB.size()-1)
         {
         	err.println("User does not exist");
@@ -223,7 +153,7 @@ class Console {
         		out.println("\t3. Phone Number");
         		out.println("\t4. Drivers License Number");
         		out.println("\t5. Cancel");
-        		
+
         		while(!valid){
         			try{
         				choice = kb.nextInt();
@@ -235,7 +165,7 @@ class Console {
         				kb.next();
         			}
         		}
-        		
+
         		switch(choice)
         		{
         			case 1:
@@ -292,15 +222,15 @@ class Console {
         				}
         			case 5:
         				return false;
-        			
+
         			default:
         				out.println("Not a correct choice.");
         		}
-        		
+
         	}
         	else
         	{
-        		
+
         	}
         }
     }
