@@ -130,7 +130,7 @@ class VehicleManager {
      * @param s A string that is the vin number of the vehicle being sought.
      * @return The index of the matching vehicle, if found. Otherwise returns -1.
      */
-    public int search(String s) {
+    int search(String s) {
         for (int x = 0; x < vehicleDB.size(); x++) {
             String vin = vehicleDB.get(x).getVin();
             if (s.equals(vin)) {

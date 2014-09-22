@@ -12,6 +12,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static java.lang.System.*;
+import static java.lang.Thread.sleep;
 
 class Console {
 
@@ -49,6 +50,11 @@ class Console {
     public static void main(String[] args) {
         Scanner kb = new Scanner(in);
         Console console = new Console();
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            // interruption matters naught
+        }
         boolean loopControl = true;
         while (loopControl) {
             console.printMenu();
@@ -106,7 +112,7 @@ class Console {
     }
 
     boolean addUser(Scanner kb) {
-        int uID = -1;
+        int uID;
         String lastName, firstName, type;
 
         out.println("Please enter the type of user you wish to add. (employee or customer)");
