@@ -282,13 +282,6 @@ class PersonManager {
 		return (personDB.get(personDB.size()-1)).getID() + 1;
 	}
 
-    public static boolean validateEmployeeUID(int employeeUID) {
-        if (personDB.size() == 0)
-            return false;
-        for (employee s: personDB) {
-            if (person.id
-        }
-    }
 
     public static boolean sellCar(int customerUID, int employeeUID, String vin, Date saleDate, double salePrice) {
         return;
