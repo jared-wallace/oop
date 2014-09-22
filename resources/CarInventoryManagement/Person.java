@@ -1,11 +1,13 @@
 package resources.CarInventoryManagement;
 
+import java.io.Serializable;
+
 /**
  * created by Mason Egger - 9/19
  */
 
 
-abstract class Person{
+abstract class Person implements Serializable {
 
     private int id;
     private String firstName, lastName;
@@ -50,7 +52,7 @@ abstract class Person{
 
     @Override
     public String toString() {
-        return this.getLastName() + "," + this.getFirstName();
+        return this.id + " " + this.getLastName() + "," + this.getFirstName();
     }
     
 }

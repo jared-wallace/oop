@@ -1,11 +1,13 @@
 package resources.CarInventoryManagement;
 
+import java.io.Serializable;
+
 /**
  * created by Mason Egger - 9/19
  */
 
 
-public class Customer extends Person{
+public class Customer extends Person implements Serializable {
     private int dlNumber;
     private String phoneNumber;
 

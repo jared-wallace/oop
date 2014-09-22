@@ -1,11 +1,13 @@
 package resources.CarInventoryManagement;
 
+import java.io.Serializable;
+
 /**
  * created by Mason Egger - 9/20
  */
 
 
-class Employee extends Person {
+class Employee extends Person implements Serializable {
     private double salary;
     private int accountNumber;
 

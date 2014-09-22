@@ -10,6 +10,7 @@ package resources.CarInventoryManagement;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.System.err;
@@ -141,9 +142,9 @@ class VehicleManager {
     boolean sellVehicle(Scanner kb, PersonManager userManager) {
         int employeeUID = 0;
         int customerUID = 0;
-        String vin = "";
+        String vin;
         Date saleDate = null;
-        DateFormat fmt = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
         double salePrice = 0.0;
         boolean valid = false;
 
@@ -152,8 +153,11 @@ class VehicleManager {
             try {
                 customerUID = kb.nextInt();
                 valid = true;
-                if (!userManager.validateCustomerUID(customerUID))
+                if (!userManager.validateCustomerUID(customerUID)) {
+                    err.println("Error: That UID does not match any customer.");
+                    err.println("Please try again.");
                     valid = false;
+                }
             } catch (InputMismatchException e1) {
                 err.println("Error: That number was not valid.");
                 err.println("Please try again.");
@@ -167,8 +171,11 @@ class VehicleManager {
             try {
                 employeeUID = kb.nextInt();
                 valid = true;
-                if (!userManager.validateEmployeeUID(employeeUID))
+                if (!userManager.validateEmployeeUID(employeeUID)) {
+                    err.println("Error: That UID does not match any employee.");
+                    err.println("Please try again.");
                     valid = false;
+                }
             } catch (InputMismatchException e1) {
                 err.println("Error: That number was not valid.");
                 err.println("Please try again.");
@@ -186,6 +193,7 @@ class VehicleManager {
                 valid = true;
             } catch (ParseException e1) {
                 err.println("Error: Please try again");
+                kb.next();
             }
         }
         out.println("Please enter the final sale price.");
@@ -255,14 +263,13 @@ class VehicleManager {
      */
     public boolean saveDB() {
         try {
-            FileOutputStream outFile = new FileOutputStream("vehicles.txt");
+            FileOutputStream outFile = new FileOutputStream("vehicles.db");
             ObjectOutputStream pWriter = new ObjectOutputStream(outFile);
-            //for(Vehicle s: vehicleDB)
             pWriter.writeObject(vehicleDB);
-
             pWriter.close();
             return true;
         } catch (IOException e1) {
+            System.err.println("Error " + e1);
             return false;
         }
     }

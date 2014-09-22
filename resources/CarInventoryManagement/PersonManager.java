@@ -348,7 +348,7 @@ class PersonManager {
      * @return True if the UID belongs to a customer. Otherwise returns false.
      */
     public boolean validateCustomerUID(int UID) {
-        return UID < personDB.size() && UID > 0 && personDB.get(search(UID)) instanceof Customer;
+        return UID < (personDB.size() + 1) && UID > 0 && personDB.get(search(UID)) instanceof Customer;
     }
 
     /**
@@ -381,10 +381,6 @@ class PersonManager {
 		return (personDB.get(personDB.size()-1)).getID() + 1;
 	}
 
-
-    public static boolean sellCar(int customerUID, int employeeUID, String vin, Date saleDate, double salePrice) {
-        return false;
-    }
     /**
      * Attempts to write the existing runtime database to the database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.
