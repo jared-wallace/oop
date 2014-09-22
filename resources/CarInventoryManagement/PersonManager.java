@@ -1,8 +1,8 @@
 package resources.CarInventoryManagement;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
+import static java.lang.System.*;
 
 /**
  * Created by jared on 9/21/14.
@@ -135,4 +135,126 @@ class PersonManager {
             return false;
         }
     }
+    
+    boolean updateUser(Scanner kb) {
+        
+        int userID = -1;
+        boolean valid = false;
+        
+        out.println("Enter the id of the User");
+        
+        while(!valid){
+            try{
+                userID = kb.nextInt();
+                valid = true;
+            }
+            catch(InputMismatchException e){
+                err.println("Not valid input");
+                err.println("Please input the id of the User again");
+                kb.next();
+            }
+        }
+        valid = false;
+        
+        if(userID < 0 || userID > personDB.size()-1)
+        {
+            err.println("User does not exist");
+            return false;
+        }
+        else
+        {
+            if(personDB.get(userID) instanceof Customer)
+            {
+                int choice = -1;
+                String changeS = "";
+                int changeI = -1;
+                double changeD = -1;
+                out.println("Enter the number of the field you want to change");
+                out.println("\t1. First Name");
+                out.println("\t2. Last Name");
+                out.println("\t3. Phone Number");
+                out.println("\t4. Drivers License Number");
+                out.println("\t5. Cancel");
+                
+                while(!valid){
+                    try{
+                        choice = kb.nextInt();
+                        valid = true;
+                    }
+                    catch(InputMismatchException e){
+                        err.println("Input was not an integer");
+                        err.println("Please reenter the option you wish to change. ");
+                        kb.next();
+                    }
+                }
+                
+                switch(choice)
+                {
+                    case 1:
+                        out.println("Enter your first name");
+                        changeS = kb.next();
+                        if(Person.validateName(changeS))
+                        {
+                            personDB.get(userID).setFirstName(changeS);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid name.");
+                            return false;
+                        }
+                    case 2:
+                        out.println("Enter your last name");
+                        changeS = kb.next();
+                        if(Person.validateName(changeS))
+                        {
+                            personDB.get(userID).setLastName(changeS);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid name.");
+                            return false;
+                        }
+                    case 3:
+                        out.println("Enter your phone number");
+                        changeS = kb.next();
+                        if(Customer.validatePhoneNumber(changeS))
+                        {
+                            ((Customer)personDB.get(userID)).setPhoneNumber(changeS);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid phone number.");
+                            return false;
+                        }
+                    case 4:
+                        out.println("Enter your drivers license");
+                        changeI = kb.nextInt();
+                        if(Customer.validateDriversLicense(changeI))
+                        {
+                            ((Customer)personDB.get(userID)).setDriversLicense(changeI);
+                            return true;
+                        }
+                        else
+                        {
+                            out.println("Invalid drivers license");
+                            return false;
+                        }
+                    case 5:
+                        return false;
+                    
+                    default:
+                        out.println("Not a correct choice.");
+                }
+                
+            }
+            else
+            {
+                
+            }
+        }
+    }
+
 }
