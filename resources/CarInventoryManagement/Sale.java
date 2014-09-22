@@ -6,58 +6,19 @@ import java.util.Date;
 /**
  * Created by jared on 9/21/14.
  */
-public class Sale implements Serializable {
-    private int employeeUID;
+class Sale implements Serializable {
     private int customerUID;
+    private int employeeUID;
     private String vin;
     private Date saleDate;
     private double salePrice;
 
-    public Sale(int employeeUID, int customerUID, String vin, Date saleDate, double salePrice) {
-        this.employeeUID = employeeUID;
-        this.customerUID = customerUID;
-        this.vin = vin;
-        this.saleDate = saleDate;
-        this.salePrice = salePrice;
+    public Sale(int employeeUID1, int customerUID1, String vin1, Date saleDate1, double salePrice1) {
+        employeeUID = employeeUID1;
+        customerUID = customerUID1;
+        vin = vin1;
+        saleDate = saleDate1;
+        salePrice = salePrice1;
     }
 
-    int getEmployeeUID() {
-        return employeeUID;
-    }
-
-    void setEmployeeUID(int employeeUID) {
-        this.employeeUID = employeeUID;
-    }
-
-    int getCustomerUID() {
-        return customerUID;
-    }
-
-    void setCustomerUID(int customerUID) {
-        this.customerUID = customerUID;
-    }
-
-    String getVin() {
-        return vin;
-    }
-
-    void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    Date getSaleDate() {
-        return saleDate;
-    }
-
-    void setSaleDate(Date saleDate) {
-        this.saleDate = saleDate;
-    }
-
-    double getSalePrice() {
-        return salePrice;
-    }
-
-    void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
-    }
 }

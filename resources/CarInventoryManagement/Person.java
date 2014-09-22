@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 abstract class Person implements Serializable {
 
-    private int id;
+    private final int id;
     private String firstName, lastName;
 
     Person(int id, String firstName, String lastName) {
@@ -28,10 +28,6 @@ abstract class Person implements Serializable {
 
     int getID() {
         return id;
-    }
-
-    public void setID(int id) {
-        this.id = id;
     }
 
     String getFirstName() {

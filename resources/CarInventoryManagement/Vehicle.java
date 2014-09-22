@@ -12,8 +12,8 @@ abstract class Vehicle implements Serializable {
     private String make = "";
     private String model = "";
     private double price = 0.0;
-    private int mileage = 0;
     private int year = 0;
+    private int mileage;
 
     Vehicle(String vin, String make, String model, double price, int mileage, int year) {
         this.vin = vin;
@@ -100,24 +100,12 @@ abstract class Vehicle implements Serializable {
         return vin;
     }
 
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
     String getMake() {
         return make;
     }
 
-    public void setMake(String make) {
-        this.make = make;
-    }
-
     String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     /**
@@ -129,23 +117,14 @@ abstract class Vehicle implements Serializable {
         return price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getMileage() {
-        return mileage;
-    }
-
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
-    }
+// --Commented out by Inspection START (9/22/14 11:33 AM):
+//    public int getMileage() {
+//        return mileage;
+//    }
+// --Commented out by Inspection STOP (9/22/14 11:33 AM)
 
     int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
 }

@@ -2,7 +2,6 @@ package resources.CarInventoryManagement;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -117,7 +116,7 @@ class PersonManager {
      * @param accountNumber Price of the new car, can't be less than 0.00.
      * @return True if the employee was successfully added, false otherwise.
      */
-    public boolean addPerson(int iD, String firstName, String lastName, double salary, int accountNumber) {
+    boolean addPerson(int iD, String firstName, String lastName, double salary, int accountNumber) {
         return Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
                 && Employee.validateSalary(salary) && Employee.validateAccountNumber(accountNumber)
                 && personDB.add(new Employee(iD, firstName, lastName, salary, accountNumber));
@@ -135,7 +134,7 @@ class PersonManager {
      * @param dLNumber    Price of the new truck, can't be less than 0.00.
      * @return True if the customer was successfully added, false otherwise.
      */
-    public boolean addPerson(int iD, String firstName, String lastName, String phoneNumber, int dLNumber) {
+    boolean addPerson(int iD, String firstName, String lastName, String phoneNumber, int dLNumber) {
         return Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
                 && Customer.validatePhoneNumber(phoneNumber) && Customer.validateDriversLicense(dLNumber)
                 && personDB.add(new Customer(iD, firstName, lastName, phoneNumber, dLNumber));
@@ -167,9 +166,9 @@ class PersonManager {
         else
         {
             int choice = -1;
-            String changeS = "";
-            int changeI = -1;
-            double changeD = -1;
+            String changeS;
+            int changeI;
+            double changeD;
             if(personDB.get(userID) instanceof Customer)
             {
                 out.println("Enter the number of the field you want to change");
@@ -362,7 +361,7 @@ class PersonManager {
         return UID < personDB.size() && UID > 0 && personDB.get(search(UID)) instanceof Employee;
     }
 
-    public int search(int s) {
+    int search(int s) {
         for (int x = 0; x < personDB.size(); x++) {
             int UID = personDB.get(x).getID();
             if (s == UID) {
@@ -373,7 +372,7 @@ class PersonManager {
     }
 
 
-	public static int getNewUID(ArrayList<Person> personDB)
+	private static int getNewUID(ArrayList<Person> personDB)
 	{
         if (personDB.size() == 0) {
             return 1;
@@ -408,7 +407,7 @@ class PersonManager {
      * @return True if the file existed and the information was successfully
      * read into the ArrayList <code>vehicleDB</code>, false otherwise.
      */
-    public boolean readDB() {
+    boolean readDB() {
         try {
             InputStream file = new FileInputStream("people.db");
             InputStream buffer = new BufferedInputStream(file);

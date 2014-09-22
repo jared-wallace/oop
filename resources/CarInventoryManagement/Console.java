@@ -7,9 +7,7 @@ package resources.CarInventoryManagement;
  * @version %I%, %G%
  */
 
-import java.text.ParseException;
 import java.util.*;
-import java.text.DateFormat;
 
 import static java.lang.System.*;
 import static java.lang.Thread.sleep;
@@ -69,7 +67,11 @@ class Console {
                     }
                     break;
                 case 6:
-                    console.updateUser(kb);
+                    if (console.updateUser(kb)) {
+                        out.println("User updated successfully.");
+                    } else {
+                        err.println("User not updated.");
+                    }
                     break;
                 case 7:
                     console.showUsers();
