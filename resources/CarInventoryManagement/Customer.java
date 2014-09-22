@@ -5,7 +5,7 @@ package resources.CarInventoryManagement;
  */
 
 
-public class Customer extends Person {
+public class Customer extends Person{
     private int dlNumber;
     private String phoneNumber;
 

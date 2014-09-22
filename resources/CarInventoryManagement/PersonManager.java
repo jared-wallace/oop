@@ -81,7 +81,10 @@ class PersonManager {
     }
 
 
-	public static int getUID()
+	public static int getUID(ArrayList<Person> personDB)
+	{
+		return (personDB.get(personDB.size()-1)).getID() + 1;
+	}
     /**
      * Attempts to write the existing runtime database to the database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.
