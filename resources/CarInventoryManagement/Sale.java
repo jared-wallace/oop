@@ -1,11 +1,12 @@
 package resources.CarInventoryManagement;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by jared on 9/21/14.
  */
-public class Sale {
+public class Sale implements Serializable {
     private int employeeUID;
     private int customerUID;
     private String vin;

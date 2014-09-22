@@ -446,7 +446,7 @@ class VehicleManager {
             InputStream file = new FileInputStream("sales.db");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput sc = new ObjectInputStream(buffer);
-            vehicleDB = (ArrayList<Vehicle>) sc.readObject();
+            saleDB = (ArrayList<Sale>) sc.readObject();
             return true;
         } catch (IOException e1) {
             System.err.println("Error " + e1);
