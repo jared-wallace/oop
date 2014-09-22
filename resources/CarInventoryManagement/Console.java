@@ -16,35 +16,35 @@ import static java.lang.Thread.sleep;
 
 class Console {
 
-    private final VehicleManager manage;
+    private final VehicleManager vehicleManager;
     private final PersonManager userManager;
     private final ArrayList<Vehicle> vehiclesDB;
     private final ArrayList<Person> personDB;
     /**
      * The default constructor for the console class does a few different things. It declares a new
-     * instance of the <code>VehicleManager</code> class called <code>manage</code>, and then proceeds
+     * instance of the <code>VehicleManager</code> class called <code>vehicleManager</code>, and then proceeds
      * to attempt reading the existing vehicle database, called <code>vehicle.txt</code>. If that file fails to be
      * read/parsed correctly, it prints an error message to that effect. Otherwise, it prints a line
      * indicating that the database has been successfully loaded into memory. Lastly, it calls the
      * <code>VehicleManager.getVehicles</code> method to get the new ArrayList, called <code>vehiclesDB</code>
      */
     private Console() {
-        manage = new VehicleManager();
+        vehicleManager = new VehicleManager();
         userManager = new PersonManager();
 
         if (!userManager.readDB()) {
-            err.println("Database corrupted or doesn't exist");
+            err.println("People database corrupted or doesn't exist");
         } else {
             out.println("Successfully read database people.db");
         }
         personDB = userManager.getPersons();
 
-        if (!manage.readDB()) {
-            err.println("Database corrupted or doesn't exist");
+        if (!vehicleManager.readDB()) {
+            err.println("Vehicle database corrupted or doesn't exist");
         } else {
             out.println("Successfully read database vehicles.db");
         }
-        vehiclesDB = manage.getVehicles();
+        vehiclesDB = vehicleManager.getVehicles();
     }
 
     public static void main(String[] args) {
@@ -311,7 +311,7 @@ class Console {
         out.println("Enter the body style.");
         kb.nextLine();
         bodyStyle = kb.nextLine();
-        return manage.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
+        return vehicleManager.addVehicle(vin, make, model, year, price, mileage, bodyStyle);
     }
 
     private boolean addTruck(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
@@ -344,7 +344,7 @@ class Console {
             }
         }
 
-        return manage.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
+        return vehicleManager.addVehicle(vin, make, model, year, price, mileage, maxLoadWeight, lengthFT);
     }
 
     private boolean addMotorcycle(Scanner kb, String vin, String make, String model, int year, double price, int mileage) {
@@ -360,7 +360,7 @@ class Console {
             err.println("The input was not a valid number.");
             return false;
         }
-        return manage.addVehicle(vin, make, model, year, price, mileage, displacement, type);
+        return vehicleManager.addVehicle(vin, make, model, year, price, mileage, displacement, type);
     }
 
     /**
@@ -375,7 +375,7 @@ class Console {
         out.println("Enter the VIN number of the car to delete.");
         String vin = kb.next();
         if (Car.validateVin(vin)) {
-            return manage.deleteVehicle(vin);
+            return vehicleManager.deleteVehicle(vin);
         } else {
             out.println("Invalid vin number entered");
             return false;
@@ -405,7 +405,7 @@ class Console {
         } else {
             type = "all";
         }
-        ArrayList<Vehicle> results = manage.showPriceRange(lower, higher, type);
+        ArrayList<Vehicle> results = vehicleManager.showPriceRange(lower, higher, type);
         if (results.size() > 0) {
             for (Vehicle s : results) {
                 out.println(s);
@@ -421,10 +421,16 @@ class Console {
      * If it succeeds, it will likewise indicate.
      */
     void writeDatabase() {
-        if (!manage.saveDB()) {
-            out.println("Unable to save database.");
+        if (!userManager.saveDB()) {
+            out.println("Unable to save people database.");
         } else {
-            out.println("Database updated, exiting...");
+            out.println("People database updated, exiting...");
+        }
+
+        if (!vehicleManager.saveDB()) {
+            out.println("Unable to save vehicle database.");
+        } else {
+            out.println("Vehicle database updated, exiting...");
         }
     }
 }
