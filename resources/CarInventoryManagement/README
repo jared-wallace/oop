@@ -4,8 +4,8 @@
 
 Still need:
 
-uniqueness checking for vin in addVehicle
-salesDB write
+remove ugly exception printing on db loads
+add toUpper on names for users
 Try removing sleep hack
 
 

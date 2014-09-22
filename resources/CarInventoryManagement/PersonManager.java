@@ -53,6 +53,17 @@ class PersonManager {
             return addEmployee(kb, uID, lastName, firstName);
     }
 
+    /**
+     * Adds an employee to the runtime database, (assuming all the fields validate correctly).
+     * This does not mean that the information will necessarily end up in the database
+     * file! The database file is only written upon exiting the program normally!
+     *
+     * @param kb            Scanner object for input/output
+     * @param uID           The UID of the employee
+     * @param firstName     The first name of the employee
+     * @param lastName      The last name of the employee
+     * @return True if the employee was successfully added, false otherwise.
+     */
     private boolean addEmployee(Scanner kb, int uID, String lastName, String firstName) {
         double salary = -1.0;
         int accountNumber = -1;
@@ -82,9 +93,22 @@ class PersonManager {
             }
         }
 
-        return addPerson(uID, firstName, lastName, salary, accountNumber);
+        return Person.validateID(uID) && Person.validateName(firstName) && Person.validateName(lastName)
+                && Employee.validateSalary(salary) && Employee.validateAccountNumber(accountNumber)
+                && personDB.add(new Employee(uID, firstName, lastName, salary, accountNumber));
     }
 
+    /**
+     * Adds a customer to the runtime database, (assuming all the fields validate correctly).
+     * This does not mean that the information will necessarily end up in the database
+     * file! The database file is only written upon exiting the program normally!
+     *
+     * @param kb          Scanner object for input/output
+     * @param uID         The UID of the customer
+     * @param firstName   The first name of the customer
+     * @param lastName    The last name of the customer
+     * @return True if the customer was successfully added, false otherwise.
+     */
     private boolean addCustomer(Scanner kb, int uID, String lastName, String firstName) {
         String phoneNumber;
         int dLNumber = -1;
@@ -103,43 +127,9 @@ class PersonManager {
                 kb.next();
             }
         }
-        return addPerson(uID, firstName, lastName, phoneNumber, dLNumber);
-    }
-
-    /**
-     * Adds an employee to the runtime database, (assuming all the fields validate correctly).
-     * This does not mean that the information will necessarily end up in the database
-     * file! The database file is only written upon exiting the program normally!
-     *
-     * @param iD            The vin number of the new car.
-     * @param firstName     Make of the new car
-     * @param lastName      Model of the new car
-     * @param salary        Year of the new car, can't be before cars were invented, in 1896.
-     * @param accountNumber Price of the new car, can't be less than 0.00.
-     * @return True if the employee was successfully added, false otherwise.
-     */
-    boolean addPerson(int iD, String firstName, String lastName, double salary, int accountNumber) {
-        return Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
-                && Employee.validateSalary(salary) && Employee.validateAccountNumber(accountNumber)
-                && personDB.add(new Employee(iD, firstName, lastName, salary, accountNumber));
-    }
-
-    /**
-     * Adds a customer to the runtime database, (assuming all the fields validate correctly).
-     * This does not mean that the information will necessarily end up in the database
-     * file! The database file is only written upon exiting the program normally!
-     *
-     * @param iD          The vin number of the new truck.
-     * @param firstName   Make of the new truck
-     * @param lastName    Model of the new truck
-     * @param phoneNumber Year of the new truck, can't be before cars were invented, in 1896.
-     * @param dLNumber    Price of the new truck, can't be less than 0.00.
-     * @return True if the customer was successfully added, false otherwise.
-     */
-    boolean addPerson(int iD, String firstName, String lastName, String phoneNumber, int dLNumber) {
-        return Person.validateID(iD) && Person.validateName(firstName) && Person.validateName(lastName)
+        return Person.validateID(uID) && Person.validateName(firstName) && Person.validateName(lastName)
                 && Customer.validatePhoneNumber(phoneNumber) && Customer.validateDriversLicense(dLNumber)
-                && personDB.add(new Customer(iD, firstName, lastName, phoneNumber, dLNumber));
+                && personDB.add(new Customer(uID, firstName, lastName, phoneNumber, dLNumber));
     }
 
     boolean updateUser(Scanner kb) {

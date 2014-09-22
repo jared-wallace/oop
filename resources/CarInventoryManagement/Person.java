@@ -34,8 +34,7 @@ abstract class Person implements Serializable {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String firstName) { this.firstName = firstName;
     }
 
     String getLastName() {
