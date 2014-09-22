@@ -116,7 +116,7 @@ class Console {
         else
             type = "employee";
 
-        uID = PersonManager.getUID();
+        uID = PersonManager.getUID(personDB);
 
         out.println("Enter the first name of the user.");
         firstName = kb.next();
@@ -129,7 +129,6 @@ class Console {
         else {
             return addCustomer(kb, uID, lastName, firstName);
         }
-        return false;
     }
 
     private boolean addEmployee(Scanner kb, int uID, String lastName, String firstName) {
@@ -165,7 +164,24 @@ class Console {
     }
 
     private boolean addCustomer(Scanner kb, int uID, String lastName, String firstName) {
-        return false;
+        String phoneNumber;
+        int dLNumber = -1;
+        boolean valid = false;
+        out.println("Please enter the phone number of the customer.");
+        phoneNumber = kb.next();
+
+        out.println("Please enter the driver's license number of the customer.");
+        while (!valid) {
+            try {
+                dLNumber = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e1) {
+                err.println("Error: That license number was invalid.");
+                err.println("Please try again.");
+                kb.next();
+            }
+        }
+        return userManager.addPerson(uID, firstName, lastName, phoneNumber, dLNumber);
     }
 
     boolean updateUser(Scanner kb) {
