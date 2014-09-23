@@ -142,7 +142,7 @@ class PersonManager {
         int userID = -1;
         boolean valid = false;
 
-        out.println("Enter the id of the User");
+        out.println("Enter the UID of the User");
         while (!valid) {
             try {
                 userID = kb.nextInt();
@@ -153,152 +153,110 @@ class PersonManager {
                 kb.next();
             }
         }
-        valid = false;
-
-        if (userID < 0 || userID > personDB.size() - 1) {
+        int index = search(userID);
+        if (index == -1) {
             err.println("User does not exist");
             return false;
+        }
+        int choice = -1;
+        String changeString;
+        int changeInteger;
+        double changeDouble;
+
+        out.println("Enter the number of the field you want to change");
+        out.println("1. First Name");
+        out.println("2. Last Name");
+        if (personDB.get(index) instanceof Customer) {
+            out.println("3. Phone Number");
+            out.println("4. Drivers License Number");
+
         } else {
-            int choice = -1;
-            String changeS;
-            int changeI;
-            double changeD;
-            if (personDB.get(userID) instanceof Customer) {
-                out.println("Enter the number of the field you want to change");
-                out.println("\t1. First Name");
-                out.println("\t2. Last Name");
-                out.println("\t3. Phone Number");
-                out.println("\t4. Drivers License Number");
-                out.println("\t5. Cancel");
-
-                while (!valid) {
-                    try {
-                        choice = kb.nextInt();
-                        valid = true;
-                    } catch (InputMismatchException e) {
-                        err.println("Input was not an integer");
-                        err.println("Please reenter the option you wish to change. ");
-                        kb.next();
-                    }
-                }
-
-                switch (choice) {
-                    case 1:
-                        out.println("Enter your first name");
-                        changeS = kb.next();
-                        if (Person.validateName(changeS)) {
-                            personDB.get(userID).setFirstName(changeS);
-                            return true;
-                        } else {
-                            out.println("Invalid name.");
-                            return false;
-                        }
-                    case 2:
-                        out.println("Enter your last name");
-                        changeS = kb.next();
-                        if (Person.validateName(changeS)) {
-                            personDB.get(userID).setLastName(changeS);
-                            return true;
-                        } else {
-                            out.println("Invalid name.");
-                            return false;
-                        }
-                    case 3:
-                        out.println("Enter your phone number");
-                        changeS = kb.next();
-                        if (Customer.validatePhoneNumber(changeS)) {
-                            ((Customer) personDB.get(userID)).setPhoneNumber(changeS);
-                            return true;
-                        } else {
-                            out.println("Invalid phone number.");
-                            return false;
-                        }
-                    case 4:
-                        out.println("Enter your drivers license");
-                        changeI = kb.nextInt();
-                        if (Customer.validateDriversLicense(changeI)) {
-                            ((Customer) personDB.get(userID)).setDriversLicense(changeI);
-                            return true;
-                        } else {
-                            out.println("Invalid drivers license");
-                            return false;
-                        }
-                    case 5:
-                        return false;
-
-                    default:
-                        out.println("Not a correct choice.");
-                        return false;
-                }
-
-            } else {
-                out.println("Enter the number of the field you want to change");
-                out.println("\t1. First Name");
-                out.println("\t2. Last Name");
-                out.println("\t3. Salary");
-                out.println("\t4. Bank Account Number");
-                out.println("\t5. Cancel");
-
-                while (!valid) {
-                    try {
-                        choice = kb.nextInt();
-                        valid = true;
-                    } catch (InputMismatchException e) {
-                        err.println("Input was not an integer");
-                        err.println("Please reenter the option you wish to change. ");
-                        kb.next();
-                    }
-                }
-
-                switch (choice) {
-                    case 1:
-                        out.println("Enter your first name");
-                        changeS = kb.next();
-                        if (Person.validateName(changeS)) {
-                            personDB.get(userID).setFirstName(changeS);
-                            return true;
-                        } else {
-                            out.println("Invalid name.");
-                            return false;
-                        }
-                    case 2:
-                        out.println("Enter your last name");
-                        changeS = kb.next();
-                        if (Person.validateName(changeS)) {
-                            personDB.get(userID).setLastName(changeS);
-                            return true;
-                        } else {
-                            out.println("Invalid name.");
-                            return false;
-                        }
-                    case 3:
-                        out.println("Enter your salary");
-                        changeD = kb.nextDouble();
-                        if (Employee.validateSalary(changeD)) {
-                            ((Employee) personDB.get(userID)).setSalary(changeD);
-                            return true;
-                        } else {
-                            out.println("Invalid salary.");
-                            return false;
-                        }
-                    case 4:
-                        out.println("Enter your bank account number");
-                        changeI = kb.nextInt();
-                        if (Employee.validateAccountNumber(changeI)) {
-                            ((Employee) personDB.get(userID)).setAccountNumber(changeI);
-                            return true;
-                        } else {
-                            out.println("Invalid bank account number");
-                            return false;
-                        }
-                    case 5:
-                        return false;
-
-                    default:
-                        out.println("Not a correct choice.");
-                        return false;
-                }
+            out.println("3. Salary");
+            out.println("4. Bank Account Number");
+        }
+        out.println("5. Cancel");
+        valid = false;
+        while (!valid) {
+            try {
+                choice = kb.nextInt();
+                valid = true;
+            } catch (InputMismatchException e) {
+                err.println("Input was not an integer");
+                err.println("Please reenter the option you wish to change. ");
+                kb.next();
             }
+        }
+
+        switch (choice) {
+            case 1:
+                out.println("Enter the new first name");
+                changeString = kb.next();
+                if (Person.validateName(changeString)) {
+                    personDB.get(index).setFirstName(changeString);
+                    return true;
+                } else {
+                    out.println("Invalid name.");
+                    return false;
+                }
+            case 2:
+                out.println("Enter the new last name");
+                changeString = kb.next();
+                if (Person.validateName(changeString)) {
+                    personDB.get(index).setLastName(changeString);
+                    return true;
+                } else {
+                    out.println("Invalid name.");
+                    return false;
+                }
+            case 3:
+                if (personDB.get(index) instanceof Customer) {
+                    out.println("Enter the new phone number");
+                    changeString = kb.next();
+                    if (Customer.validatePhoneNumber(changeString)) {
+                        ((Customer) personDB.get(index)).setPhoneNumber(changeString);
+                        return true;
+                    } else {
+                        out.println("Invalid phone number.");
+                        return false;
+                    }
+                } else {
+                    out.println("Enter the new salary");
+                    changeDouble = kb.nextDouble();
+                    if (Employee.validateSalary(changeDouble)) {
+                        ((Employee) personDB.get(index)).setSalary(changeDouble);
+                        return true;
+                    } else {
+                        out.println("Invalid salary.");
+                        return false;
+                    }
+                }
+            case 4:
+                if (personDB.get(index) instanceof Customer) {
+                    out.println("Enter the new drivers license");
+                    changeInteger = kb.nextInt();
+                    if (Customer.validateDriversLicense(changeInteger)) {
+                        ((Customer) personDB.get(index)).setDriversLicense(changeInteger);
+                        return true;
+                    } else {
+                        out.println("Invalid drivers license");
+                        return false;
+                    }
+                } else {
+                    out.println("Enter the new bank account number");
+                    changeInteger = kb.nextInt();
+                    if (Employee.validateAccountNumber(changeInteger)) {
+                        ((Employee) personDB.get(index)).setAccountNumber(changeInteger);
+                        return true;
+                    } else {
+                        out.println("Invalid bank account number");
+                        return false;
+                    }
+                }
+            case 5:
+                return false;
+            default:
+                out.println("Not a correct choice.");
+                return false;
         }
     }
 
