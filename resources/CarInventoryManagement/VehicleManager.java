@@ -10,10 +10,7 @@ package resources.CarInventoryManagement;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -81,12 +78,17 @@ class VehicleManager {
         make = kb.next();
         out.println("Enter the model. (Cannot be blank)");
         model = kb.next();
-
-        out.println("Enter the year (cannot be prior to 1886)");
+        out.println("Enter the year (cannot be prior to 1886, or more than 1 year in the future)");
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         while (!valid) {
             try {
                 year = kb.nextInt();
                 valid = true;
+                if (year > (currentYear + 1)) {
+                    err.println("Sorry, that year is too far into the future.");
+                    err.println("Please try again.");
+                    valid = false;
+                }
             } catch (InputMismatchException e) {
                 err.println("That was not an integer value.");
                 err.println("Please enter the year again.");
