@@ -7,9 +7,11 @@ package resources.CarInventoryManagement;
  * @author Jared Wallace
  * @version %I%, %G%
  */
+
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Calendar;
 
 abstract class Vehicle implements Serializable {
     private String vin = "";
@@ -19,6 +21,16 @@ abstract class Vehicle implements Serializable {
     private int year = 0;
     private int mileage;
 
+    /**
+     * The constructor for the vehicle class
+     *
+     * @param vin The VIN of the new vehicle
+     * @param make The manufacturer of the new vehicle
+     * @param model The model of the new vehicle
+     * @param price The price of the new vehicle
+     * @param mileage The mileage of the new vehicle
+     * @param year The year of the new vehicle
+     */
     Vehicle(String vin, String make, String model, double price, int mileage, int year) {
         this.vin = vin;
         this.make = make;
@@ -29,33 +41,33 @@ abstract class Vehicle implements Serializable {
     }
 
     /**
-     * Currently, the only validation is a length between 1 and 17 inclusive.
-     * Although vin numbers are standard now, this was not always the case.
+     * This method validates the VIN, by checking that the length of the VIN
+     * is between 1 and 17 inclusive. Although VIN numbers are standard now,
+     * this was not always the case.
      *
-     * @param vin A string representing the vin number of the vehicle
-     * @return True if the string is 17 characters or less and not empty.
+     * @param vin A string representing the VIN number of the vehicle
+     * @return True if the vin parameter is 17 characters or less and not empty.
      */
     public static boolean validateVin(String vin) {
         return !(vin.equals("") && vin.length() > 17);
     }
 
     /**
-     * The only validation for the "make" field is that the make
-     * is a non empty string.
+     * This method validates the manufacturer, by ensuring that the
+     * make parameter is a non-empty string.
      *
-     * @param make The make to be validated
-     * @return True if the make is a non empty string, false otherwise.
+     * @param make The manufacturer to be validated
+     * @return True if the manufacturer is a non empty string, false otherwise.
      */
     public static boolean validateMake(String make) {
         return !make.equals("");
     }
 
     /**
-     * The only validation for the "model" field is that the model
-     * is indeed a string.
+     * This method validates the model by ensuring that it's not an empty string.
      *
      * @param model The model to be validated
-     * @return True if the model is a non empty string, false otherwise.
+     * @return True if the model parameter is a non empty string, false otherwise.
      */
     public static boolean validateModel(String model) {
         return !model.equals("");
@@ -63,15 +75,17 @@ abstract class Vehicle implements Serializable {
 
     /**
      * The validation function for the year checks to make sure the year
-     * is at least 1886 or later (The car was invented in 1886). The
+     * is at least 1886 (The car was invented in 1886) and at most one year in
+     * the future (since car dealerships sell next year's models this year). The
      * function also checks for exactly 4 digits.
      *
      * @param year The year to be validated
-     * @return True if the year is an integer greater than 1886 and exactly
-     * 4 digits, otherwise it returns false.
+     * @return True if the year is an integer greater than 1886 and less than the current
+     * year plus one, and exactly 4 digits, otherwise it returns false.
      */
     public static boolean validateYear(int year) {
-        return !((year < 1886) || (String.valueOf(year).length() != 4));
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        return !((year < 1886) || (String.valueOf(year).length() != 4) || (year > currentYear + 1));
     }
 
     /**
@@ -100,6 +114,11 @@ abstract class Vehicle implements Serializable {
         return this.getVin() + " " + this.getMake() + " " + this.getModel() + " " + this.getYear() + " " + price_formatted;
     }
 
+    /**
+     * Allows retrieving the VIN number of a vehicle.
+     *
+     * @return The VIN number of the vehicle object
+     */
     public String getVin() {
         return vin;
     }
@@ -113,19 +132,13 @@ abstract class Vehicle implements Serializable {
     }
 
     /**
-     * Getter function to retrieve the price of the Car object.
+     * Allows retrieving the price of the car object.
      *
-     * @return The price of the Car object
+     * @return The price of the car object
      */
     public double getPrice() {
         return price;
     }
-
-// --Commented out by Inspection START (9/22/14 11:33 AM):
-//    public int getMileage() {
-//        return mileage;
-//    }
-// --Commented out by Inspection STOP (9/22/14 11:33 AM)
 
     int getYear() {
         return year;

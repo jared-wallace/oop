@@ -32,18 +32,18 @@ class Car extends Vehicle implements Serializable {
     }
 
     /**
-     * Currently, this only checks to make sure the bodystyle is not an empty
-     * string. In the future, we should check against an accepted list of styles.
+     * Currently, this only checks to make sure the body style is not an empty
+     * string.
      *
      * @param bodyStyle the proposed body style of the car
-     * @return True if the bodystyle parameter was not an empty string
+     * @return True if the body style parameter was not an empty string
      */
     public static boolean validateBodyStyle(String bodyStyle) {
         return !bodyStyle.equals("");
     }
 
     /**
-     * Just adds the body style to the default vehicle string.
+     * This method just adds the body style to the default vehicle string.
      *
      * @return A nicely formatted string of all Car fields.
      */

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.System.*;
-import static java.lang.Thread.sleep;
 
 class Console {
 
@@ -91,9 +90,6 @@ class Console {
         }
     }
 
-    /**
-     * Prints the menu with all the currently available options.
-     */
     void printMenu() {
         out.println("1. Add a new vehicle to the database.");
         out.println("2. Delete a vehicle from a database (given its VIN).");
@@ -110,7 +106,6 @@ class Console {
     boolean addUser(Scanner kb) {
         return userManager.addUser(kb);
     }
-
 
     boolean updateUser(Scanner kb) {
         return userManager.updateUser(kb);
@@ -132,11 +127,6 @@ class Console {
         return vehicleManager.sellVehicle(kb, userManager);
     }
 
-
-    /**
-     * Prints out the current database. This will print what is currently
-     * in memory, but not necessarily what is currently written to the file.
-     */
     void showCars() {
         if (vehicleManager.getVehicleDB().size() == 0) {
             out.println("Database is empty");
@@ -149,38 +139,16 @@ class Console {
         }
     }
 
-    /**
-     * Attempts to add a new vehicle to the database in memory. This only succeeds
-     * if all the fields successfully pass validation.
-     *
-     * @param kb The scanner object used to read in from the console
-     * @return True if a vehicle was successfully added to the database in memory,
-     * false if something went wrong.
-     */
     boolean addVehicle(Scanner kb) {
         return vehicleManager.addVehicle(kb);
     }
 
-    /**
-     * Attempts to delete a vehicle from the database in memory. The vehicle is located
-     * by VIN number. This does not necessarily mean the change is permanently
-     * written to the database file.
-     *
-     * @param kb The scanner object used to read in from the console
-     * @return True if the vehicle was located and deleted, false otherwise
-     */
     boolean deleteCar(Scanner kb) {
         out.println("Enter the VIN number of the car to delete.");
         String vin = kb.next();
         return vehicleManager.deleteVehicle(vin);
     }
 
-    /**
-     * Allows searching the database in memory for cars whose prices fall within a specified
-     * range.
-     *
-     * @param kb The scanner object used to read in from the console
-     */
     void showPriceRange(Scanner kb) {
         out.println("Enter the lower limit of the price range you wish to search.");
         double lower = kb.nextDouble();
@@ -208,11 +176,6 @@ class Console {
         }
     }
 
-    /**
-     * Attempts to write the current database in memory to a file called cars.txt
-     * as plain text. If this effort fails, it will indicate so with an error message.
-     * If it succeeds, it will likewise indicate.
-     */
     void writeDatabase() {
         if (!userManager.saveDB()) {
             out.println("Unable to save people database.");

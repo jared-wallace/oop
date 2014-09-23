@@ -7,6 +7,7 @@ package resources.CarInventoryManagement;
  * @author Jared Wallace
  * @version %I%, %G%
  */
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -17,15 +18,16 @@ import static java.lang.System.out;
 
 class PersonManager {
 
-    private static ArrayList<Person> personDB;
+    private static ArrayList<Person> peopleDB;
 
     /**
-     * Default constructor creates an ArrayList of Person objects called <code>personDB</code>.
-     * This ArrayList will serve as the runtime database.
+     * The constructor for PersonManager creates an ArrayList of Person objects
+     * called <code>peopleDB</code>. This ArrayList will serve as the runtime
+     * people database.
      */
     public PersonManager() {
 
-        personDB = new ArrayList<Person>();
+        peopleDB = new ArrayList<Person>();
         if (!readDB()) {
             err.println("People database corrupted or doesn't exist");
         } else {
@@ -33,8 +35,13 @@ class PersonManager {
         }
     }
 
+    /**
+     * This method returns the runtime database peopleDB
+     *
+     * @return The runtime people database called peopleDB
+     */
     public ArrayList<Person> getPersonDB() {
-        return personDB;
+        return peopleDB;
     }
 
 
@@ -44,7 +51,7 @@ class PersonManager {
 
         out.println("Please enter the type of user you wish to add. (employee or customer)");
         type = kb.next();
-        uID = getNewUID(personDB);
+        uID = getNewUID();
 
         out.println("Enter the first name of the user.");
         firstName = kb.next();
@@ -99,9 +106,9 @@ class PersonManager {
             }
         }
 
-        return Person.validateID(uID) && Person.validateName(firstName) && Person.validateName(lastName)
+        return Person.validateName(firstName) && Person.validateName(lastName)
                 && Employee.validateSalary(salary) && Employee.validateAccountNumber(accountNumber)
-                && personDB.add(new Employee(uID, firstName, lastName, salary, accountNumber));
+                && peopleDB.add(new Employee(uID, firstName, lastName, salary, accountNumber));
     }
 
     /**
@@ -133,11 +140,20 @@ class PersonManager {
                 kb.next();
             }
         }
-        return Person.validateID(uID) && Person.validateName(firstName) && Person.validateName(lastName)
+        return Person.validateName(firstName) && Person.validateName(lastName)
                 && Customer.validatePhoneNumber(phoneNumber) && Customer.validateDriversLicense(dLNumber)
-                && personDB.add(new Customer(uID, firstName, lastName, phoneNumber, dLNumber));
+                && peopleDB.add(new Customer(uID, firstName, lastName, phoneNumber, dLNumber));
     }
 
+    /**
+     * This method allows updating existing users information. The
+     * only field that cannot be updated is UID, since that must
+     * remain both static and unique. The method only allows for changing
+     * one field at a time.
+     *
+     * @param kb The scanner object for console input and output
+     * @return True if the user had a field successfully updated, false otherwise.
+     */
     boolean updateUser(Scanner kb) {
         int userID = -1;
         boolean valid = false;
@@ -166,7 +182,7 @@ class PersonManager {
         out.println("Enter the number of the field you want to change");
         out.println("1. First Name");
         out.println("2. Last Name");
-        if (personDB.get(index) instanceof Customer) {
+        if (peopleDB.get(index) instanceof Customer) {
             out.println("3. Phone Number");
             out.println("4. Drivers License Number");
 
@@ -192,7 +208,7 @@ class PersonManager {
                 out.println("Enter the new first name");
                 changeString = kb.next();
                 if (Person.validateName(changeString)) {
-                    personDB.get(index).setFirstName(changeString);
+                    peopleDB.get(index).setFirstName(changeString);
                     return true;
                 } else {
                     out.println("Invalid name.");
@@ -202,18 +218,18 @@ class PersonManager {
                 out.println("Enter the new last name");
                 changeString = kb.next();
                 if (Person.validateName(changeString)) {
-                    personDB.get(index).setLastName(changeString);
+                    peopleDB.get(index).setLastName(changeString);
                     return true;
                 } else {
                     out.println("Invalid name.");
                     return false;
                 }
             case 3:
-                if (personDB.get(index) instanceof Customer) {
+                if (peopleDB.get(index) instanceof Customer) {
                     out.println("Enter the new phone number");
                     changeString = kb.next();
                     if (Customer.validatePhoneNumber(changeString)) {
-                        ((Customer) personDB.get(index)).setPhoneNumber(changeString);
+                        ((Customer) peopleDB.get(index)).setPhoneNumber(changeString);
                         return true;
                     } else {
                         out.println("Invalid phone number.");
@@ -223,7 +239,7 @@ class PersonManager {
                     out.println("Enter the new salary");
                     changeDouble = kb.nextDouble();
                     if (Employee.validateSalary(changeDouble)) {
-                        ((Employee) personDB.get(index)).setSalary(changeDouble);
+                        ((Employee) peopleDB.get(index)).setSalary(changeDouble);
                         return true;
                     } else {
                         out.println("Invalid salary.");
@@ -231,11 +247,11 @@ class PersonManager {
                     }
                 }
             case 4:
-                if (personDB.get(index) instanceof Customer) {
+                if (peopleDB.get(index) instanceof Customer) {
                     out.println("Enter the new drivers license");
                     changeInteger = kb.nextInt();
                     if (Customer.validateDriversLicense(changeInteger)) {
-                        ((Customer) personDB.get(index)).setDriversLicense(changeInteger);
+                        ((Customer) peopleDB.get(index)).setDriversLicense(changeInteger);
                         return true;
                     } else {
                         out.println("Invalid drivers license");
@@ -245,7 +261,7 @@ class PersonManager {
                     out.println("Enter the new bank account number");
                     changeInteger = kb.nextInt();
                     if (Employee.validateAccountNumber(changeInteger)) {
-                        ((Employee) personDB.get(index)).setAccountNumber(changeInteger);
+                        ((Employee) peopleDB.get(index)).setAccountNumber(changeInteger);
                         return true;
                     } else {
                         out.println("Invalid bank account number");
@@ -268,7 +284,7 @@ class PersonManager {
      * @return True if the UID belongs to a customer. Otherwise returns false.
      */
     public boolean validateCustomerUID(int UID) {
-        return UID < (personDB.size() + 1) && UID > 0 && personDB.get(search(UID)) instanceof Customer;
+        return UID < (peopleDB.size() + 1) && UID > 0 && peopleDB.get(search(UID)) instanceof Customer;
     }
 
     /**
@@ -279,12 +295,19 @@ class PersonManager {
      * @return True if the UID belongs to a customer. Otherwise returns false.
      */
     public boolean validateEmployeeUID(int UID) {
-        return UID < personDB.size() && UID > 0 && personDB.get(search(UID)) instanceof Employee;
+        return UID < peopleDB.size() && UID > 0 && peopleDB.get(search(UID)) instanceof Employee;
     }
 
+    /**
+     * This method searches the runtime people database for a given
+     * UID.
+     *
+     * @param s The UID to search the database for
+     * @return The index of the matching person, if found, otherwise -1
+     */
     int search(int s) {
-        for (int x = 0; x < personDB.size(); x++) {
-            int UID = personDB.get(x).getID();
+        for (int x = 0; x < peopleDB.size(); x++) {
+            int UID = peopleDB.get(x).getID();
             if (s == UID) {
                 return x;
             }
@@ -293,46 +316,51 @@ class PersonManager {
     }
 
 
-    private static int getNewUID(ArrayList<Person> personDB) {
-        if (personDB.size() == 0) {
+    /**
+     * This method generates a new UID for a person. The UID
+     * is simply generated based on database size.
+     *
+     * @return The UID generated for the new user
+     */
+    private static int getNewUID() {
+        if (peopleDB.size() == 0) {
             return 1;
         }
-        return (personDB.get(personDB.size() - 1)).getID() + 1;
+        return (peopleDB.size() + 1);
     }
 
     /**
-     * Attempts to write the existing runtime database to the database file.
+     * Attempts to write the existing runtime people database to the people database file.
      * The file will be overwritten, so hopefully this doesn't introduce any corruption.
      *
-     * @return True if the database was successfully written, false if there
+     * @return True if the people database was successfully written, false if there
      * was an IOException.
      */
     public boolean saveDB() {
         try {
             FileOutputStream outFile = new FileOutputStream("people.db");
             ObjectOutputStream pWriter = new ObjectOutputStream(outFile);
-            pWriter.writeObject(personDB);
+            pWriter.writeObject(peopleDB);
             pWriter.close();
             return true;
         } catch (IOException e1) {
-            System.err.println("Error " + e1);
             return false;
         }
     }
 
     /**
      * Attempts to read in from the database file called <code>people.db</code>
-     * and load each Vehicle's info into the runtime database.
+     * and load each person's info into the runtime people database.
      *
      * @return True if the file existed and the information was successfully
-     * read into the ArrayList <code>vehicleDB</code>, false otherwise.
+     * read into the ArrayList <code>peopleDB</code>, false otherwise.
      */
     boolean readDB() {
         try {
             InputStream file = new FileInputStream("people.db");
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput sc = new ObjectInputStream(buffer);
-            personDB = (ArrayList<Person>) sc.readObject();
+            peopleDB = (ArrayList<Person>) sc.readObject();
             return true;
         } catch (IOException e1) {
             return false;

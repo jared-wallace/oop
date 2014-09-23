@@ -14,6 +14,18 @@ public class Motorcycle extends Vehicle implements Serializable {
     private String type;
     private int displacement;
 
+    /**
+     * The constructor for the Motorcycle class.
+     *
+     * @param vin The VIN number of the new motorcycle
+     * @param make The manufacturer of the new motorcycle
+     * @param model The model of the new motorcycle
+     * @param year The year of the new motorcycle
+     * @param price The price of the new motorcycle
+     * @param mileage The mileage of the new motorcycle
+     * @param type The type of the new motorcycle (cruiser, dual-purpose, etc)
+     * @param displacement The displacement in cubic centimeters of the new motorcycle
+     */
     public Motorcycle(String vin, String make, String model, int year, double price, int mileage, String type, int displacement) {
         super(vin, make, model, price, mileage, year);
         this.setType(type);
@@ -24,17 +36,17 @@ public class Motorcycle extends Vehicle implements Serializable {
     /**
      * Checks to see if the type is blank since there is no set list of types.
      *
-     * @param type - the type of motorcycle (Scooter, Touring, Street Bike, etc.)
-     * @return True if the type is not blank
+     * @param type - The type of motorcycle (Scooter, Touring, Cruiser, etc.)
+     * @return True if the type is not blank, false otherwise
      */
     public static boolean validateType(String type) {
         return !(type.equals(""));
     }
 
     /**
-     * Checks to see if the displacement is less than 0
+     * This method checks whether the displacement is less than 50cc.
      *
-     * @param displacement - integer value representing displacement in cubic centimeters
+     * @param displacement Integer value representing displacement in cubic centimeters
      * @return True if the displacement is not less than 50
      */
     public static boolean validateDisplacement(int displacement) {
@@ -42,9 +54,10 @@ public class Motorcycle extends Vehicle implements Serializable {
     }
 
     /**
-     * Adds displacement and type to the default Vehicle string.
+     * This method overrides toString to return a nicely formatted string
+     * consisting of all the motorcycle object's fields.
      *
-     * @return A nicely formatted string with all the Motorcycle fields.
+     * @return A nicely formatted string.
      */
     @Override
     public String toString() {

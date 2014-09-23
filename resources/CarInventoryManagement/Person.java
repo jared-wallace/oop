@@ -7,11 +7,8 @@ package resources.CarInventoryManagement;
  * @author Jared Wallace
  * @version %I%, %G%
  */
-import java.io.Serializable;
 
-/**
- * created by Mason Egger - 9/19
- */
+import java.io.Serializable;
 
 
 abstract class Person implements Serializable {
@@ -25,12 +22,14 @@ abstract class Person implements Serializable {
         this.lastName = lastName;
     }
 
+    /**
+     * This method validates the name as being at least one character long.
+     *
+     * @param name The name to validate
+     * @return True if the name was at least one character long, false otherwise
+     */
     public static boolean validateName(String name) {
         return !(name.length() < 1);
-    }
-
-    public static boolean validateID(int id) {
-        return !(id < 0);
     }
 
     int getID() {
@@ -41,6 +40,11 @@ abstract class Person implements Serializable {
         return firstName;
     }
 
+    /**
+     * This method allows setting the first name of a person
+     *
+     * @param firstName The new first name
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -49,10 +53,21 @@ abstract class Person implements Serializable {
         return lastName;
     }
 
+    /**
+     * This method allows setting the last name of a person.
+     * @param lastName The new last name
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * This method overrides toString to return a nicely formatted string consisting
+     * of the UID, last name and first name of a person. This is never called by itself,
+     * but rather by Person's child classes.
+     *
+     * @return A nicely formatted string
+     */
     @Override
     public String toString() {
         return this.id + " " + this.getLastName() + "," + this.getFirstName();

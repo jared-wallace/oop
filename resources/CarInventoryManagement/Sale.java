@@ -7,12 +7,11 @@ package resources.CarInventoryManagement;
  * @author Jared Wallace
  * @version %I%, %G%
  */
+
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by jared on 9/21/14.
- */
+
 class Sale implements Serializable {
     private int customerUID;
     private int employeeUID;
@@ -20,6 +19,16 @@ class Sale implements Serializable {
     private Date saleDate;
     private double salePrice;
 
+    /**
+     * The constructor for the Sale class. This class exists only for the
+     * purpose of creating new Sale records.
+     *
+     * @param employeeUID1 The employee's UID who is selling the vehicle
+     * @param customerUID1 The customer's UID who is purchasing the vehicle
+     * @param vin1 The VIN number of the vehicle being sold
+     * @param saleDate1 The date of the sale
+     * @param salePrice1 The final sale price of the vehicle
+     */
     public Sale(int employeeUID1, int customerUID1, String vin1, Date saleDate1, double salePrice1) {
         employeeUID = employeeUID1;
         customerUID = customerUID1;

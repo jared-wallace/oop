@@ -20,8 +20,9 @@ class VehicleManager {
     private static ArrayList<Sale> saleDB;
 
     /**
-     * Default constructor creates an ArrayList of Vehicle objects called <code>vehicleDB</code>.
-     * This ArrayList will serve as the runtime database.
+     * The constructor for the VehicleManager class creates an ArrayList of Vehicle
+     * objects called <code>vehicleDB</code>. This ArrayList will serve as the runtime
+     * vehicle database.
      */
     public VehicleManager() {
 
@@ -43,11 +44,24 @@ class VehicleManager {
 
     }
 
+    /**
+     * This method allows retrieving the current runtime vehicle database.
+     *
+     * @return The vehicle ArrayList that serves as the runtime vehicle database
+     */
     public ArrayList<Vehicle> getVehicleDB() {
         return vehicleDB;
     }
 
-    boolean validateVin(String vin) {
+    /**
+     * This method allows for verification of the existence of a vehicle
+     * in the runtime database whose VIN number matches the parameter vin.
+     *
+     * @param vin The VIN number to search the database for
+     * @return True if a vehicle with a VIN matching the parameter vin was
+     * located, false otherwise
+     */
+    boolean verifyExistanceOfVin(String vin) {
         for (Vehicle s : vehicleDB) {
             if (s.getVin().equals(vin))
                 return true;
@@ -122,8 +136,8 @@ class VehicleManager {
             }
         }
 
-        make = Character.toUpperCase(make.charAt(0)) + make.substring(1).toLowerCase();
-        model = Character.toUpperCase(model.charAt(0)) + model.substring(1).toLowerCase();
+        make = String.format("%s%s", Character.toUpperCase(make.charAt(0)), make.substring(1).toLowerCase());
+        model = String.format("%s%s", Character.toUpperCase(model.charAt(0)), model.substring(1).toLowerCase());
 
         if (type.matches("[cC][aA][rR][sS]?")) {
             return addCar(kb, vin, make, model, year, price, mileage);
@@ -150,6 +164,7 @@ class VehicleManager {
         out.println("Enter the body style.");
         kb.nextLine();
         bodyStyle = kb.nextLine();
+        bodyStyle = String.format("%s%s", Character.toUpperCase(bodyStyle.charAt(0)), bodyStyle.substring(1).toLowerCase());
         return Car.validateVin(vin) && Car.validateMake(make) && Car.validateModel(model) && Car.validateYear(year)
                 && Car.validatePrice(price) && Car.validateBodyStyle(bodyStyle)
                 && vehicleDB.add(new Car(vin, make, model, year, price, mileage, bodyStyle));
@@ -235,11 +250,12 @@ class VehicleManager {
     }
 
     /**
-     * Deletes a Vehicle from the runtime database, (assuming the Vehicle
-     * existed). See cautionary note on the <code>addVehicle</code> method.
+     * Deletes a vehicle from the runtime database, (assuming the vehicle
+     * existed in the database). See cautionary note on the <code>addVehicle</code> method.
      *
-     * @param vin The vin number of the Vehicle to be removed from the database
-     * @return True if a Vehicle was deleted, false otherwise
+     * @param vin The VIN number of the vehicle to be removed from the database
+     * @return True if the vehicle with VIN number matching the parameter vin was deleted,
+     * false otherwise
      */
     public boolean deleteVehicle(String vin) {
         if (!Car.validateVin(vin)) {
@@ -253,6 +269,23 @@ class VehicleManager {
         return true;
     }
 
+    /**
+     * This method allows making a sale of an existing vehicle in the runtime database. In
+     * order to successfully complete a sale, both the customer and the employee making the
+     * sale must exist in the runtime people database. In addition, the vehicle to be sold
+     * must also exist in the runtime vehicle database.
+     *
+     * After successfully completing a sale, the corresponding vehicle will be deleted from
+     * the runtime vehicle database, and the sale record will have been created in the runtime
+     * sales database.
+     *
+     * Note: If the program is not exited normally, it is likely that sales and vehicle databases
+     * will not reflect the sale.
+     *
+     * @param kb The Scanner object for console input and output
+     * @param userManager The user manager (for verifying customer/employee UID)
+     * @return True if a sale was successfully performed
+     */
     boolean sellVehicle(Scanner kb, PersonManager userManager) {
         int employeeUID = 0;
         int customerUID = 0;
@@ -301,7 +334,7 @@ class VehicleManager {
         vin = kb.next();
         valid = false;
         while (!valid) {
-            if (validateVin(vin)) {
+            if (verifyExistanceOfVin(vin)) {
                 valid = true;
             } else {
                 err.println("Error: That VIN does not match any existing vehicle in the database.");
@@ -338,10 +371,10 @@ class VehicleManager {
     }
 
     /**
-     * Given a vin number, attempts to locate the Vehicle in question in the
+     * Given a VIN number, attempts to locate the vehicle in question in the
      * runtime database.
      *
-     * @param s A string that is the vin number of the vehicle being sought.
+     * @param s A string that is the VIN number of the vehicle being sought.
      * @return The index of the matching vehicle, if found. Otherwise returns -1.
      */
     int search(String s) {
@@ -360,7 +393,7 @@ class VehicleManager {
      * @param lower  The lower limit of the price range to be searched.
      * @param higher The upper limit of the price range to be searched.
      * @param type   The type of results to return (car, truck, motorcycle or all)
-     * @return An ArrayList of Vehicles falling within the specified price range.
+     * @return An ArrayList of vehicles falling within the specified price range.
      */
     public ArrayList<Vehicle> showPriceRange(double lower, double higher, String type) {
         ArrayList<Vehicle> results = new ArrayList<Vehicle>();
@@ -369,6 +402,8 @@ class VehicleManager {
                 if (type.equals("cars") && s instanceof Car) {
                     results.add(s);
                 } else if (type.equals("trucks") && s instanceof Truck) {
+                    results.add(s);
+                } else if (type.equals("motorcycles") && s instanceof Motorcycle) {
                     results.add(s);
                 } else {
                     results.add(s);
@@ -393,7 +428,6 @@ class VehicleManager {
             pWriter.close();
             return true;
         } catch (IOException e1) {
-            System.err.println("Error " + e1);
             return false;
         }
     }
@@ -413,14 +447,13 @@ class VehicleManager {
             pWriter.close();
             return true;
         } catch (IOException e1) {
-            System.err.println("Error " + e1);
             return false;
         }
     }
 
     /**
-     * Attempts to read in from the database file called <code>Vehicles.txt</code>
-     * and load each Vehicle's info into the runtime database.
+     * Attempts to read in from the database file called <code>vehicles.db</code>
+     * and load each vehicle's info into the runtime database.
      *
      * @return True if the file existed and the information was successfully
      * read into the ArrayList <code>vehicleDB</code>, false otherwise.
@@ -441,7 +474,7 @@ class VehicleManager {
 
     /**
      * Attempts to read in from the database file called <code>sales.db</code>
-     * and load each Vehicle's info into the runtime database.
+     * and load each sale transaction's info into the runtime database.
      *
      * @return True if the file existed and the information was successfully
      * read into the ArrayList <code>salesDB</code>, false otherwise.

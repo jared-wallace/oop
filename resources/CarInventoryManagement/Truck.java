@@ -15,6 +15,18 @@ public class Truck extends Vehicle implements Serializable {
     private int maxLoadWeight = 0;
     private double lengthFT = 0;
 
+    /**
+     * The constructor for the Truck class.
+     *
+     * @param vin The VIN number of the new truck
+     * @param make The manufacturer of the new truck
+     * @param model The model of the new truck
+     * @param year The year of the new truck
+     * @param price The price of the new truck
+     * @param mileage The mileage of the new truck
+     * @param maxLoadWeight The maximum load weight, in pounds, of the new truck
+     * @param lengthFT The length of the new truck, in feet
+     */
     public Truck(String vin, String make, String model, int year, double price, int mileage, int maxLoadWeight,
                  double lengthFT) {
         super(vin, make, model, price, mileage, year);
@@ -23,7 +35,8 @@ public class Truck extends Vehicle implements Serializable {
     }
 
     /**
-     * Currently only checking for non zero numbers
+     * This method validates the maximum load weight, checking that the number is not
+     * negative.
      *
      * @param maxLoadWeight the proposed maximum load weight the truck can accept
      * @return True if the maxLoadWeight parameter is greater than zero
@@ -33,7 +46,7 @@ public class Truck extends Vehicle implements Serializable {
     }
 
     /**
-     * Currently only checking for non zero numbers
+     * This method validates the length, checking that the number is not negative.
      *
      * @param lengthFT the proposed length in feet of the truck
      * @return True if the lengthFT parameter is greater than zero
@@ -43,9 +56,10 @@ public class Truck extends Vehicle implements Serializable {
     }
 
     /**
-     * Adds max load weight and length to the default Vehicle string.
+     * This method overrides toString to return a nicely formatted string
+     * consisting of all the truck objects fields.
      *
-     * @return A nicely formatted string with all the Truck fields.
+     * @return A nicely formatted string with all the truck fields.
      */
     @Override
     public String toString() {
