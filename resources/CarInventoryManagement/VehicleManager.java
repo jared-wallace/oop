@@ -300,7 +300,7 @@ class VehicleManager {
             try {
                 customerUID = kb.nextInt();
                 valid = true;
-                if (!userManager.validateCustomerUID(customerUID)) {
+                if (!userManager.validateUID(customerUID, "Customer")) {
                     err.println("Error: That UID does not match any customer.");
                     err.println("Please try again.");
                     valid = false;
@@ -318,7 +318,7 @@ class VehicleManager {
             try {
                 employeeUID = kb.nextInt();
                 valid = true;
-                if (!userManager.validateEmployeeUID(employeeUID)) {
+                if (!userManager.validateUID(employeeUID, "Employee")) {
                     err.println("Error: That UID does not match any employee.");
                     err.println("Please try again.");
                     valid = false;

@@ -6,7 +6,6 @@ Future plans:
      fix UID to accomodate deletions. I highly suspect this will be a requirement in project 3
 to do:
     combine validateUID methods
-    look at the getnewuid method
 
 
 

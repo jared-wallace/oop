@@ -277,25 +277,18 @@ class PersonManager {
     }
 
     /**
-     * Given a UID, attempts to validate whether or not the user
-     * is listed in the database as a customer
+     * Given a UID and a type of person, attempts to validate whether or not the user
+     * is listed in the database as the provided type of person (customer or employee)
      *
      * @param UID An int that is the UID of the person being sought.
+     * @param type The type of person to verify (employee or customer)
      * @return True if the UID belongs to a customer. Otherwise returns false.
      */
-    public boolean validateCustomerUID(int UID) {
-        return UID < (peopleDB.size() + 1) && UID > 0 && peopleDB.get(search(UID)) instanceof Customer;
-    }
-
-    /**
-     * Given a UID, attempts to validate whether or not the user
-     * is listed in the database as a employee
-     *
-     * @param UID An int that is the UID of the person being sought.
-     * @return True if the UID belongs to a customer. Otherwise returns false.
-     */
-    public boolean validateEmployeeUID(int UID) {
-        return UID < peopleDB.size() && UID > 0 && peopleDB.get(search(UID)) instanceof Employee;
+    public boolean validateUID(int UID, String type) {
+        if (type.equals("Customer"))
+            return UID < (peopleDB.size() + 1) && UID > 0 && peopleDB.get(search(UID)) instanceof Customer;
+        else
+            return UID < (peopleDB.size() + 1) && UID > 0 && peopleDB.get(search(UID)) instanceof Employee;
     }
 
     /**
