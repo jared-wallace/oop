@@ -48,8 +48,10 @@ class PersonManager {
 
         out.println("Enter the first name of the user.");
         firstName = kb.next();
+        firstName = Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1).toLowerCase();
         out.println("Enter the last name of the user.");
         lastName = kb.next();
+        lastName = Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1).toLowerCase();
 
         if (type.matches("[cC]\\w*"))
             return addCustomer(kb, uID, lastName, firstName);
@@ -375,10 +377,8 @@ class PersonManager {
             personDB = (ArrayList<Person>) sc.readObject();
             return true;
         } catch (IOException e1) {
-            System.err.println("Error " + e1);
             return false;
         } catch (ClassNotFoundException e2) {
-            System.err.println("Error" + e2);
             return false;
         }
     }

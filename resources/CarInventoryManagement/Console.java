@@ -31,11 +31,6 @@ class Console {
     public static void main(String[] args) {
         Scanner kb = new Scanner(in);
         Console console = new Console();
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            // interruption matters naught
-        }
         boolean loopControl = true;
         while (loopControl) {
             console.printMenu();
@@ -125,7 +120,7 @@ class Console {
         if (userManager.getPersonDB().size() == 0) {
             out.println("Database is empty");
         } else {
-            out.println("Last name | First name | Classification | Extra");
+            out.println("UID | Last name | First name | Classification | Extra");
             out.println("--------------------------------------------------------------------------------");
             for (Person s : userManager.getPersonDB()) {
                 out.println(s);

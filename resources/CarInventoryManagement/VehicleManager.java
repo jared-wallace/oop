@@ -431,10 +431,8 @@ class VehicleManager {
             vehicleDB = (ArrayList<Vehicle>) sc.readObject();
             return true;
         } catch (IOException e1) {
-            System.err.println("Error " + e1);
             return false;
         } catch (ClassNotFoundException e2) {
-            System.err.println("Error " + e2);
             return false;
         }
     }
@@ -454,10 +452,8 @@ class VehicleManager {
             saleDB = (ArrayList<Sale>) sc.readObject();
             return true;
         } catch (IOException e1) {
-            System.err.println("Error " + e1);
             return false;
         } catch (ClassNotFoundException e2) {
-            System.err.println("Error " + e2);
             return false;
         }
     }
